@@ -37,6 +37,7 @@ import h9 from "@/assetss/heroSectionImages/h9.png";
 // import h9 from "@/assetss/heroSectionImages/h9.jpeg";
 
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
+import "./Hero.css";
 // Right-side hero image (unchanged)
 import { heroImg } from "@/assets/images";
 import HeroRightImage from "./HeroImageRight";
@@ -119,7 +120,7 @@ export default function Hero() {
       </section>
       {/* Sticky 3D WhatsApp & Call icons */}
       <div
-        className="fixed bottom-8  right-4 z-50 flex flex-col space-y-4"
+        className="fixed bottom-8 right-4 z-50 flex flex-col space-y-4"
         data-aos="fade-left"
       >
         {/* WhatsApp Button */}
@@ -127,25 +128,25 @@ export default function Hero() {
           href="https://wa.me/9326262292"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-auto min-w-[20px]  h-8 lg:h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg text-white text-2xl
-      transform transition-transform duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-2xl
-      active:scale-95 active:shadow-md animate-bounce"
+          className="w-auto min-w-[20px] h-8 lg:h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg text-white text-2xl
+     hover:scale-110 hover:-translate-y-1 hover:shadow-2xl
+     active:shadow-md animate-zoom"
           title="Chat with us on WhatsApp"
           aria-label="WhatsApp Chat"
         >
-          <FaWhatsapp className=" text-xl lg:text-4xl" />
+          <FaWhatsapp className="text-xl lg:text-4xl" />
         </a>
 
         {/* Call Button */}
         <a
           href="tel:9326262292"
           className="w-auto min-w-[20px] px-3 h-8 lg:h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg text-white text-2xl
-      transform transition-transform duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-2xl
-      active:scale-95 active:shadow-md animate-bounce"
+     hover:scale-110 hover:-translate-y-1 hover:shadow-2xl
+    active:scale-95 active:shadow-md animate-zoom"
           title="Call us"
           aria-label="Call Us"
         >
-          <FaPhoneAlt className=" text-xl lg:text-2xl" />
+          <FaPhoneAlt className="text-xl lg:text-2xl" />
         </a>
       </div>
     </>
