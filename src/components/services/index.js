@@ -173,3 +173,9 @@ export const useCommercialPropertyRenovation = () =>
     queryKey: ["commercial-property-renovation"],
     queryFn: () => fetchServiceGroup("/property-renovation-commercial-data"),
   });
+
+export const useBhangarwalaServices = () =>
+  useQuery({
+    queryKey: ["bhangarwala-services"],
+    queryFn: () => fetchServiceGroup("/bhangarwala-services-data"),
+  });

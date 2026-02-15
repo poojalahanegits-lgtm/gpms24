@@ -35,7 +35,7 @@ import h9 from "@/assetss/heroSectionImages/h9.png";
 // import h7 from "@/assetss/heroSectionImages/h7.jpeg";
 // import h8 from "@/assetss/heroSectionImages/h8.jpeg";
 // import h9 from "@/assetss/heroSectionImages/h9.jpeg";
-
+import { Link } from "react-router-dom";
 import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 import "./Hero.css";
 // Right-side hero image (unchanged)
@@ -97,10 +97,62 @@ export default function Hero() {
                 <button className="w-full sm:w-auto px-6 md:px-2 lg:px-10 py-3 bg-black text-white lg:text-[18px] font-bold rounded-[68px] shadow-lg hover:bg-black-700 transition">
                   <a href="#services">Explore Services</a>
                 </button>
-                <button className="w-full sm:w-auto px-6 lg:px-10 py-3 bg-black text-white font-bold rounded-[68px] shadow-lg hover:bg-black-500 lg:text-[18px] transition">
+                {/* <button className="w-full sm:w-auto px-6 lg:px-10 py-3 bg-black text-white font-bold rounded-[68px] shadow-lg hover:bg-black-500 lg:text-[18px] transition">
                   Get in Touch
+                </button> */}
+                <button>
+                  <Link
+                    to="/contact"
+                    className="relative p-3 flex justify-center  items-center rounded-full  max-w-md  space-x-2 overflow-hidden group color-flow-bg"
+                  >
+                    <p className="whitespace-nowrap overflow-hidden pl-10  text-ellipsis text-white capitalize text-base sm:text-md md:text-xl transition-all duration-700 group-hover:mr-6 z-10">
+                      Get in Touch
+                    </p>
+
+                    <span className="opacity-0 group-hover:opacity-100 text-white transition-opacity duration-300 z-10">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                        />
+                      </svg>
+                    </span>
+                  </Link>
                 </button>
               </div>
+              {/* <Link
+                to="/contact"
+                className="relative p-3 flex justify-center items-center rounded-full w-[100%] md:w-[80%] max-w-md mb-8 space-x-2 overflow-hidden group color-flow-bg"
+              >
+                <p className="whitespace-nowrap overflow-hidden text-ellipsis text-white capitalize text-base sm:text-md md:text-xl transition-all duration-700 group-hover:mr-4 z-10">
+                  Book Your Stay with us today
+                </p>
+
+                <span className="opacity-0 group-hover:opacity-100 text-white transition-opacity duration-300 z-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                    />
+                  </svg>
+                </span>
+              </Link> */}
             </section>
 
             {/* Right Image */}

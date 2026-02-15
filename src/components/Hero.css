@@ -10,7 +10,8 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: repeating-linear-gradient(120deg, #297229 0%, #025002 40%);
+  /* background: repeating-linear-gradient(120deg, #297229 0%, #025002 40%); */
+  background: repeating-linear-gradient(120deg, #0f130f 0%, #202120 40%);
   background-size: 200% 200%;
   animation: policeFlow 1.13s linear infinite;
   border-radius: inherit;
