@@ -97,15 +97,19 @@ export default function Hero() {
                 <button className="w-full sm:w-auto px-6 md:px-2 lg:px-10 py-3 bg-black text-white lg:text-[18px] font-bold rounded-[68px] shadow-lg hover:bg-black-700 transition">
                   <a href="#services">Explore Services</a>
                 </button>
+
+                <button className="w-full sm:w-auto px-6 lg:px-10 py-3  text-black border-2 border-black  font-bold rounded-[68px] shadow-lg hover:bg-black-500 lg:text-[18px] transition">
+                  Get in Touch
+                </button>
                 {/* <button className="w-full sm:w-auto px-6 lg:px-10 py-3 bg-black text-white font-bold rounded-[68px] shadow-lg hover:bg-black-500 lg:text-[18px] transition">
                   Get in Touch
                 </button> */}
-                <button>
+                {/* <button>
                   <Link
                     to="/contact"
                     className="relative p-3 flex justify-center  items-center rounded-full  max-w-md  space-x-2 overflow-hidden group color-flow-bg"
                   >
-                    <p className="whitespace-nowrap overflow-hidden pl-10  text-ellipsis text-white capitalize text-base sm:text-md md:text-xl transition-all duration-700 group-hover:mr-6 z-10">
+                    <p className="whitespace-nowrap overflow-hidden lg:pl-10 pl-6 md:pl-8  text-ellipsis text-white capitalize text-base sm:text-md md:text-xl transition-all duration-700 group-hover:mr-6 z-10">
                       Get in Touch
                     </p>
 
@@ -126,7 +130,7 @@ export default function Hero() {
                       </svg>
                     </span>
                   </Link>
-                </button>
+                </button> */}
               </div>
               {/* <Link
                 to="/contact"
