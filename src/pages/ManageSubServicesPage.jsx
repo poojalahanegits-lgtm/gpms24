@@ -315,7 +315,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
               />
 
               <input
-                type="number"
+                type="string"
                 required
                 placeholder="Price"
                 value={formData.price}

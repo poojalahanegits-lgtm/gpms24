@@ -44,20 +44,21 @@ import service15_image from "@/assetss/servicesImages/SocietyManagemen.png";
 
 // import service16_icon from "@/assetss/icons/Movers&Packers.png";
 // import service1_icon from "@/assetss/icons/DeepCleaning-Icon.png";
-// import service1_icon from "@/assetss/icons/Electrical-Icon.png";
-// import service1_icon from "@/assetss/icons/src/assetss/icons/Plumbing-Icon.png.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service1_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service1_icon from "@/assetss/icons/Movers&Packers.png";
+import service2_icon from "@/assetss/icons/DeepCleaning-Icon.png";
+import service3_icon from "@/assetss/icons/Electrical-Icon.png";
+import service4_icon from "@/assetss/icons/Plumbing-Icon.png";
+import service5_icon from "@/assetss/icons/WaterTank-Icon.png";
+import service6_icon from "@/assetss/icons/Painting-Icon.png";
+import service7_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service8_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service9_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service10_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service11_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service12_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service13_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service14_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service15_icon from "@/assetss/icons/Bhangarwala-Icon.png";
 
 const fallbackImages = [
   service1_image,
@@ -78,17 +79,21 @@ const fallbackImages = [
 ];
 
 const serviceIconMap = {
-  "gpms-service-1": electricalImg,
-  "gpms-service-2": electricalImg,
-  "gpms-service-3": moversImg,
-  "gpms-service-4": carMaintenanceImg,
-  "gpms-service-5": carpentryImg,
-  "gpms-service-6": civilWorkImg,
-  "gpms-service-7": societyManageImg,
-  "gpms-service-8": buildingMaintenanceImg,
-  "gpms-service-9": tileworkImg,
-  "gpms-service-10": paintingImg,
-  "gpms-service-11": waterTankImg,
+  "gpms-service-1": service1_icon,
+  "gpms-service-2": service2_icon,
+  "gpms-service-3": service3_icon,
+  "gpms-service-4": service4_icon,
+  "gpms-service-5": service5_icon,
+  "gpms-service-6": service6_icon,
+  "gpms-service-7": service7_icon,
+  "gpms-service-8": service8_icon,
+  "gpms-service-9": service9_icon,
+  "gpms-service-10": service10_icon,
+  "gpms-service-11": service11_icon,
+  "gpms-service-12": service12_icon,
+  "gpms-service-13": service13_icon,
+  "gpms-service-14": service14_icon,
+  "gpms-service-15": service15_icon,
 };
 const IconWithFallback = ({ src, fallback }) => {
   const [iconSrc, setIconSrc] = useState(fallback);
