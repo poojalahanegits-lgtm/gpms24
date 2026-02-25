@@ -198,7 +198,11 @@ export const useCreateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) => apiClient.post("/categories/create", data),
-    onSuccess: () => queryClient.invalidateQueries(["categories"]),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["categories", variables.main_service_id],
+      });
+    },
   });
 };
 
@@ -206,7 +210,11 @@ export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) => apiClient.post("/categories/update", data),
-    onSuccess: () => queryClient.invalidateQueries(["categories"]),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["categories"],
+      });
+    },
   });
 };
 
@@ -214,7 +222,26 @@ export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) => apiClient.post("/categories/delete", data),
-    onSuccess: () => queryClient.invalidateQueries(["categories"]),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["categories"],
+      });
+    },
+  });
+};
+//! update category status
+const updateCategoryStatus = async (data) => {
+  const res = await apiClient.post("/categories/update-status", data);
+  return res.data;
+};
+
+export const useUpdateCategoryStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateCategoryStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["categories"]);
+    },
   });
 };
 
@@ -280,6 +307,7 @@ export const useAllSubServices = () =>
           page: item.pageNumber,
           parentId: mainId,
           main_service_icon: item.main_service_icon,
+          icon: item.icon,
         });
       });
 
@@ -305,6 +333,56 @@ export const useAdminSubServices = (mainServiceId) =>
     enabled: !!mainServiceId,
   });
 
+//! create subservice
+export const useCreateSubService = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (formData) =>
+      apiClient.post("/sub-services/create", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }),
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-sub-services", variables.get("main_service_id")],
+      });
+    },
+  });
+};
+
+//! update subservice
+export const useUpdateSubService = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (formData) =>
+      apiClient.post("/sub-services/update", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }),
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-sub-services", variables.get("main_service_id")],
+      });
+    },
+  });
+};
+//! delete subservice
+export const useDeleteSubService = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, mainServiceId }) =>
+      apiClient.post("/sub-services/delete", { id }),
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-sub-services", variables.mainServiceId],
+      });
+    },
+  });
+};
 // import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 // import axios from "axios";
 // // http://localhost:4000/api/sub-services/filter?mainServiceId=gpms-service-1&categoryId=gpms-category-1

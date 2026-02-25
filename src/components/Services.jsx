@@ -7,7 +7,8 @@ import { useState } from "react";
 import { Info } from "lucide-react";
 import { useAllSubServices, useMainServices } from "./services/index";
 
-import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
+// import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
+import notFoundImg from "@/assetss/commanImages/not-found.jpeg";
 
 //! images
 import service1_image from "@/assetss/servicesImages/Movers&Packers.png";
@@ -29,6 +30,7 @@ import service15_image from "@/assetss/servicesImages/SocietyManagemen.png";
 //! icons
 
 import service1_icon from "@/assetss/icons/Movers&Packers.png";
+
 import service2_icon from "@/assetss/icons/DeepCleaning-Icon.png";
 import service3_icon from "@/assetss/icons/Electrical-Icon.png";
 import service4_icon from "@/assetss/icons/Plumbing-Icon.png";
@@ -138,11 +140,12 @@ const getDrivePreviewUrl = (url, pageNumber) => {
 };
 
 const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
-  // console.log(11111, service.main_service_icon);
+  console.log(11111, service.main_service_icon);
+  console.log(2222, service.icon);
   return (
     <div
       onClick={() => service?.pdfUrl && onViewDetails(service)}
-      className="group relative rounded-2xl border border-gray-100
+      className="group relative rounded-2xl border border-gray-300
   pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4 
   shadow-sm transition-all duration-300
   hover:-translate-y-1 hover:shadow-md
@@ -173,7 +176,13 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
         </div>
         <div className=" h-auto w-24 ">
           <IconWithFallback
-            src={service.main_service_icon}
+            // src={service.icon}
+            src={
+              service.icon ||
+              service.main_service_icon ||
+              serviceIconMap[mainId] ||
+              null
+            }
             fallback={serviceIconMap[mainId] || plumbingImg}
             className=" object-cover"
           />
@@ -221,6 +230,19 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
 
           {/* Search */}
           <div className="flex items-center gap-2">
+            {/* <div className="relative w-full sm:w-[280px]">
+              <input
+                type="text"
+                placeholder="Search services..."
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setShowAll(false); 
+                }}
+                className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+              />
+              <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div> */}
             <div className="relative w-full sm:w-[280px]">
               <input
                 type="text"
@@ -228,13 +250,27 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
-                  setShowAll(false); // reset view when searching
+                  setShowAll(false);
                 }}
-                className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                className="w-full rounded-xl border border-gray-300 px-4 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
               />
-              <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
-            </div>
 
+              {!search && (
+                <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              )}
+
+              {search && (
+                <button
+                  onClick={() => {
+                    setSearch("");
+                    setShowAll(false);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
             <button
               onClick={() => scrollToSection("services")}
               className="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium  transition bg-black text-white whitespace-nowrap"
@@ -272,7 +308,14 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
             )}
           </>
         ) : (
-          <p className="text-gray-500 text-sm">No services found.</p>
+          <div className="flex flex-col items-center bg-[#fbfbfb] justify-center py-12">
+            <img
+              src={notFoundImg}
+              alt="No services found"
+              className="w-32 h-32 object-contain opacity-80"
+            />
+            <p className="mt-4 text-gray-500 text-sm">No services found</p>
+          </div>
         )}
       </div>
       <div className="flex justify-end my-4 mx-8 lg:mx-14">
@@ -369,7 +412,7 @@ const Services = () => {
 
             {/* Right Search */}
             <div className="ml-auto w-full max-w-md lg:pl-8  lg:ml-0">
-              <div className="relative">
+              {/* <div className="relative">
                 <div className=" lg:pl-12">
                   <input
                     type="text"
@@ -380,13 +423,37 @@ const Services = () => {
                   />
                   <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
+              </div> */}
+              <div className="lg:pl-12 relative">
+                <input
+                  type="text"
+                  placeholder="Search services..."
+                  value={mainSearch}
+                  onChange={(e) => setMainSearch(e.target.value)}
+                  className="w-full rounded-xl border border-gray-300 px-6 pr-10 py-2 text-lg focus:outline-none focus:ring-1 focus:ring-black"
+                />
+
+                {/* Search icon (when empty) */}
+                {!mainSearch && (
+                  <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                )}
+
+                {/* Clear icon (when typing) */}
+                {mainSearch && (
+                  <button
+                    onClick={() => setMainSearch("")}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
             </div>
           </div>
 
           {/* Main Services Cards */}
           <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:px-2">
-            {loading
+            {/* {loading
               ? Array.from({ length: 8 }).map((_, i) => (
                   <ServiceCardSkeleton key={i} />
                 ))
@@ -397,7 +464,7 @@ const Services = () => {
                         service.Status === "active") &&
                       service.title
                         .toLowerCase()
-                        .includes(mainSearch.toLowerCase()),
+                        .includes(mainSearch.trim().toLowerCase()),
                   )
                   .map((service, index) => (
                     <div
@@ -406,7 +473,7 @@ const Services = () => {
                       onClick={() => scrollToSection(service.id)}
                       className="cursor-pointer rounded-md flex flex-col gap-4 scroll-mt-40 lg:scroll-mt-0 transition hover:-translate-y-1 group max-w-[400px] shadow-lg"
                     >
-                      {/* Image wrapper */}
+            
                       <ImageWithFallback
                         src={service.img}
                         alt={service.title}
@@ -417,12 +484,60 @@ const Services = () => {
                         <h3 className="font-semibold text-[18px] text-[#111D15]">
                           {service.title}
                         </h3>
-                        {/* <p className="text-[14px] text-[#666666]">
-                          {service.desc}
-                        </p> */}
+                     
                       </div>
                     </div>
-                  ))}
+                  ))} */}
+            {loading ? (
+              Array.from({ length: 8 }).map((_, i) => (
+                <ServiceCardSkeleton key={i} />
+              ))
+            ) : services.filter(
+                (service) =>
+                  (service.status === "active" ||
+                    service.Status === "active") &&
+                  service.title
+                    .toLowerCase()
+                    .includes(mainSearch.trim().toLowerCase()),
+              ).length === 0 ? (
+              <div className="col-span-full flex bg-[#fbfbfb] flex-col items-center justify-center py-12">
+                <img
+                  src={notFoundImg}
+                  alt="No services found"
+                  className="w-40 h-40 object-contain opacity-80"
+                />
+                <p className="mt-4 text-gray-500 text-lg">No services found</p>
+              </div>
+            ) : (
+              services
+                .filter(
+                  (service) =>
+                    (service.status === "active" ||
+                      service.Status === "active") &&
+                    service.title
+                      .toLowerCase()
+                      .includes(mainSearch.trim().toLowerCase()),
+                )
+                .map((service, index) => (
+                  <div
+                    key={service.title}
+                    onClick={() => scrollToSection(service.id)}
+                    className="cursor-pointer rounded-md flex flex-col gap-4 transition hover:-translate-y-1 group max-w-[400px] shadow-lg"
+                  >
+                    <ImageWithFallback
+                      src={service.img}
+                      alt={service.title}
+                      fallback={fallbackImages[index % fallbackImages.length]}
+                    />
+
+                    <div className="px-4 pb-4 ">
+                      <h3 className="font-semibold text-[18px] text-[#111D15]">
+                        {service.title}
+                      </h3>
+                    </div>
+                  </div>
+                ))
+            )}
           </div>
         </div>
       </div>

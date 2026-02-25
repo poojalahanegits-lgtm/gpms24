@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import axios from "axios";
+// import axios from "axios";
+import {
+  useCategories,
+  useCreateCategory,
+  useUpdateCategory,
+  useDeleteCategory,
+  useUpdateCategoryStatus,
+} from "../components/services/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ManageCategoriesPage = ({ parent, onBack }) => {
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -17,69 +24,86 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
   const [formData, setFormData] = useState({
     category_name: "",
   });
+
   const [editingId, setEditingId] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: categories = [], isLoading } = useCategories(parent?.id);
+  const updateStatus = useUpdateCategoryStatus();
+  const createCategory = useCreateCategory();
+  const updateCategory = useUpdateCategory();
+  const deleteCategory = useDeleteCategory();
 
-  // ================= FETCH =================
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `${import.meta.env.VITE_BASE_URL}/categories`,
-  //       );
+  // const fetchCategories = async () => {
+  //   try {
+  //     setIsLoading(true);
 
-  //       const allCategories = res.data?.data || [];
+  //     const res = await axios.get(
+  //       `${import.meta.env.VITE_BASE_URL}/categories`,
+  //     );
 
-  //       // filter by main_service_id
-  //       const filtered = allCategories.filter(
-  //         (cat) => cat.main_service_id === parent?.id,
-  //       );
+  //     const allCategories = res.data?.data || [];
 
-  //       setCategories(filtered);
-  //     } catch (error) {
-  //       console.error("Failed to fetch categories", error);
-  //     }
-  //   };
-  const fetchCategories = async () => {
-    try {
-      setIsLoading(true);
+  //     const filtered = allCategories.filter(
+  //       (cat) => cat.main_service_id === parent?.id,
+  //     );
 
-      const res = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/categories`,
-      );
-
-      const allCategories = res.data?.data || [];
-
-      const filtered = allCategories.filter(
-        (cat) => cat.main_service_id === parent?.id,
-      );
-
-      setCategories(filtered);
-    } catch (error) {
-      toast.error("Failed to fetch categories");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    if (parent?.id) {
-      fetchCategories();
-    }
-  }, [parent]);
+  //     setCategories(filtered);
+  //   } catch (error) {
+  //     toast.error("Failed to fetch categories");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (parent?.id) {
+  //     fetchCategories();
+  //   }
+  // }, [parent]);
 
   // ================= SUBMIT =================
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     if (editingId) {
+  //       await axios.post(`${import.meta.env.VITE_BASE_URL}/categories/update`, {
+  //         category_id: editingId,
+  //         category_name: formData.category_name,
+  //       });
+  //       toast.success("Category updated successfully");
+  //     } else {
+  //       await axios.post(`${import.meta.env.VITE_BASE_URL}/categories/create`, {
+  //         main_service_id: parent?.id,
+  //         category_name: formData.category_name,
+  //       });
+  //       toast.success("Category created successfully");
+  //     }
+
+  //     setFormData({ category_name: "" });
+  //     setEditingId(null);
+  //     setIsModalOpen(false);
+  //     fetchCategories();
+  //   } catch (error) {
+  //     console.error("Submit failed", error);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
       if (editingId) {
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/categories/update`, {
+        await updateCategory.mutateAsync({
           category_id: editingId,
           category_name: formData.category_name,
         });
         toast.success("Category updated successfully");
       } else {
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/categories/create`, {
+        await createCategory.mutateAsync({
           main_service_id: parent?.id,
           category_name: formData.category_name,
         });
@@ -89,9 +113,8 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
       setFormData({ category_name: "" });
       setEditingId(null);
       setIsModalOpen(false);
-      fetchCategories();
     } catch (error) {
-      console.error("Submit failed", error);
+      toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -103,7 +126,7 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
     try {
       setIsDeleting(true);
 
-      await axios.post(`${import.meta.env.VITE_BASE_URL}/categories/delete`, {
+      await deleteCategory.mutateAsync({
         category_id: categoryToDelete.category_id,
       });
 
@@ -111,13 +134,33 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
 
       setIsDeleteModalOpen(false);
       setCategoryToDelete(null);
-      fetchCategories();
     } catch (error) {
       toast.error("Failed to delete category");
     } finally {
       setIsDeleting(false);
     }
   };
+  // const confirmDelete = async () => {
+  //   if (!categoryToDelete) return;
+
+  //   try {
+  //     setIsDeleting(true);
+
+  //     await axios.post(`${import.meta.env.VITE_BASE_URL}/categories/delete`, {
+  //       category_id: categoryToDelete.category_id,
+  //     });
+
+  //     toast.success("Category deleted successfully");
+
+  //     setIsDeleteModalOpen(false);
+  //     setCategoryToDelete(null);
+  //     fetchCategories();
+  //   } catch (error) {
+  //     toast.error("Failed to delete category");
+  //   } finally {
+  //     setIsDeleting(false);
+  //   }
+  // };
   const handleDelete = (category) => {
     setCategoryToDelete(category);
     setIsDeleteModalOpen(true);
@@ -140,26 +183,50 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
 
       setUpdatingStatusId(categoryToToggle.category_id);
 
-      await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/categories/update-status`,
-        {
-          category_id: categoryToToggle.category_id,
-          status: newStatus,
-        },
-      );
+      await updateStatus.mutateAsync({
+        category_id: categoryToToggle.category_id,
+        status: newStatus,
+      });
 
       toast.success("Status updated successfully");
 
       setIsStatusModalOpen(false);
       setCategoryToToggle(null);
-
-      await fetchCategories();
     } catch (error) {
       toast.error("Failed to update status");
     } finally {
       setUpdatingStatusId(null);
     }
   };
+  // const confirmStatusToggle = async () => {
+  //   if (!categoryToToggle) return;
+
+  //   try {
+  //     const newStatus =
+  //       categoryToToggle.status === "active" ? "inactive" : "active";
+
+  //     setUpdatingStatusId(categoryToToggle.category_id);
+
+  //     await axios.post(
+  //       `${import.meta.env.VITE_BASE_URL}/categories/update-status`,
+  //       {
+  //         category_id: categoryToToggle.category_id,
+  //         status: newStatus,
+  //       },
+  //     );
+
+  //     toast.success("Status updated successfully");
+
+  //     setIsStatusModalOpen(false);
+  //     setCategoryToToggle(null);
+
+  //     await fetchCategories();
+  //   } catch (error) {
+  //     toast.error("Failed to update status");
+  //   } finally {
+  //     setUpdatingStatusId(null);
+  //   }
+  // };
   return (
     <div>
       {/* HEADER */}
@@ -508,31 +575,15 @@ export default ManageCategoriesPage;
 //   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 //   const [categoryToDelete, setCategoryToDelete] = useState(null);
 //   const [isDeleting, setIsDeleting] = useState(false);
+//   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+//   const [categoryToToggle, setCategoryToToggle] = useState(null);
+//   const [updatingStatusId, setUpdatingStatusId] = useState(null);
 //   const [formData, setFormData] = useState({
 //     category_name: "",
 //   });
 //   const [editingId, setEditingId] = useState(null);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 
-//   // ================= FETCH =================
-//   //   const fetchCategories = async () => {
-//   //     try {
-//   //       const res = await axios.get(
-//   //         `${import.meta.env.VITE_BASE_URL}/categories`,
-//   //       );
-
-//   //       const allCategories = res.data?.data || [];
-
-//   //       // filter by main_service_id
-//   //       const filtered = allCategories.filter(
-//   //         (cat) => cat.main_service_id === parent?.id,
-//   //       );
-
-//   //       setCategories(filtered);
-//   //     } catch (error) {
-//   //       console.error("Failed to fetch categories", error);
-//   //     }
-//   //   };
 //   const fetchCategories = async () => {
 //     try {
 //       setIsLoading(true);
@@ -625,22 +676,33 @@ export default ManageCategoriesPage;
 //     setEditingId(category.category_id);
 //     setIsModalOpen(true);
 //   };
-//   const handleStatusToggle = async (category) => {
+//   const confirmStatusToggle = async () => {
+//     if (!categoryToToggle) return;
+
 //     try {
-//       const newStatus = category.status === "active" ? "inactive" : "active";
+//       const newStatus =
+//         categoryToToggle.status === "active" ? "inactive" : "active";
+
+//       setUpdatingStatusId(categoryToToggle.category_id);
 
 //       await axios.post(
 //         `${import.meta.env.VITE_BASE_URL}/categories/update-status`,
 //         {
-//           category_id: category.category_id,
+//           category_id: categoryToToggle.category_id,
 //           status: newStatus,
 //         },
 //       );
 
 //       toast.success("Status updated successfully");
-//       fetchCategories();
+
+//       setIsStatusModalOpen(false);
+//       setCategoryToToggle(null);
+
+//       await fetchCategories();
 //     } catch (error) {
 //       toast.error("Failed to update status");
+//     } finally {
+//       setUpdatingStatusId(null);
 //     }
 //   };
 //   return (
@@ -728,7 +790,7 @@ export default ManageCategoriesPage;
 //                     <td className="p-4">
 //                       <div className="flex items-center gap-3">
 //                         {/* Toggle */}
-//                         <button
+//                         {/* <button
 //                           onClick={() => handleStatusToggle(category)}
 //                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
 //                             category.status === "active"
@@ -743,6 +805,35 @@ export default ManageCategoriesPage;
 //                                 : "translate-x-1"
 //                             }`}
 //                           />
+//                         </button> */}
+
+//                         <button
+//                           disabled={updatingStatusId === category.category_id}
+//                           onClick={() => {
+//                             setCategoryToToggle(category);
+//                             setIsStatusModalOpen(true);
+//                           }}
+//                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
+//                             category.status === "active"
+//                               ? "bg-green-500"
+//                               : "bg-red-500"
+//                           } ${
+//                             updatingStatusId === category.category_id
+//                               ? "opacity-50 cursor-not-allowed"
+//                               : ""
+//                           }`}
+//                         >
+//                           {updatingStatusId === category.category_id ? (
+//                             <span className="bw-loader-small"></span>
+//                           ) : (
+//                             <span
+//                               className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+//                                 category.status === "active"
+//                                   ? "translate-x-6"
+//                                   : "translate-x-1"
+//                               }`}
+//                             />
+//                           )}
 //                         </button>
 //                       </div>
 //                     </td>
@@ -769,7 +860,59 @@ export default ManageCategoriesPage;
 //           </table>
 //         </div>
 //       </div>
+//       {/* status modal */}
+//       {isStatusModalOpen && (
+//         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+//           <div className="bg-white rounded-xl shadow-xl w-[420px] p-6">
+//             <h2 className="text-lg font-semibold text-gray-900">
+//               Change Category Status
+//             </h2>
 
+//             <p className="text-gray-600 mt-2">
+//               Are you sure you want to{" "}
+//               <span className="font-medium text-black">
+//                 {categoryToToggle?.status === "active"
+//                   ? "Deactivate"
+//                   : "Activate"}
+//               </span>{" "}
+//               <span className="font-medium text-black">
+//                 {categoryToToggle?.category_name}
+//               </span>
+//               ?
+//             </p>
+
+//             <div className="flex justify-end gap-3 mt-6">
+//               <button
+//                 onClick={() => {
+//                   setIsStatusModalOpen(false);
+//                   setCategoryToToggle(null);
+//                 }}
+//                 className="px-4 py-2 border rounded-lg"
+//               >
+//                 Cancel
+//               </button>
+
+//               <button
+//                 onClick={confirmStatusToggle}
+//                 disabled={updatingStatusId === categoryToToggle?.category_id}
+//                 className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
+//                   updatingStatusId === categoryToToggle?.category_id
+//                     ? "bg-gray-300 text-gray-600"
+//                     : "bg-black text-white hover:bg-gray-800"
+//                 }`}
+//               >
+//                 {updatingStatusId === categoryToToggle?.category_id ? (
+//                   <>
+//                     <span className="bw-loader"></span> Updating...
+//                   </>
+//                 ) : (
+//                   "Confirm"
+//                 )}
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
 //       {/* MODAL */}
 //       {isModalOpen && (
 //         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
@@ -875,6 +1018,14 @@ export default ManageCategoriesPage;
 //         height: 14px;
 //         animation: spin 0.6s linear infinite;
 //       }
+//         .bw-loader-small {
+//   border: 2px solid #fff;
+//   border-top: 2px solid transparent;
+//   border-radius: 50%;
+//   width: 14px;
+//   height: 14px;
+//   animation: spin 0.6s linear infinite;
+// }
 
 //       @keyframes spin {
 //         0% { transform: rotate(0deg); }
