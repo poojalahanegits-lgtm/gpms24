@@ -22,12 +22,7 @@ export const useLogin = () => {
     },
   });
 };
-// const apiClient = axios.create({
-//   baseURL: "https://api.gpgs24.in/api",
-// });
-// const apiClient = axios.create({
-//   baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:4000/api",
-// });
+
 /* =========================================================
    MAIN SERVICES (WITH IMAGE)
 ========================================================= */
@@ -55,10 +50,7 @@ export const useMainServices = () =>
     queryFn: fetchMainServices,
   });
 //! create new main service
-// const createMainService = async (data) => {
-//   const res = await apiClient.post("/services/create", data);
-//   return res.data;
-// };
+
 const createMainService = async (data) => {
   const res = await apiClient.post("/services/create", data, {
     headers: {
@@ -79,10 +71,7 @@ export const useCreateMainService = () => {
   });
 };
 //! update main service
-// const updateMainService = async (data) => {
-//   const res = await apiClient.post("/services/update", data);
-//   return res.data;
-// };
+
 const updateMainService = async (data) => {
   const res = await apiClient.post("/services/update", data, {
     headers: {
@@ -340,12 +329,7 @@ export const useAdminSubServices = (mainServiceId) =>
 //     },
 //   });
 // };
-// // const apiClient = axios.create({
-// //   baseURL: "https://api.gpgs24.in/api",
-// // });
-// // const apiClient = axios.create({
-// //   baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:4000/api",
-// // });
+
 // /* =========================================================
 //    MAIN SERVICES (WITH IMAGE)
 // ========================================================= */
@@ -373,10 +357,7 @@ export const useAdminSubServices = (mainServiceId) =>
 //     queryFn: fetchMainServices,
 //   });
 // //! create new main service
-// // const createMainService = async (data) => {
-// //   const res = await apiClient.post("/services/create", data);
-// //   return res.data;
-// // };
+
 // const createMainService = async (data) => {
 //   const res = await apiClient.post("/services/create", data, {
 //     headers: {
@@ -397,10 +378,7 @@ export const useAdminSubServices = (mainServiceId) =>
 //   });
 // };
 // //! update main service
-// // const updateMainService = async (data) => {
-// //   const res = await apiClient.post("/services/update", data);
-// //   return res.data;
-// // };
+
 // const updateMainService = async (data) => {
 //   const res = await apiClient.post("/services/update", data, {
 //     headers: {
@@ -547,6 +525,7 @@ export const useAdminSubServices = (mainServiceId) =>
 //   });
 // };
 
+// //! getting one subservice hook
 // export const useSubServices = (mainServiceId, categoryId) =>
 //   useQuery({
 //     queryKey: ["sub-services", mainServiceId, categoryId],
@@ -576,6 +555,46 @@ export const useAdminSubServices = (mainServiceId) =>
 //     },
 //     enabled: !!mainServiceId,
 //   });
+// //! getting al subservices hook
+// export const useAllSubServices = () =>
+//   useQuery({
+//     queryKey: ["all-sub-services"],
+//     queryFn: async () => {
+//       const res = await apiClient.get("/sub-services");
+
+//       const data = res.data?.data || [];
+
+//       // group by main service + category
+//       const grouped = {};
+
+//       data.forEach((item) => {
+//         const mainId = item.main_service_id;
+//         const categoryId = item.category_id || "no-category";
+
+//         if (!grouped[mainId]) grouped[mainId] = {};
+//         if (!grouped[mainId][categoryId])
+//           grouped[mainId][categoryId] = {
+//             mainTitle: item.main_service_title,
+//             categoryTitle: item.category_name,
+//             services: [],
+//           };
+
+//         grouped[mainId][categoryId].services.push({
+//           id: item.sub_service_id,
+//           title: item.title,
+//           price: item.price,
+//           pdfUrl: item.pdfUrl,
+//           page: item.pageNumber,
+//           parentId: mainId,
+//           main_service_icon: item.main_service_icon,
+//         });
+//       });
+
+//       return grouped;
+//     },
+//   });
+
+// //! for admin dashboard geeting all subservices hook
 // export const useAdminSubServices = (mainServiceId) =>
 //   useQuery({
 //     queryKey: ["admin-sub-services", mainServiceId],
