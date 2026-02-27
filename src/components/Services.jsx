@@ -116,13 +116,38 @@ const ImageWithFallback = ({ src, alt, fallback }) => {
     />
   );
 };
-const scrollToSection = (id) => {
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+// const scrollToSection = (id) => {
+//   const element = document.getElementById(id);
+//   if (element) {
+//     element.scrollIntoView({
+//       behavior: "smooth",
+//       block: "start",
+//     });
+//   }
+// };
+
+const scrollToSection = (id, resetSearch) => {
+  if (resetSearch) {
+    resetSearch("");
+
+    // wait for DOM update after state change
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  } else {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   }
 };
 
@@ -140,8 +165,8 @@ const getDrivePreviewUrl = (url, pageNumber) => {
 };
 
 const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
-  console.log(11111, service.main_service_icon);
-  console.log(2222, service.icon);
+  //console.log(11111, service.main_service_icon);
+  //console.log(2222, service.icon);
   return (
     <div
       onClick={() => service?.pdfUrl && onViewDetails(service)}
@@ -522,7 +547,7 @@ const Services = () => {
                 .map((service, index) => (
                   <div
                     key={service.title}
-                    onClick={() => scrollToSection(service.id)}
+                    onClick={() => scrollToSection(service.id, setMainSearch)}
                     className="cursor-pointer rounded-md flex flex-col gap-4 transition hover:-translate-y-1 group max-w-[400px] shadow-lg"
                   >
                     <ImageWithFallback

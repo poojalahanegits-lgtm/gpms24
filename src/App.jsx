@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import { useEffect } from "react";
 import Header from "./components/Header.jsx";
 import Home from "./components/Home.jsx";
 import Services from "./components/Services.jsx";
@@ -10,7 +10,8 @@ import Locations from "./components/Location.jsx";
 import Footer from "./components/Footer.jsx";
 import Hero from "./components/Hero.jsx";
 import Login from "./components/Login.jsx"; // 👈 create this
-import Dashboard from "./pages/Dashboard";
+import ScrollToTop from "./components/ScrollToTop";
+import Dashboard from "./admin/Dashboard";
 import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -36,10 +37,11 @@ const App = () => {
           path="/"
           element={
             <>
+              <ScrollToTop />
               <Hero />
               <Home />
               <Services />
-              <About />
+              {/* <About /> */}
               <Contact />
               <Locations />
               <ReadyToGetStarted />
