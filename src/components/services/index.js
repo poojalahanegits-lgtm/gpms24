@@ -308,6 +308,7 @@ export const useAllSubServices = () =>
           parentId: mainId,
           main_service_icon: item.main_service_icon,
           icon: item.icon,
+          status: item.status,
         });
       });
 
@@ -364,6 +365,25 @@ export const useUpdateSubService = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ["admin-sub-services", variables.get("main_service_id")],
+      });
+    },
+  });
+};
+//! update subservice status
+const updateSubServiceStatus = async (data) => {
+  const res = await apiClient.post("/sub-services/update-status", data);
+  return res.data;
+};
+
+export const useUpdateSubServiceStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateSubServiceStatus,
+
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["admin-sub-services", variables.mainServiceId],
       });
     },
   });

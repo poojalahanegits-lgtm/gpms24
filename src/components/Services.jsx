@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Info } from "lucide-react";
 import { useAllSubServices, useMainServices } from "./services/index";
 
-// import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
+import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
 import notFoundImg from "@/assetss/commanImages/not-found.jpeg";
 
 //! images
@@ -37,14 +37,14 @@ import service4_icon from "@/assetss/icons/Plumbing-Icon.png";
 import service5_icon from "@/assetss/icons/WaterTank-Icon.png";
 import service6_icon from "@/assetss/icons/Painting-Icon.png";
 import service7_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service8_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service9_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service10_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service11_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service12_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service13_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service14_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service15_icon from "@/assetss/icons/Bhangarwala-Icon.png";
+import service8_icon from "@/assetss/icons/PropertyRenovation-Icon.png";
+import service9_icon from "@/assetss/icons/PropertyRenovation-Icon.png";
+import service10_icon from "@/assetss/icons/Tile&GraniteWork-Icon.png";
+import service11_icon from "@/assetss/icons/CivilWork-Icon.png";
+import service12_icon from "@/assetss/icons/Carpentry-Icon.png";
+import service13_icon from "@/assetss/icons/CarMaintenance-Icon.png";
+import service14_icon from "@/assetss/icons/BuildingMaintenance-Icon.png";
+import service15_icon from "@/assetss/icons/SocietyManagement-Icon.png";
 
 const fallbackImages = [
   service1_image,
@@ -200,11 +200,12 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
 
   const filteredServices =
     trimmedSearch === ""
-      ? data.services
-      : data.services.filter((service) =>
-          service.title.toLowerCase().includes(trimmedSearch),
+      ? data.services.filter((service) => service.status === "active")
+      : data.services.filter(
+          (service) =>
+            service.status === "active" &&
+            service.title.toLowerCase().includes(trimmedSearch),
         );
-
   // show only first 10 unless "View More" clicked
   const visibleServices = showAll
     ? filteredServices
@@ -312,7 +313,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
             <img
               src={notFoundImg}
               alt="No services found"
-              className="w-32 h-32 object-contain opacity-80"
+              className="w-64 h-64 md:w-72 md:h-72  object-contain opacity-90"
             />
             <p className="mt-4 text-gray-500 text-sm">No services found</p>
           </div>
@@ -504,7 +505,7 @@ const Services = () => {
                 <img
                   src={notFoundImg}
                   alt="No services found"
-                  className="w-40 h-40 object-contain opacity-80"
+                  className="w-64 h-64 md:w-72 md:h-72  object-contain opacity-80"
                 />
                 <p className="mt-4 text-gray-500 text-lg">No services found</p>
               </div>

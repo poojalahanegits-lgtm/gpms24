@@ -368,12 +368,12 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
                         <Pencil size={18} />
                       </button>
 
-                      <button
+                      {/* <button
                         onClick={() => handleDelete(category)}
                         className="text-red-500 hover:text-red-700"
                       >
                         <Trash2 size={18} />
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))

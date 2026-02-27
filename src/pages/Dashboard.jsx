@@ -285,12 +285,13 @@ const Dashboard = () => {
                   </th>
                   <th className="p-4 bg-black sticky top-0 z-30">Image</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Icon</th>
+
+                  <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
+                  <th className="p-4 bg-black sticky top-0 z-30">Status</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Categories</th>
                   <th className="p-4 bg-black sticky top-0 z-30">
                     Sub Services
                   </th>
-                  <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
-                  <th className="p-4 bg-black sticky top-0 z-30">Status</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Worklogs</th>
                 </tr>
               </thead>
@@ -326,28 +327,6 @@ const Dashboard = () => {
                         alt="icon"
                         onError={(e) => (e.target.src = "/no-image.png")}
                       />
-                    </td>
-                    <td className="p-4">
-                      <button
-                        onClick={() => {
-                          setSelectedParent(service);
-                          setViewMode("categories");
-                        }}
-                        className="px-3 py-1 bg-black text-white rounded-lg"
-                      >
-                        Manage Categories
-                      </button>
-                    </td>
-                    <td className="p-4">
-                      <button
-                        onClick={() => {
-                          setSelectedParent(service);
-                          setViewMode("sub");
-                        }}
-                        className="px-3 py-1 bg-black text-white rounded-lg hover:bg-black transition text-sm"
-                      >
-                        Manage Sub services
-                      </button>
                     </td>
 
                     <td className="p-4">
@@ -419,6 +398,28 @@ const Dashboard = () => {
                           />
                         </button>
                       </div>
+                    </td>
+                    <td className="p-4">
+                      <button
+                        onClick={() => {
+                          setSelectedParent(service);
+                          setViewMode("categories");
+                        }}
+                        className="px-3 py-1 border-2 rounded-lg hover:gray-20  0"
+                      >
+                        Manage Categories
+                      </button>
+                    </td>
+                    <td className="p-4">
+                      <button
+                        onClick={() => {
+                          setSelectedParent(service);
+                          setViewMode("sub");
+                        }}
+                        className="px-3 py-1 border-2 rounded-lg hover:bg-gray-200 transition text-sm"
+                      >
+                        Manage Sub services
+                      </button>
                     </td>
                     {/* worklob */}
                     <td className="p-4">

@@ -7,6 +7,7 @@ import {
   useCreateSubService,
   useUpdateSubService,
   useDeleteSubService,
+  useUpdateSubServiceStatus,
 } from "../components/services/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,6 +27,10 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [iconPreview, setIconPreview] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [subServiceToToggle, setSubServiceToToggle] = useState(null);
+  const [updatingStatusId, setUpdatingStatusId] = useState(null);
+  const updateSubServiceStatus = useUpdateSubServiceStatus();
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -100,6 +105,61 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
   //     setIsSubmitting(false);
   //   }
   // };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const form = new FormData();
+  //   form.append("main_service_id", mainServiceId);
+  //   form.append("main_service_title", mainServiceTitle);
+  //   form.append("title", formData.title);
+  //   form.append("price", formData.price);
+  //   form.append("category_id", selectedCategory?.category_id || "");
+
+  //   if (formData.icon) {
+  //     form.append("icon", formData.icon);
+  //   }
+
+  //   try {
+  //     if (editingId) {
+  //       form.append("id", editingId);
+  //       await updateSubService.mutateAsync(form);
+  //       toast.success("Sub service updated successfully");
+  //     } else {
+  //       await createSubService.mutateAsync(form);
+  //       toast.success("Sub service created successfully");
+  //     }
+
+  //     setFormData({ title: "", price: "", icon: null });
+  //     setIconPreview(null);
+  //     setSelectedCategory(null);
+  //     setEditingId(null);
+  //     setIsModalOpen(false);
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //   }
+  // };
+  const confirmStatusToggle = async () => {
+    if (!subServiceToToggle) return;
+
+    try {
+      setUpdatingStatusId(subServiceToToggle.sub_service_id);
+
+      await updateSubServiceStatus.mutateAsync({
+        id: subServiceToToggle.sub_service_id,
+        status: subServiceToToggle.status === "active" ? "inactive" : "active",
+        mainServiceId, // IMPORTANT for refetch
+      });
+
+      toast.success("Status updated successfully");
+
+      setIsStatusModalOpen(false);
+      setSubServiceToToggle(null);
+    } catch (error) {
+      toast.error("Status update failed");
+    } finally {
+      setUpdatingStatusId(null);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -124,11 +184,13 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
         toast.success("Sub service created successfully");
       }
 
+      // reset form only
       setFormData({ title: "", price: "", icon: null });
       setIconPreview(null);
-      setSelectedCategory(null);
       setEditingId(null);
       setIsModalOpen(false);
+
+      // ❌ DO NOT reset selectedCategory here
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -266,13 +328,22 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
         <div className="max-h-[400px] overflow-y-auto overflow-x-auto rounded-xl">
           {/* CATEGORY TABS */}
 
-          <table className="w-full text-left min-w-[600px]">
+          <table className="w-full text-left ">
             <thead className="bg-black text-white text-xl">
               <tr>
-                <th className="p-4 top-0 left-0 z-50 bg-black sticky">Title</th>
-                <th className="p-4 top-0 left-0 z-50 bg-black sticky">Icon</th>
-                <th className="p-4 top-0 left-0 z-50 bg-black sticky">Price</th>
-                <th className="p-4 top-0 left-0 z-50 bg-black sticky">
+                <th className="p-4 w-1/5 top-0 left-0 z-50 bg-black sticky">
+                  Title
+                </th>
+                <th className="p-4 top-0 w-1/5 left-0 z-50 bg-black sticky">
+                  Icon
+                </th>
+                <th className="p-4 top-0 w-1/5 left-0 z-50 bg-black sticky">
+                  Price
+                </th>
+                <th className="p-4 top-0 w-1/5 left-0 sticky z-50 bg-black ">
+                  Status
+                </th>
+                <th className="p-4 top-0 w-1/5 left-0 z-50 bg-black sticky">
                   Actions
                 </th>
               </tr>
@@ -293,6 +364,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                     </td>
                     <td className="p-4 flex gap-3">
                       <div className="h-6 w-6 bg-gray-300 rounded animate-pulse"></div>
+
                       <div className="h-6 w-6 bg-gray-300 rounded animate-pulse"></div>
                     </td>
                   </tr>
@@ -327,7 +399,37 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
 
                     {/* Price */}
                     <td className="p-4">₹{service.price} onwards</td>
-
+                    {/* Status */}
+                    <td className="p-4 ">
+                      <button
+                        disabled={updatingStatusId === service.sub_service_id}
+                        onClick={() => {
+                          setSubServiceToToggle(service);
+                          setIsStatusModalOpen(true);
+                        }}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
+                          service.status === "active"
+                            ? "bg-green-500"
+                            : "bg-red-500"
+                        } ${
+                          updatingStatusId === service.sub_service_id
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
+                        {updatingStatusId === service.sub_service_id ? (
+                          <span className="bw-loader-small"></span>
+                        ) : (
+                          <span
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+                              service.status === "active"
+                                ? "translate-x-6"
+                                : "translate-x-1"
+                            }`}
+                          />
+                        )}
+                      </button>
+                    </td>
                     {/* Actions */}
                     <td className="p-4 flex gap-3">
                       <button
@@ -336,7 +438,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                       >
                         <Pencil size={18} />
                       </button>
-
+                      {/* 
                       <button
                         onClick={() => {
                           setDeleteId(service.sub_service_id);
@@ -345,7 +447,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                         className="text-red-500"
                       >
                         <Trash2 size={18} />
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))
@@ -494,6 +596,58 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                 className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
               >
                 {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* STATUS CONFIRMATION MODAL */}
+      {isStatusModalOpen && subServiceToToggle && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-2xl w-[400px] shadow-2xl">
+            <h2 className="text-xl font-semibold mb-2">
+              {subServiceToToggle.status === "active"
+                ? "Deactivate Sub Service"
+                : "Activate Sub Service"}
+            </h2>
+
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to{" "}
+              <span className="font-semibold">
+                {subServiceToToggle.status === "active"
+                  ? "deactivate"
+                  : "activate"}
+              </span>{" "}
+              this sub service?
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => {
+                  setIsStatusModalOpen(false);
+                  setSubServiceToToggle(null);
+                }}
+                className="px-4 py-2 border rounded-lg hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={confirmStatusToggle}
+                disabled={
+                  updatingStatusId === subServiceToToggle.sub_service_id
+                }
+                className={`px-4 py-2 text-white rounded-lg transition ${
+                  subServiceToToggle.status === "active"
+                    ? "bg-red-600 hover:bg-red-700"
+                    : "bg-green-600 hover:bg-green-700"
+                }`}
+              >
+                {updatingStatusId === subServiceToToggle.sub_service_id
+                  ? "Updating..."
+                  : subServiceToToggle.status === "active"
+                    ? "Deactivate"
+                    : "Activate"}
               </button>
             </div>
           </div>
