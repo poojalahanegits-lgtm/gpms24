@@ -13,6 +13,8 @@ import Login from "./components/Login.jsx"; // 👈 create this
 import ScrollToTop from "./components/ScrollToTop";
 import Dashboard from "./admin/Dashboard";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
   // or check from context if you have AuthContext
@@ -25,8 +27,21 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/dashboard");
+
+  useEffect(() => {
+    const hasHash = window.location.hash;
+
+    if (
+      (location.pathname !== "/" &&
+        !location.pathname.startsWith("/dashboard")) ||
+      hasHash
+    ) {
+      navigate("/", { replace: true });
+    }
+  }, []);
   return (
     <>
       <Header />
