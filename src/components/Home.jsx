@@ -7,13 +7,16 @@ const features = [
 ];
 const Home = () => {
   return (
-    <div>
+    <div className="bg-[#fbfbfb]">
       {/* Feature Cards */}
-      <div className="mt-12 mb-8 sm:mt-16  lg:mb-16 grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl lg:mx-auto mx-4">
+      <div
+        className="pt-12 pb-8 sm:pt-16  lg:pb-16 grid grid-cols-1 
+        sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl lg:mx-auto mx-4"
+      >
         {features.map((feature) => (
           <div
             key={feature.title}
-            className="bg-[#fbfbfb]  shadow-md rounded-xl p-6 flex flex-col items-center text-center cursor-pointer"
+            className="  shadow-md rounded-xl p-6 flex flex-col bg-white items-center text-center cursor-pointer"
           >
             <div className="text-3xl sm:text-4xl mb-3">{feature.icon}</div>
             <h3 className="font-bold max-w-[140px] text-black lg:text-[20px] text-sm sm:text-base break-words whitespace-normal">

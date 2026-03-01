@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, MoveLeft, Trash2 } from "lucide-react";
 // import axios from "axios";
 import {
   useCategories,
@@ -236,8 +236,11 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
         </h1>
 
         <div className="flex gap-3">
-          <button onClick={onBack} className="px-4 py-2 border rounded-lg">
-            Back
+          <button
+            onClick={onBack}
+            className="px-4 flex items-center gap-2  py-2 border rounded-lg"
+          >
+            <MoveLeft className="w-5" /> Back
           </button>
 
           <button
@@ -255,8 +258,8 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
       </div>
 
       {/* TABLE */}
-      <div className="bg-white shadow rounded-xl border">
-        <div className="max-h-[480px] overflow-y-auto overflow-x-auto rounded-xl">
+      <div className="bg-white shadow  border">
+        <div className="max-h-[480px] overflow-y-auto overflow-x-auto ">
           <table className="w-full text-left min-w-[600px]">
             <thead className="bg-black text-white text-xl">
               <tr>
@@ -363,17 +366,17 @@ const ManageCategoriesPage = ({ parent, onBack }) => {
                     <td className="p-4 flex gap-3">
                       <button
                         onClick={() => handleEdit(category)}
-                        className="text-blue-500 hover:text-blue-700"
+                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
                       >
-                        <Pencil size={18} />
+                        <i className="fas fa-edit"></i>
                       </button>
 
-                      {/* <button
+                      <button
                         onClick={() => handleDelete(category)}
                         className="text-red-500 hover:text-red-700"
                       >
                         <Trash2 size={18} />
-                      </button> */}
+                      </button>
                     </td>
                   </tr>
                 ))

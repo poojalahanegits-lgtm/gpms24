@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, MoveLeft } from "lucide-react";
 // import axios from "axios";
 import {
   useAdminSubServices,
@@ -251,17 +251,68 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
   };
 
   return (
-    <div className="px-6 py-1">
+    <div className=" py-1 ">
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-3">
-        <div className="flex gap-x-4 font-bold">
-          <h1 className="text-2xl ">Sub Services</h1>
-          <h2 className="text-gray-500 text-2xl">- {mainServiceTitle}</h2>
+      <div
+        className="flex justify-between  gap-2
+        mb-6 shadow-sm lg:mb-10"
+      >
+        {/* categories */}
+        <div>
+          {(categoriesLoading || categories.length > 0) && (
+            <div className="flex gap-3  flex-wrap">
+              {categoriesLoading ? (
+                [...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-8 w-20 rounded-lg bg-gray-300 animate-pulse"
+                  />
+                ))
+              ) : (
+                <>
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    className={`flex items-center space-x-2 px-6 py-2 text-md sm:text-lg font-medium
+    rounded-md sm:rounded-t-lg border-b-2 transition-colors ${
+      !selectedCategory
+        ? "text-orange-600 border-orange-600 bg-orange-50"
+        : "text-black border-transparent hover:text-gray-900 hover:border-gray-300"
+    }`}
+                  >
+                    All
+                  </button>
+
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.category_id}
+                      onClick={() => setSelectedCategory(cat)}
+                      className={` flex items-center space-x-2 px-4 py-2 text-md sm:text-lg font-medium
+    rounded-md sm:rounded-t-lg border-b-2 transition-colors ${
+      selectedCategory?.category_id === cat.category_id
+        ? "text-orange-600 border-orange-600 bg-orange-50"
+        : "text-black border-transparent hover:text-gray-900 hover:border-gray-300"
+    }`}
+                    >
+                      {cat.category_name}
+                    </button>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+        {/* title */}
+        <div className="flex gap-x-4 ">
+          <h1 className="text-2xl font-bold">Sub Services</h1>
+          <h2 className="text-gray-500 text-xl italic">- {mainServiceTitle}</h2>
         </div>
 
         <div className="flex gap-3">
-          <button onClick={onBack} className="px-4 py-2 border rounded-lg">
-            Back
+          <button
+            onClick={onBack}
+            className="px-4 flex items-center gap-2  py-2 border rounded-lg"
+          >
+            <MoveLeft className="w-5" /> Back
           </button>
 
           <button
@@ -283,49 +334,9 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
       </div>
 
       {/* TABLE */}
-      <div>
-        {(categoriesLoading || categories.length > 0) && (
-          <div className="flex gap-3 mb-6 flex-wrap">
-            {categoriesLoading ? (
-              [...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="h-8 w-20 rounded-lg bg-gray-300 animate-pulse"
-                />
-              ))
-            ) : (
-              <>
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  className={`px-4 py-2 rounded-lg border transition ${
-                    !selectedCategory
-                      ? "bg-black text-white"
-                      : "hover:bg-gray-100"
-                  }`}
-                >
-                  All
-                </button>
 
-                {categories.map((cat) => (
-                  <button
-                    key={cat.category_id}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2 rounded-lg  transition ${
-                      selectedCategory?.category_id === cat.category_id
-                        ? "bg-gray-100  text-black  border-b-4 border-black"
-                        : "hover:bg-gray-100"
-                    }`}
-                  >
-                    {cat.category_name}
-                  </button>
-                ))}
-              </>
-            )}
-          </div>
-        )}
-      </div>
-      <div className="bg-white shadow rounded-xl border z-20 pb-2">
-        <div className="max-h-[400px] overflow-y-auto overflow-x-auto rounded-xl">
+      <div className="bg-white shadow  border z-20 pb-2">
+        <div className="max-h-[400px] overflow-y-auto overflow-x-auto ">
           {/* CATEGORY TABS */}
 
           <table className="w-full text-left ">
@@ -430,15 +441,14 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                         )}
                       </button>
                     </td>
-                    {/* Actions */}
+
                     <td className="p-4 flex gap-3">
                       <button
                         onClick={() => handleEdit(service)}
-                        className="text-blue-500"
+                        className="text-orange-500 hover:text-orange-700 transition-colors"
                       >
-                        <Pencil size={18} />
+                        <i className="fas fa-edit"></i>
                       </button>
-                      {/* 
                       <button
                         onClick={() => {
                           setDeleteId(service.sub_service_id);
@@ -447,7 +457,17 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                         className="text-red-500"
                       >
                         <Trash2 size={18} />
-                      </button> */}
+                      </button>
+                      {/* 
+                      // <button
+                      //   onClick={() => {
+                      //     setDeleteId(service.sub_service_id);
+                      //     setDeleteModalOpen(true);
+                      //   }}
+                      //   className="text-red-500"
+                      // >
+                      //   <Trash2 size={18} />
+                      // </button> */}
                     </td>
                   </tr>
                 ))

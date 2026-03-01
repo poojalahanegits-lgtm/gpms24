@@ -273,11 +273,13 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="px-8 py-1">
-      <div className="flex justify-between items-center mb-4 mt-3">
+    <div className="px-4 py-1 ">
+      <div className="flex justify-between items-center mb-4 ">
         <div className="text-2xl font-bold text-gray-900">
           {viewMode === "main" && (
-            <h1 className="text-2xl font-bold text-gray-900">Main Services</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mt-3">
+              Main Services
+            </h1>
           )}
         </div>
 
@@ -329,7 +331,7 @@ const Dashboard = () => {
         </div>
       ) : viewMode === "main" ? (
         <div className="bg-white shadow rounded-xl border z-20 pb-2">
-          <div className="max-h-[480px] overflow-y-auto overflow-x-auto rounded-xl">
+          <div className="max-h-[480px] overflow-y-auto  overflow-x-auto ">
             <table className="w-full text-left min-w-[600px] ">
               <thead className="bg-black text-white text-xl">
                 <tr>
@@ -385,9 +387,9 @@ const Dashboard = () => {
                     <td className="p-4">
                       <button
                         onClick={() => handleEdit(service)}
-                        className="text-blue-500 hover:text-blue-700 px-3 py-1"
+                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
                       >
-                        <Pencil size={18} />
+                        <i className="fas fa-edit"></i>
                       </button>
 
                       {/* <button
@@ -452,15 +454,15 @@ const Dashboard = () => {
                         </button>
                       </div>
                     </td>
-                    <td className="p-4">
+                    <td className="p-4 ">
                       <button
                         onClick={() => {
                           setSelectedParent(service);
                           setViewMode("categories");
                         }}
-                        className="px-3 py-1 border-2 rounded-lg hover:gray-20  0"
+                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
                       >
-                        Manage Categories
+                        <i className="fas fa-edit"></i>
                       </button>
                     </td>
                     <td className="p-4">
@@ -469,9 +471,9 @@ const Dashboard = () => {
                           setSelectedParent(service);
                           setViewMode("sub");
                         }}
-                        className="px-3 py-1 border-2 rounded-lg hover:bg-gray-200 transition text-sm"
+                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
                       >
-                        Manage Sub services
+                        <i className="fas fa-edit"></i>
                       </button>
                     </td>
                     {/* worklob */}

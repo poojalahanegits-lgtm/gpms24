@@ -23,7 +23,6 @@ const ProtectedRoute = ({ children }) => {
   if (!isAuthenticated) {
     return <Navigate to="/my-account" replace />;
   }
-
   return children;
 };
 
@@ -35,17 +34,18 @@ const App = () => {
   // console.log("Logged in user:", username);
   const isAdminPage = location.pathname.startsWith("/dashboard");
 
-  useEffect(() => {
-    const hasHash = window.location.hash;
+  // useEffect(() => {
+  //   const hasHash = window.location.hash;
 
-    if (
-      (location.pathname !== "/" &&
-        !location.pathname.startsWith("/dashboard")) ||
-      hasHash
-    ) {
-      navigate("/", { replace: true });
-    }
-  }, []);
+  //   if (
+  //     location.pathname !== "/" ||
+  //     (location.pathname !== "/my-account" &&
+  //       !location.pathname.startsWith("/dashboard")) ||
+  //     hasHash
+  //   ) {
+  //     navigate("/", { replace: true });
+  //   }
+  // }, []);
   return (
     <>
       <Header />

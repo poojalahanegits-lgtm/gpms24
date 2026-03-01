@@ -9,6 +9,22 @@ body {
   @apply font-roboto;
 }
 
+.perspective {
+  perspective: 1200px;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-inner {
+  transform-style: preserve-3d;
+}
 /* body {
   @apply font-nunito;
 } */
