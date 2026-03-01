@@ -240,7 +240,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
     <>
       <div
         id={id}
-        className="space-y-6   lg:scroll-mt-28 scroll-mt-16 px-4  sm:px-6 lg:px-12"
+        className="space-y-6   lg:scroll-mt-28 scroll-mt-24 px-4  sm:px-6 lg:px-12"
       >
         {/* Header */}
         <div className="flex flex-col  sm:flex-row sm:items-center justify-between">
@@ -384,7 +384,7 @@ const Services = () => {
   const { data: allSubServices = {} } = useAllSubServices();
 
   return (
-    <section id="services" className="  scroll-mt-16 ">
+    <section id="services" className="  lg:scroll-mt-16 scroll-mt-20">
       {open && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
           <div className="relative w-[90%] max-w-4xl rounded-xl bg-white overflow-hidden">

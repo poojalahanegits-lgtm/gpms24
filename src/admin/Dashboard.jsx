@@ -11,7 +11,57 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ManageSubServicesPage from "./ManageSubServicesPage";
 import ManageCategoriesPage from "./ManageCategoriesPage";
+import { useApp } from "../context/AppProvider.jsx";
+
+const WorkLogTooltip = ({ value }) => {
+  const [show, setShow] = useState(false);
+
+  if (!value) return null;
+
+  // Split logs correctly (based on your format)
+  const blocks = value.split(/(?=\[\d{1,2} .*?\])/g);
+
+  return (
+    <div
+      className="relative w-full"
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+    >
+      {/* Truncated cell */}
+      <div className="truncate overflow-hidden text-ellipsis cursor-pointer text-sm max-w-[180px]">
+        {value}
+      </div>
+
+      {/* Tooltip */}
+      {show && (
+        <div
+          className="absolute top-0 right-full mr-2 z-[200] w-[350px] 
+                        bg-white border border-gray-300 rounded-lg shadow-xl 
+                        p-3 text-xs break-words max-h-[250px] overflow-y-auto"
+        >
+          <div className="space-y-3 whitespace-pre-wrap">
+            {blocks.map((block, index) => {
+              const match = block.match(/^\[(.*?)\]/);
+              const header = match ? `[${match[1]}]` : "";
+              const message = block.replace(/^\[(.*?)\]\s*/, "");
+
+              return (
+                <div key={index}>
+                  <div className="text-gray-600">{header}</div>
+                  <div className="font-semibold mt-1">{message}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 const Dashboard = () => {
+  const { username } = useApp();
+  const name = username ? username : "Unknown";
+  // console.log(11111111, name);
   const { data: services = [], isLoading } = useMainServices();
   const statusMutation = useUpdateMainServiceStatus();
   const createMutation = useCreateMainService();
@@ -37,7 +87,8 @@ const Dashboard = () => {
   const [removeImage, setRemoveImage] = useState(false);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [serviceToToggle, setServiceToToggle] = useState(null);
-
+  // const { decryptedUser } = useApp();
+  // const LOGGED_IN_USER = `${decryptedUser?.employee?.Name}` || "Unknow User";
   const [formData, setFormData] = useState({
     title: "",
     desc: "",
@@ -77,6 +128,7 @@ const Dashboard = () => {
       {
         Id: id,
         Status: serviceToToggle.status === "active" ? "inactive" : "active",
+        updatedBy: name,
       },
       {
         onSuccess: () => {
@@ -131,6 +183,7 @@ const Dashboard = () => {
 
     formDataToSend.append("Title", formData.title);
     formDataToSend.append("Description", formData.desc);
+    formDataToSend.append("updatedBy", name);
 
     if (selectedFile) {
       formDataToSend.append("image", selectedFile);
@@ -423,6 +476,9 @@ const Dashboard = () => {
                     </td>
                     {/* worklob */}
                     <td className="p-4">
+                      <WorkLogTooltip value={service.workLogs} />
+                    </td>
+                    {/* <td className="p-4">
                       {service.workLogs ? (
                         <div className="max-h-32 h-16 overflow-y-auto bg-gray-50 border rounded-lg p-3 text-sm whitespace-pre-line shadow-inner">
                           {service.workLogs}
@@ -430,7 +486,7 @@ const Dashboard = () => {
                       ) : (
                         <span className="text-gray-400 text-sm italic"></span>
                       )}
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
@@ -824,7 +880,11 @@ export default Dashboard;
 // import "react-toastify/dist/ReactToastify.css";
 // import ManageSubServicesPage from "./ManageSubServicesPage";
 // import ManageCategoriesPage from "./ManageCategoriesPage";
+// import { useApp } from "../context/AppProvider.jsx";
 // const Dashboard = () => {
+//   const { username } = useApp();
+//   const name = username ? username : "Unknown";
+//   console.log(11111111, name);
 //   const { data: services = [], isLoading } = useMainServices();
 //   const statusMutation = useUpdateMainServiceStatus();
 //   const createMutation = useCreateMainService();
@@ -834,34 +894,88 @@ export default Dashboard;
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 //   const [editingService, setEditingService] = useState(null);
 //   const [selectedFile, setSelectedFile] = useState(null);
+//   const [updatingId, setUpdatingId] = useState(null);
 
 //   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 //   const [serviceToDelete, setServiceToDelete] = useState(null);
 //   const [previewImage, setPreviewImage] = useState(null);
-
-//   const [subServices, setSubServices] = useState([]);
-//   const [newSubService, setNewSubService] = useState("");
-//   const [editingSubIndex, setEditingSubIndex] = useState(null);
+//   const [selectedIconFile, setSelectedIconFile] = useState(null);
+//   const [previewIcon, setPreviewIcon] = useState(null);
+//   const [removeIcon, setRemoveIcon] = useState(false);
 //   const [selectedParent, setSelectedParent] = useState(null);
 //   const [viewMode, setViewMode] = useState("main");
 
 //   const [categories, setCategories] = useState([]);
 
 //   const [removeImage, setRemoveImage] = useState(false);
-
+//   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+//   const [serviceToToggle, setServiceToToggle] = useState(null);
+//   // const { decryptedUser } = useApp();
+//   // const LOGGED_IN_USER = `${decryptedUser?.employee?.Name}` || "Unknow User";
 //   const [formData, setFormData] = useState({
 //     title: "",
 //     desc: "",
 //     img: "",
 //     sectionId: "",
 //   });
+//   //! confirmation box for upating status
+//   // const confirmStatusToggle = () => {
+//   //   if (!serviceToToggle) return;
+//   //   setUpdatingId(id);
+//   //   statusMutation.mutate(
+//   //     {
+//   //       Id: serviceToToggle.id,
+//   //       Status: serviceToToggle.status === "active" ? "inactive" : "active",
+//   //     },
+//   //     {
+//   //       onSuccess: () => {
+//   //         toast.success("Status updated successfully");
+//   //         setIsStatusModalOpen(false);
+//   //         setServiceToToggle(null);
+//   //       },
+//   //       onError: () => {
+//   //         toast.error("Failed to update status");
+//   //       },
+//   //     },
+//   //   );
+//   // };
 
+//   const confirmStatusToggle = () => {
+//     if (!serviceToToggle) return;
+
+//     const id = serviceToToggle.id || serviceToToggle.Id;
+
+//     setUpdatingId(id); // 👈 mark this row as updating
+
+//     statusMutation.mutate(
+//       {
+//         Id: id,
+//         Status: serviceToToggle.status === "active" ? "inactive" : "active",
+//       },
+//       {
+//         onSuccess: () => {
+//           toast.success("Status updated successfully");
+//         },
+//         onError: () => {
+//           toast.error("Failed to update status");
+//         },
+//         onSettled: () => {
+//           setUpdatingId(null); // 👈 re-enable switch
+//           setIsStatusModalOpen(false);
+//           setServiceToToggle(null);
+//         },
+//       },
+//     );
+//   };
 //   const resetAll = () => {
 //     setIsModalOpen(false);
 //     setEditingService(null);
 //     setRemoveImage(false);
 //     setSelectedFile(null);
 //     setPreviewImage(null);
+//     setSelectedIconFile(null);
+//     setPreviewIcon(null);
+//     setRemoveIcon(false);
 //     setFormData({
 //       title: "",
 //       desc: "",
@@ -891,14 +1005,18 @@ export default Dashboard;
 
 //     formDataToSend.append("Title", formData.title);
 //     formDataToSend.append("Description", formData.desc);
-//     formDataToSend.append("Section ID", formData.sectionId);
 
 //     if (selectedFile) {
-//       formDataToSend.append("files", selectedFile);
+//       formDataToSend.append("image", selectedFile);
 //     }
-
+//     if (selectedIconFile) {
+//       formDataToSend.append("icon", selectedIconFile);
+//     }
 //     if (removeImage) {
 //       formDataToSend.append("removeImage", "true");
+//     }
+//     if (removeIcon) {
+//       formDataToSend.append("removeIcon", "true");
 //     }
 //     // Optional Category
 //     if (categories.length > 0) {
@@ -939,7 +1057,7 @@ export default Dashboard;
 //       img: service.Image || service.img,
 //       sectionId: service["Section ID"] || service.sectionId,
 //     });
-
+//     setPreviewIcon(service.Icon || service.icon);
 //     setPreviewImage(service.Image || service.img);
 //     setIsModalOpen(true);
 //   };
@@ -1040,17 +1158,19 @@ export default Dashboard;
 //                     Title
 //                   </th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">Image</th>
+//                   <th className="p-4 bg-black sticky top-0 z-30">Icon</th>
+
+//                   <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
+//                   <th className="p-4 bg-black sticky top-0 z-30">Status</th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">Categories</th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">
 //                     Sub Services
 //                   </th>
-//                   <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
-//                   <th className="p-4 bg-black sticky top-0 z-30">Status</th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">Worklogs</th>
 //                 </tr>
 //               </thead>
 
-//               <tbody>
+//               <tbody className="h-16">
 //                 {services.map((service, index) => (
 //                   <tr
 //                     key={service.Id || service.id || index}
@@ -1072,32 +1192,21 @@ export default Dashboard;
 //                       />
 //                     </td>
 //                     <td className="p-4">
-//                       <button
-//                         onClick={() => {
-//                           setSelectedParent(service);
-//                           setViewMode("categories");
-//                         }}
-//                         className="px-3 py-1 bg-black text-white rounded-lg"
-//                       >
-//                         Manage Categories
-//                       </button>
-//                     </td>
-//                     <td className="p-4">
-//                       <button
-//                         onClick={() => {
-//                           setSelectedParent(service);
-//                           setViewMode("sub");
-//                         }}
-//                         className="px-3 py-1 bg-black text-white rounded-lg hover:bg-black transition text-sm"
-//                       >
-//                         Manage Sub services
-//                       </button>
+//                       <img
+//                         onClick={() =>
+//                           setZoomImage(service.Icon || service.icon)
+//                         }
+//                         className="h-8 w-8 object-contain rounded cursor-pointer hover:scale-110 transition"
+//                         src={service.Icon || service.icon}
+//                         alt="icon"
+//                         onError={(e) => (e.target.src = "/no-image.png")}
+//                       />
 //                     </td>
 
-//                     <td className="p-4 flex gap-3">
+//                     <td className="p-4">
 //                       <button
 //                         onClick={() => handleEdit(service)}
-//                         className="text-blue-500 hover:text-blue-700"
+//                         className="text-blue-500 hover:text-blue-700 px-3 py-1"
 //                       >
 //                         <Pencil size={18} />
 //                       </button>
@@ -1122,13 +1231,36 @@ export default Dashboard;
 
 //                     <td className="p-4">
 //                       <div className="flex items-center gap-3">
-//                         {/* Toggle */}
-//                         <button
-//                           onClick={() => handleStatusToggle(service)}
+//                         {/* <button
+//                           disabled={updatingId === (service.id || service.Id)}
+//                           onClick={() => {
+//                             setServiceToToggle(service);
+//                             setIsStatusModalOpen(true);
+//                           }}
 //                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
 //                             service.status === "active"
 //                               ? "bg-green-500"
 //                               : "bg-red-500"
+//                           } ${
+//                             updatingId === (service.id || service.Id)
+//                               ? "opacity-50 cursor-not-allowed"
+//                               : ""
+//                           }`}
+//                         ></button> */}
+//                         <button
+//                           disabled={updatingId === (service.id || service.Id)}
+//                           onClick={() => {
+//                             setServiceToToggle(service);
+//                             setIsStatusModalOpen(true);
+//                           }}
+//                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
+//                             service.status === "active"
+//                               ? "bg-green-500"
+//                               : "bg-red-500"
+//                           }${
+//                             updatingId === (service.id || service.Id)
+//                               ? "opacity-50 cursor-not-allowed"
+//                               : ""
 //                           }`}
 //                         >
 //                           <span
@@ -1140,6 +1272,38 @@ export default Dashboard;
 //                           />
 //                         </button>
 //                       </div>
+//                     </td>
+//                     <td className="p-4">
+//                       <button
+//                         onClick={() => {
+//                           setSelectedParent(service);
+//                           setViewMode("categories");
+//                         }}
+//                         className="px-3 py-1 border-2 rounded-lg hover:gray-20  0"
+//                       >
+//                         Manage Categories
+//                       </button>
+//                     </td>
+//                     <td className="p-4">
+//                       <button
+//                         onClick={() => {
+//                           setSelectedParent(service);
+//                           setViewMode("sub");
+//                         }}
+//                         className="px-3 py-1 border-2 rounded-lg hover:bg-gray-200 transition text-sm"
+//                       >
+//                         Manage Sub services
+//                       </button>
+//                     </td>
+//                     {/* worklob */}
+//                     <td className="p-4">
+//                       {service.workLogs ? (
+//                         <div className="max-h-32 h-16 overflow-y-auto bg-gray-50 border rounded-lg p-3 text-sm whitespace-pre-line shadow-inner">
+//                           {service.workLogs}
+//                         </div>
+//                       ) : (
+//                         <span className="text-gray-400 text-sm italic"></span>
+//                       )}
 //                     </td>
 //                   </tr>
 //                 ))}
@@ -1168,6 +1332,57 @@ export default Dashboard;
 //         </>
 //       )}
 
+//       {/* STATUS UPATION CONFIRMATION MODAL */}
+//       {isStatusModalOpen && (
+//         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+//           <div className="bg-white rounded-2xl shadow-2xl w-[420px] p-6 animate-fadeIn">
+//             <h2 className="text-xl font-semibold text-gray-900">
+//               Change Service Status
+//             </h2>
+
+//             <p className="text-gray-600 mt-3">
+//               Are you sure you want to{" "}
+//               <span className="font-semibold text-black">
+//                 {serviceToToggle?.status === "active"
+//                   ? "Deactivate"
+//                   : "Activate"}
+//               </span>{" "}
+//               <span className="font-semibold">{serviceToToggle?.title}</span>?
+//             </p>
+
+//             <div className="flex justify-end gap-3 mt-6">
+//               <button
+//                 onClick={() => {
+//                   setIsStatusModalOpen(false);
+//                   setServiceToToggle(null);
+//                 }}
+//                 className="px-4 py-2 border rounded-lg hover:bg-gray-100 transition"
+//               >
+//                 Cancel
+//               </button>
+
+//               <button
+//                 onClick={confirmStatusToggle}
+//                 disabled={statusMutation.isPending}
+//                 className={`px-4 py-2 rounded-lg text-white flex items-center gap-2 ${
+//                   statusMutation.isPending
+//                     ? "bg-gray-400 cursor-not-allowed"
+//                     : "bg-black hover:bg-gray-800"
+//                 }`}
+//               >
+//                 {statusMutation.isPending ? (
+//                   <>
+//                     <span className="bw-loader"></span>
+//                     Updating...
+//                   </>
+//                 ) : (
+//                   "Confirm"
+//                 )}
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
 //       {/* ================= Modal ================= */}
 //       {isModalOpen && (
 //         <div className="fixed inset-0 bg-black/40 z-[500] flex justify-center items-center">
@@ -1204,24 +1419,114 @@ export default Dashboard;
 //                 className="w-full border rounded-lg px-3 py-2"
 //                 required
 //               />
-//               {/* upload img */}
-//               <div>
-//                 <label className="block text-sm font-medium text-gray-600 mb-1">
-//                   Upload Image
-//                 </label>
-//                 <input
-//                   type="file"
-//                   accept="image/*"
-//                   onChange={(e) => {
-//                     const file = e.target.files[0];
-//                     if (file) {
-//                       setSelectedFile(file);
-//                       setPreviewImage(URL.createObjectURL(file)); // ✅ show new preview
-//                     }
-//                   }}
-//                   className="w-full border rounded-lg px-3 py-2"
-//                 />
+
+//               <div className="flex gap-4 justify-between">
+//                 <div className="">
+//                   <label className="block text-sm font-medium text-gray-600 mb-1">
+//                     Upload Image
+//                   </label>
+//                   <input
+//                     type="file"
+//                     accept="image/*"
+//                     onChange={(e) => {
+//                       const file = e.target.files[0];
+//                       if (file) {
+//                         setSelectedFile(file);
+//                         setPreviewImage(URL.createObjectURL(file)); // ✅ show new preview
+//                       }
+//                     }}
+//                     className="w-full border rounded-lg px-3 py-2"
+//                   />
+//                 </div>
+
+//                 <div className="">
+//                   <label className="block text-sm font-medium text-gray-600 mb-1">
+//                     Upload Icon
+//                   </label>
+
+//                   <input
+//                     type="file"
+//                     accept="image/*"
+//                     onChange={(e) => {
+//                       const file = e.target.files[0];
+//                       if (file) {
+//                         setSelectedIconFile(file);
+//                         setPreviewIcon(URL.createObjectURL(file));
+//                       }
+//                     }}
+//                     className="w-full border rounded-lg px-3 py-2"
+//                   />
+//                 </div>
 //               </div>
+//               {(previewIcon || previewImage) && (
+//                 <div className="mt-4 flex justify-between gap-4 mx-4 items-start">
+//                   {/* IMAGE PREVIEW */}
+//                   {previewImage && (
+//                     <div className="relative inline-block  mx-4">
+//                       <img
+//                         src={previewImage}
+//                         alt="Preview"
+//                         className="h-20 w-20 object-cover rounded-lg border"
+//                       />
+
+//                       <button
+//                         type="button"
+//                         onClick={() => {
+//                           setPreviewImage(null);
+//                           setSelectedFile(null);
+//                           setRemoveImage(true);
+//                         }}
+//                         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+//                       >
+//                         ✕
+//                       </button>
+//                     </div>
+//                   )}
+//                   {/* ICON PREVIEW */}
+//                   {previewIcon && (
+//                     <div className="relative inline-block  mx-4">
+//                       <img
+//                         src={previewIcon}
+//                         alt="Icon Preview"
+//                         className="h-16 w-16 object-contain rounded-lg border"
+//                       />
+
+//                       <button
+//                         type="button"
+//                         onClick={() => {
+//                           setPreviewIcon(null);
+//                           setSelectedIconFile(null);
+//                           setRemoveIcon(true);
+//                         }}
+//                         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+//                       >
+//                         ✕
+//                       </button>
+//                     </div>
+//                   )}
+//                 </div>
+//               )}
+//               {/* {previewIcon && (
+//                 <div className="mt-3  ">
+//                   <img
+//                     src={previewIcon}
+//                     alt="Icon Preview"
+//                     className="h-16 w-16 object-contain rounded-lg border"
+//                   />
+
+//                   <button
+//                     type="button"
+//                     onClick={() => {
+//                       setPreviewIcon(null);
+//                       setSelectedIconFile(null);
+//                       setRemoveIcon(true);
+//                     }}
+//                     className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+//                   >
+//                     ✕
+//                   </button>
+//                 </div>
+//               )}
 //               {previewImage && (
 //                 <div className="mt-3 relative inline-block">
 //                   <img
@@ -1230,7 +1535,6 @@ export default Dashboard;
 //                     className="h-20 w-20 object-cover rounded-lg border"
 //                   />
 
-//                   {/* ❌ Remove Button */}
 //                   <button
 //                     type="button"
 //                     onClick={() => {
@@ -1243,7 +1547,7 @@ export default Dashboard;
 //                     ✕
 //                   </button>
 //                 </div>
-//               )}
+//               )} */}
 
 //               <div className="flex justify-end gap-3">
 //                 <button
@@ -1284,6 +1588,14 @@ export default Dashboard;
 //     height: 16px;
 //     animation: spin 0.6s linear infinite;
 //   }
+//     .bw-loader-small {
+//   border: 2px solid #fff;
+//   border-top: 2px solid transparent;
+//   border-radius: 50%;
+//   width: 14px;
+//   height: 14px;
+//   animation: spin 0.6s linear infinite;
+// }
 
 //   @keyframes spin {
 //     0% { transform: rotate(0deg); }

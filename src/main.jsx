@@ -5,6 +5,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { AppProvider } from "./context/AppProvider";
 import { ToastContainer } from "react-toastify";
 const queryClient = new QueryClient();
 
@@ -13,8 +14,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <ToastContainer className="mt-20" />
-          <App />
+          <AppProvider>
+            <ToastContainer className="mt-20" />
+            <App />
+          </AppProvider>
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>

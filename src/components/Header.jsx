@@ -15,6 +15,11 @@ const navLinks = [
 ];
 
 const Header = () => {
+  const handleLogout = () => {
+    logout();
+    localStorage.clear();
+    window.location.reload();
+  };
   useEffect(() => {
     AOS.init({
       duration: 1000,

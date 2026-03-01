@@ -14,7 +14,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import Dashboard from "./admin/Dashboard";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "./context/AuthContext";
+import { useApp } from "./context/AppProvider.jsx";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
   // or check from context if you have AuthContext
@@ -29,6 +30,9 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
+  const { username } = useApp();
+  // console.log("Logged in user:", username);
   const isAdminPage = location.pathname.startsWith("/dashboard");
 
   useEffect(() => {

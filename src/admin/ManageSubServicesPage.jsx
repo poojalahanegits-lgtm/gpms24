@@ -553,20 +553,39 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                 >
                   Cancel
                 </button>
-
                 <button
+                  type="submit"
+                  disabled={
+                    createSubService.isPending || updateSubService.isPending
+                  }
+                  className="px-4 py-2 bg-black text-white rounded-lg flex items-center justify-center gap-2 min-w-[90px]"
+                >
+                  {createSubService.isPending || updateSubService.isPending ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Saving
+                    </>
+                  ) : (
+                    "Save"
+                  )}
+                </button>
+                {/* <button
                   type="submit"
                   disabled={isSubmitting}
                   className="px-4 py-2 bg-black text-white rounded-lg"
                 >
                   {isSubmitting ? "Saving..." : "Save"}
-                </button>
+                </button> */}
               </div>
             </form>
           </div>
         </div>
       )}
-
+      {(createSubService.isPending || updateSubService.isPending) && (
+        <div className="absolute inset-0 bg-white/70 flex items-center justify-center rounded-xl">
+          <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
       {/* delete confirmation modal */}
       {/* DELETE CONFIRMATION MODAL */}
       {deleteModalOpen && (
