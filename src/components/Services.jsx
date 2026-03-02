@@ -175,10 +175,10 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
       // shadow-sm transition-all duration-300
       // hover:-translate-y-1 hover:shadow-md
       // bg-white"
-      className={`group relative rounded-2xl border border-gray-300
+      className={`group relative rounded-2xl shadow-lg hover:shadow-xl transition duration-300
 pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4 
-shadow-sm transition-all duration-300
-hover:-translate-y-1 hover:shadow-md
+
+hover:-translate-y-1 
 ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
     >
       {/* Details */}
@@ -274,8 +274,26 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
               />
               <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
             </div> */}
-            <div className="cursor-pointer text-[18px]">₹</div>
-            <div className="relative w-full sm:w-[280px]">
+            <div
+              onClick={() => {
+                if (data.rate_pdf) {
+                  onViewDetails({
+                    title: data.mainTitle + " - Rate Card",
+                    pdfUrl: data.rate_pdf,
+                    page: 1,
+                  });
+                }
+              }}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition
+    ${
+      data.rate_pdf
+        ? "bg-black text-white cursor-pointer hover:scale-105"
+        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+    }`}
+            >
+              ₹
+            </div>
+            <div className="relative w-full sm:w-[200px]">
               <input
                 type="text"
                 placeholder="Search services..."
@@ -388,7 +406,7 @@ const Services = () => {
   const { data: services = [], isLoading: loading } = useMainServices();
   const { data: allSubServices = {} } = useAllSubServices();
   const [flipped, setFlipped] = useState(null);
-
+  //console.log(11111111, allSubServices);
   return (
     <section id="services" className="  lg:scroll-mt-16 scroll-mt-20">
       {open && (
@@ -665,6 +683,7 @@ const Services = () => {
                           ? `${section.mainTitle} - ${section.categoryTitle}`
                           : section.mainTitle,
                         services: section.services,
+                        rate_pdf: section.main_service_rate_pdf,
                       }}
                       sectionBg={isFirst ? "gray" : "white"}
                       onViewDetails={handleViewDetails}

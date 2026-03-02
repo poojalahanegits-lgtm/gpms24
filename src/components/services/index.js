@@ -41,6 +41,7 @@ const fetchMainServices = async () => {
     workLogs: item["WorkLogs"] || "",
     status: item["Status"],
     icon: item["Icon"],
+    Pdf: item["Pdf"],
   }));
 };
 
@@ -296,6 +297,7 @@ export const useAllSubServices = () =>
           grouped[mainId][categoryId] = {
             mainTitle: item.main_service_title,
             categoryTitle: item.category_name,
+            main_service_rate_pdf: item.main_service_rate_pdf,
             services: [],
           };
 

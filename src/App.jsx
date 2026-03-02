@@ -63,7 +63,7 @@ const App = () => {
               {/* <About /> */}
               <Contact />
               <Locations />
-              <ReadyToGetStarted />
+              {/* <ReadyToGetStarted /> */}
             </>
           }
         />

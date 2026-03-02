@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { pdfjs } from "react-pdf";
+import { Document, Page } from "react-pdf";
 import {
   useMainServices,
   useCreateMainService,
@@ -12,7 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 import ManageSubServicesPage from "./ManageSubServicesPage";
 import ManageCategoriesPage from "./ManageCategoriesPage";
 import { useApp } from "../context/AppProvider.jsx";
-
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url,
+).toString();
 const WorkLogTooltip = ({ value }) => {
   const [show, setShow] = useState(false);
 
@@ -72,7 +77,9 @@ const Dashboard = () => {
   const [editingService, setEditingService] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
-
+  const [selectedPdfFile, setSelectedPdfFile] = useState(null);
+  const [previewPdf, setPreviewPdf] = useState(null);
+  const [removePdf, setRemovePdf] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [serviceToDelete, setServiceToDelete] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -81,7 +88,9 @@ const Dashboard = () => {
   const [removeIcon, setRemoveIcon] = useState(false);
   const [selectedParent, setSelectedParent] = useState(null);
   const [viewMode, setViewMode] = useState("main");
-
+  const [open, setOpen] = useState(false);
+  const [activePdf, setActivePdf] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
   const [categories, setCategories] = useState([]);
 
   const [removeImage, setRemoveImage] = useState(false);
@@ -154,6 +163,9 @@ const Dashboard = () => {
     setSelectedIconFile(null);
     setPreviewIcon(null);
     setRemoveIcon(false);
+    setSelectedPdfFile(null);
+    setPreviewPdf(null);
+    setRemovePdf(false);
     setFormData({
       title: "",
       desc: "",
@@ -162,21 +174,18 @@ const Dashboard = () => {
     });
   };
 
-  const handleStatusToggle = (service) => {
-    statusMutation.mutate(
-      {
-        Id: service.id,
-        Status: service.status === "active" ? "inactive" : "active",
-      },
-      {
-        onSuccess: () => {
-          toast.success("Status updated");
-        },
-        onError: () => {
-          toast.error("Failed to update status");
-        },
-      },
-    );
+  //! pdf view
+  const getDrivePreviewUrl = (url, pageNumber) => {
+    if (!url) return null;
+
+    const match = url.match(/\/d\/([^/]+)/);
+    if (!match) return url;
+
+    const baseUrl = `https://drive.google.com/file/d/${match[1]}/preview`;
+
+    const page = Number(pageNumber);
+
+    return page > 0 ? `${baseUrl}#page=${page}` : baseUrl;
   };
   const handleFinalSubmit = () => {
     const formDataToSend = new FormData();
@@ -190,6 +199,12 @@ const Dashboard = () => {
     }
     if (selectedIconFile) {
       formDataToSend.append("icon", selectedIconFile);
+    }
+    if (selectedPdfFile) {
+      formDataToSend.append("pdf", selectedPdfFile);
+    }
+    if (removePdf) {
+      formDataToSend.append("removePdf", "true");
     }
     if (removeImage) {
       formDataToSend.append("removeImage", "true");
@@ -238,6 +253,7 @@ const Dashboard = () => {
     });
     setPreviewIcon(service.Icon || service.icon);
     setPreviewImage(service.Image || service.img);
+    setPreviewPdf(service.Pdf || service.pdf);
     setIsModalOpen(true);
   };
   const handleDelete = (service) => {
@@ -343,6 +359,7 @@ const Dashboard = () => {
 
                   <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Status</th>
+                  <th className="p-4 bg-black sticky top-0 z-30">PDF</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Categories</th>
                   <th className="p-4 bg-black sticky top-0 z-30">
                     Sub Services
@@ -454,6 +471,30 @@ const Dashboard = () => {
                         </button>
                       </div>
                     </td>
+                    {/* pdf */}
+                    <td className="p-1">
+                      {service?.Pdf && (
+                        <div
+                          onClick={() => {
+                            const previewUrl = getDrivePreviewUrl(
+                              service.Pdf,
+                              service.page,
+                            );
+
+                            setSelectedService(service);
+                            setActivePdf(previewUrl);
+                            setOpen(true);
+                          }}
+                          className="group relative rounded-2xl  hover:shadow-xl transition duration-300
+pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4 
+
+hover:-translate-y-1 "
+                          title="Open PDF"
+                        >
+                          <i className="fa-solid fa-file-pdf text-red-600 text-3xl"></i>
+                        </div>
+                      )}
+                    </td>
                     <td className="p-4 ">
                       <button
                         onClick={() => {
@@ -516,6 +557,46 @@ const Dashboard = () => {
         </>
       )}
 
+      {/* pdf view */}
+      {open && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+          <div className="relative w-[90%] max-w-4xl rounded-xl bg-white overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b px-4 py-3">
+              <h3 className="text-sm font-semibold">
+                {selectedService?.title || "Service Details"}
+              </h3>
+
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  setActivePdf(null);
+                  setSelectedService(null);
+                }}
+                className="text-gray-500 hover:text-black"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* PDF */}
+            <div className="h-[75vh]">
+              {activePdf ? (
+                <iframe
+                  src={activePdf}
+                  className="h-full w-full"
+                  title="Service PDF"
+                  allow="autoplay"
+                />
+              ) : (
+                <p className="p-4 text-center text-gray-500">
+                  No document available
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       {/* STATUS UPATION CONFIRMATION MODAL */}
       {isStatusModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
@@ -606,6 +687,7 @@ const Dashboard = () => {
 
               <div className="flex gap-4 justify-between">
                 <div className="">
+                  {/* img */}
                   <label className="block text-sm font-medium text-gray-600 mb-1">
                     Upload Image
                   </label>
@@ -622,7 +704,7 @@ const Dashboard = () => {
                     className="w-full border rounded-lg px-3 py-2"
                   />
                 </div>
-
+                {/* icon */}
                 <div className="">
                   <label className="block text-sm font-medium text-gray-600 mb-1">
                     Upload Icon
@@ -641,16 +723,147 @@ const Dashboard = () => {
                     className="w-full border rounded-lg px-3 py-2"
                   />
                 </div>
+                {/* pdf */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">
+                    Upload PDF
+                  </label>
+
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setSelectedPdfFile(file);
+                        setPreviewPdf(URL.createObjectURL(file));
+                      }
+                    }}
+                    className="w-full border rounded-lg px-3 py-2"
+                  />
+                </div>
               </div>
-              {(previewIcon || previewImage) && (
-                <div className="mt-4 flex justify-between gap-4 mx-4 items-start">
+
+              {(previewIcon || previewImage || previewPdf) && (
+                // <div className="mt-4 grid grid-cols-3 gap-4 mx-4 items-start">
+                //   {/* IMAGE PREVIEW */}
+                //   {previewImage && (
+                //     <div className="relative inline-block  mx-4">
+                //       <img
+                //         src={previewImage}
+                //         alt="Preview"
+                //         className="h-20 w-20 object-cover border"
+                //       />
+
+                //       <button
+                //         type="button"
+                //         onClick={() => {
+                //           setPreviewImage(null);
+                //           setSelectedFile(null);
+                //           setRemoveImage(true);
+                //         }}
+                //         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+                //       >
+                //         ✕
+                //       </button>
+                //     </div>
+                //   )}
+                //   {/* ICON PREVIEW */}
+                //   {previewIcon && (
+                //     <div className="relative inline-block  mx-4">
+                //       <img
+                //         src={previewIcon}
+                //         alt="Icon Preview"
+                //         className="h-20 w-20 object-contain  border"
+                //       />
+
+                //       <button
+                //         type="button"
+                //         onClick={() => {
+                //           setPreviewIcon(null);
+                //           setSelectedIconFile(null);
+                //           setRemoveIcon(true);
+                //         }}
+                //         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+                //       >
+                //         ✕
+                //       </button>
+                //     </div>
+                //   )}
+                //   {/*  Pdf Preview */}
+                //   {(previewPdf || selectedPdfFile) && (
+                //     <div className="relative inline-block mt-3">
+                //       {/* PDF Card */}
+                //       <div className="h-20 w-20 bg-gray-100 border  flex flex-col items-center justify-center text-center p-3">
+                //         {/* PDF ICON */}
+                //         <i className="fa-solid fa-file-pdf text-red-600 text-5xl"></i>
+
+                //         {/* File Name */}
+                //         <span
+                //           className="text-xs mt-3 truncate w-full"
+                //           title={
+                //             selectedPdfFile
+                //               ? selectedPdfFile.name
+                //               : previewPdf.split("/").pop()
+                //           }
+                //         >
+                //           {selectedPdfFile
+                //             ? selectedPdfFile.name
+                //             : previewPdf.split("/").pop()}
+                //         </span>
+                //       </div>
+
+                //       {/* Remove Button */}
+                //       <button
+                //         type="button"
+                //         onClick={() => {
+                //           setPreviewPdf(null);
+                //           setSelectedPdfFile(null);
+                //           setRemovePdf(true);
+                //         }}
+                //         className="absolute -top-2 -right-2 bg-white shadow-md text-red-500 rounded-md w-7 h-7 text-sm flex items-center justify-center"
+                //       >
+                //         ✕
+                //       </button>
+                //     </div>
+                //   )}
+                //   {/* {previewPdf && (
+                //     <div className="relative inline-block mt-3">
+                //       <div className="w-32 h-40 border rounded overflow-hidden">
+                //         <Document
+                //           file={selectedPdfFile ? selectedPdfFile : previewPdf}
+                //         >
+                //           <Page
+                //             pageNumber={1}
+                //             width={120}
+                //             renderTextLayer={false}
+                //             renderAnnotationLayer={false}
+                //           />
+                //         </Document>
+                //       </div>
+
+                //       <button
+                //         type="button"
+                //         onClick={() => {
+                //           setPreviewPdf(null);
+                //           setSelectedPdfFile(null);
+                //           setRemovePdf(true);
+                //         }}
+                //         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+                //       >
+                //         ✕
+                //       </button>
+                //     </div>
+                //   )} */}
+                // </div>
+                <div className="mt-4 grid grid-cols-3 gap-6 mx-4 items-start">
                   {/* IMAGE PREVIEW */}
                   {previewImage && (
-                    <div className="relative inline-block  mx-4">
+                    <div className="relative h-20 w-20">
                       <img
                         src={previewImage}
                         alt="Preview"
-                        className="h-20 w-20 object-cover rounded-lg border"
+                        className="h-20 w-20 object-cover border"
                       />
 
                       <button
@@ -666,13 +879,14 @@ const Dashboard = () => {
                       </button>
                     </div>
                   )}
+
                   {/* ICON PREVIEW */}
                   {previewIcon && (
-                    <div className="relative inline-block  mx-4">
+                    <div className="relative h-20 w-20">
                       <img
                         src={previewIcon}
                         alt="Icon Preview"
-                        className="h-16 w-16 object-contain rounded-lg border"
+                        className="h-20 w-20 object-contain border"
                       />
 
                       <button
@@ -688,8 +902,54 @@ const Dashboard = () => {
                       </button>
                     </div>
                   )}
+
+                  {/* PDF PREVIEW */}
+                  {(previewPdf || selectedPdfFile) && (
+                    <div className="relative h-20 w-20">
+                      <div className="h-20 w-20 border flex items-center justify-center bg-white">
+                        <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPreviewPdf(null);
+                          setSelectedPdfFile(null);
+                          setRemovePdf(true);
+                        }}
+                        className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
+
+              {/* {previewPdf && (
+                <div className="relative inline-block mt-3">
+                  <a
+                    href={previewPdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline text-sm"
+                  >
+                    📄 View PDF
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPreviewPdf(null);
+                      setSelectedPdfFile(null);
+                      setRemovePdf(true);
+                    }}
+                    className="ml-3 bg-black text-white rounded-full w-6 h-6 text-xs"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )} */}
               {/* {previewIcon && (
                 <div className="mt-3  ">
                   <img
