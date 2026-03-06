@@ -32,6 +32,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
   const [updatingStatusId, setUpdatingStatusId] = useState(null);
   const updateSubServiceStatus = useUpdateSubServiceStatus();
   const [pdfPreview, setPdfPreview] = useState(null);
+  const [showAllCategories, setShowAllCategories] = useState(false);
   const [removePdf, setRemovePdf] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -187,7 +188,72 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
         mb-6 shadow-sm lg:mb-10"
       >
         {/* categories */}
-        <div>
+        <div className="flex items-center gap-3 relative">
+          {/* Category Tabs */}
+          <div className="flex gap-3 overflow-hidden">
+            {/* ALL */}
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className={`px-5 py-2 flex items-center gap-2 text-md font-medium rounded-md border-b-2 transition ${
+                !selectedCategory
+                  ? "text-orange-600 border-orange-600 bg-orange-50"
+                  : "text-black border-transparent hover:border-gray-300"
+              }`}
+            >
+              {" "}
+              <i className="fa-solid fa-border-all"></i> All
+            </button>
+
+            {/* FIRST 4 CATEGORIES */}
+            {categories.slice(0, 2).map((cat) => (
+              <button
+                key={cat.category_id}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 text-md font-medium rounded-md border-b-2 transition ${
+                  selectedCategory?.category_id === cat.category_id
+                    ? "text-orange-600 border-orange-600 bg-orange-50"
+                    : "text-black border-transparent hover:border-gray-300"
+                }`}
+              >
+                {cat.category_name}
+              </button>
+            ))}
+          </div>
+
+          {/* VIEW ALL DROPDOWN */}
+          {categories.length > 4 && (
+            <div className="relative">
+              <button
+                onClick={() => setShowAllCategories(!showAllCategories)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md"
+              >
+                {" "}
+                <i className="fa-solid fa-layer-group text-gray-600"></i>
+                View All Categories
+                <i className="fa-solid fa-chevron-down text-xs"></i>
+              </button>
+
+              {showAllCategories && (
+                <div className="absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-[250] max-h-60 overflow-y-auto">
+                  {categories.map((cat) => (
+                    <div
+                      key={cat.category_id}
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setShowAllCategories(false);
+                      }}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                    >
+                      {cat.category_name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* <div>
           {(categoriesLoading || categories.length > 0) && (
             <div className="flex gap-3  flex-wrap">
               {categoriesLoading ? (
@@ -229,7 +295,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
               )}
             </div>
           )}
-        </div>
+        </div> */}
         {/* title */}
         <div className="flex gap-x-4 ">
           <h1 className="text-2xl font-bold">Sub Services</h1>
@@ -286,7 +352,9 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                 <th className="p-4 top-0 w-1/5 left-0 z-50 bg-black sticky">
                   Actions
                 </th>
-                <th className="p-4">PDF</th>
+                <th className="p-4 top-0 w-1/5 left-0 z-50 bg-black sticky">
+                  PDF
+                </th>
               </tr>
             </thead>
 
@@ -422,7 +490,7 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
       {/* MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl w-[420px] shadow-xl">
+          <div className="bg-white p-6 rounded-xl w-[420px] lg:w-[540px] shadow-xl">
             <h2 className="text-lg font-semibold mb-4">
               {editingId ? "Edit Sub Service" : "Add Sub Service"}
             </h2>
@@ -469,76 +537,93 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                 }
                 className="w-full border rounded-lg px-3 py-2"
               />
-              <div className="flex gap-2">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      setFormData({ ...formData, icon: file });
-                      setIconPreview(URL.createObjectURL(file));
-                    }
-                  }}
-                  className="w-full border rounded-lg px-3 py-2"
-                />{" "}
-                <label htmlFor="">icon</label>
-              </div>
-              {iconPreview && (
-                <div className="relative w-20 h-20 mt-2">
-                  <img
-                    src={iconPreview}
-                    alt="Preview"
-                    className="w-20 h-20 object-contain border rounded-lg"
+
+              <div className="flex gap-4 justify-between">
+                {/* ICON */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">
+                    Upload Icon
+                  </label>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setFormData({ ...formData, icon: file });
+                        setIconPreview(URL.createObjectURL(file));
+                      }
+                    }}
+                    className="w-full border rounded-lg px-3 py-2"
                   />
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormData({ ...formData, icon: null });
-                      setIconPreview(null);
-                    }}
-                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
-                  >
-                    ✕
-                  </button>
                 </div>
-              )}
-              <div className="flex gap-2">
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      setFormData({ ...formData, pdf: file });
-                      setPdfPreview(file.name);
-                      setRemovePdf(false);
-                    }
-                  }}
-                  className="w-full border rounded-lg px-3 py-2"
-                />{" "}
-                <label htmlFor="">pdf</label>
-              </div>
-              {pdfPreview && (
-                <div className="flex items-center justify-between bg-gray-100 px-3 py-2 rounded-lg mt-2">
-                  <span className="text-sm truncate">
-                    {typeof pdfPreview === "string"
-                      ? pdfPreview.split("/").pop()
-                      : pdfPreview}
-                  </span>
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormData({ ...formData, pdf: null });
-                      setPdfPreview(null);
-                      setRemovePdf(true);
+                {/* PDF */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">
+                    Upload PDF
+                  </label>
+
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setFormData({ ...formData, pdf: file });
+                        setPdfPreview(URL.createObjectURL(file));
+                        setRemovePdf(false);
+                      }
                     }}
-                    className="text-red-600 text-sm"
-                  >
-                    Remove
-                  </button>
+                    className="w-full border rounded-lg px-3 py-2"
+                  />
+                </div>
+              </div>
+              {(iconPreview || pdfPreview) && (
+                <div className="mt-4 grid grid-cols-2 gap-6 mx-4 items-start">
+                  {/* ICON PREVIEW */}
+                  {iconPreview && (
+                    <div className="relative h-20 w-20">
+                      <img
+                        src={iconPreview}
+                        alt="Icon Preview"
+                        className="h-20 w-20 object-contain border rounded-lg"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIconPreview(null);
+                          setFormData({ ...formData, icon: null });
+                        }}
+                        className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
+
+                  {/* PDF PREVIEW */}
+                  {pdfPreview && (
+                    <div className="relative h-20 w-20">
+                      <div className="h-20 w-20 border flex items-center justify-center bg-white rounded-lg">
+                        <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPdfPreview(null);
+                          setFormData({ ...formData, pdf: null });
+                          setRemovePdf(true);
+                        }}
+                        className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
               <div className="flex justify-end gap-3">

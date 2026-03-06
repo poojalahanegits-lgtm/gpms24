@@ -686,8 +686,8 @@ hover:-translate-y-1 "
               />
 
               <div className="flex gap-4 justify-between">
+                {/* img */}
                 <div className="">
-                  {/* img */}
                   <label className="block text-sm font-medium text-gray-600 mb-1">
                     Upload Image
                   </label>
@@ -745,117 +745,6 @@ hover:-translate-y-1 "
               </div>
 
               {(previewIcon || previewImage || previewPdf) && (
-                // <div className="mt-4 grid grid-cols-3 gap-4 mx-4 items-start">
-                //   {/* IMAGE PREVIEW */}
-                //   {previewImage && (
-                //     <div className="relative inline-block  mx-4">
-                //       <img
-                //         src={previewImage}
-                //         alt="Preview"
-                //         className="h-20 w-20 object-cover border"
-                //       />
-
-                //       <button
-                //         type="button"
-                //         onClick={() => {
-                //           setPreviewImage(null);
-                //           setSelectedFile(null);
-                //           setRemoveImage(true);
-                //         }}
-                //         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
-                //       >
-                //         ✕
-                //       </button>
-                //     </div>
-                //   )}
-                //   {/* ICON PREVIEW */}
-                //   {previewIcon && (
-                //     <div className="relative inline-block  mx-4">
-                //       <img
-                //         src={previewIcon}
-                //         alt="Icon Preview"
-                //         className="h-20 w-20 object-contain  border"
-                //       />
-
-                //       <button
-                //         type="button"
-                //         onClick={() => {
-                //           setPreviewIcon(null);
-                //           setSelectedIconFile(null);
-                //           setRemoveIcon(true);
-                //         }}
-                //         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
-                //       >
-                //         ✕
-                //       </button>
-                //     </div>
-                //   )}
-                //   {/*  Pdf Preview */}
-                //   {(previewPdf || selectedPdfFile) && (
-                //     <div className="relative inline-block mt-3">
-                //       {/* PDF Card */}
-                //       <div className="h-20 w-20 bg-gray-100 border  flex flex-col items-center justify-center text-center p-3">
-                //         {/* PDF ICON */}
-                //         <i className="fa-solid fa-file-pdf text-red-600 text-5xl"></i>
-
-                //         {/* File Name */}
-                //         <span
-                //           className="text-xs mt-3 truncate w-full"
-                //           title={
-                //             selectedPdfFile
-                //               ? selectedPdfFile.name
-                //               : previewPdf.split("/").pop()
-                //           }
-                //         >
-                //           {selectedPdfFile
-                //             ? selectedPdfFile.name
-                //             : previewPdf.split("/").pop()}
-                //         </span>
-                //       </div>
-
-                //       {/* Remove Button */}
-                //       <button
-                //         type="button"
-                //         onClick={() => {
-                //           setPreviewPdf(null);
-                //           setSelectedPdfFile(null);
-                //           setRemovePdf(true);
-                //         }}
-                //         className="absolute -top-2 -right-2 bg-white shadow-md text-red-500 rounded-md w-7 h-7 text-sm flex items-center justify-center"
-                //       >
-                //         ✕
-                //       </button>
-                //     </div>
-                //   )}
-                //   {/* {previewPdf && (
-                //     <div className="relative inline-block mt-3">
-                //       <div className="w-32 h-40 border rounded overflow-hidden">
-                //         <Document
-                //           file={selectedPdfFile ? selectedPdfFile : previewPdf}
-                //         >
-                //           <Page
-                //             pageNumber={1}
-                //             width={120}
-                //             renderTextLayer={false}
-                //             renderAnnotationLayer={false}
-                //           />
-                //         </Document>
-                //       </div>
-
-                //       <button
-                //         type="button"
-                //         onClick={() => {
-                //           setPreviewPdf(null);
-                //           setSelectedPdfFile(null);
-                //           setRemovePdf(true);
-                //         }}
-                //         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
-                //       >
-                //         ✕
-                //       </button>
-                //     </div>
-                //   )} */}
-                // </div>
                 <div className="mt-4 grid grid-cols-3 gap-6 mx-4 items-start">
                   {/* IMAGE PREVIEW */}
                   {previewImage && (
@@ -925,74 +814,6 @@ hover:-translate-y-1 "
                   )}
                 </div>
               )}
-
-              {/* {previewPdf && (
-                <div className="relative inline-block mt-3">
-                  <a
-                    href={previewPdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline text-sm"
-                  >
-                    📄 View PDF
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPreviewPdf(null);
-                      setSelectedPdfFile(null);
-                      setRemovePdf(true);
-                    }}
-                    className="ml-3 bg-black text-white rounded-full w-6 h-6 text-xs"
-                  >
-                    ✕
-                  </button>
-                </div>
-              )} */}
-              {/* {previewIcon && (
-                <div className="mt-3  ">
-                  <img
-                    src={previewIcon}
-                    alt="Icon Preview"
-                    className="h-16 w-16 object-contain rounded-lg border"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPreviewIcon(null);
-                      setSelectedIconFile(null);
-                      setRemoveIcon(true);
-                    }}
-                    className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
-                  >
-                    ✕
-                  </button>
-                </div>
-              )}
-              {previewImage && (
-                <div className="mt-3 relative inline-block">
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    className="h-20 w-20 object-cover rounded-lg border"
-                  />
-
-           
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPreviewImage(null);
-                      setSelectedFile(null);
-                      setRemoveImage(true);
-                    }}
-                    className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-gray-800"
-                  >
-                    ✕
-                  </button>
-                </div>
-              )} */}
 
               <div className="flex justify-end gap-3">
                 <button

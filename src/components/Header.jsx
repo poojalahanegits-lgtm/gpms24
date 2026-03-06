@@ -3,18 +3,42 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import logo from "../assets/all_icons/GPMS-Logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+// const navLinks = [
+//   { label: "Home", href: "/" },
+//   { label: "Services", href: "#services" },
+//   { label: "About Us", href: "#about" },
+//   { label: "Location", href: "#location" },
+//   { label: "Contact Us", href: "#contact" },
+// ];
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "#services" },
-  { label: "About Us", href: "#about" },
-  { label: "Location", href: "#location" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Home", path: "/" },
+  { label: "Services", section: "services" },
+  { label: "About Us", section: "about" },
+  { label: "Location", section: "location" },
+  { label: "Contact Us", section: "contact" },
 ];
 
 const Header = () => {
+  const handleNavigation = (section) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+
+      setTimeout(() => {
+        const element = document.getElementById(section);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 200);
+    } else {
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
   const handleLogout = () => {
     logout();
     localStorage.clear();
@@ -51,17 +75,17 @@ const Header = () => {
     <header className="w-full font-nunito bg-white shadow-lg sticky top-0 z-[100]">
       <div className="flex items-center justify-between px-4 sm:px-6 lg:px-10 py-1">
         {/* Logo */}
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img
             src={logo}
             alt="Company Logo"
             className="h-20 lg:h-24 w-auto object-contain"
           />
-        </a>
+        </Link>
 
         {/* ================= Desktop Navigation (md and up) ================= */}
         <nav className="hidden lg:flex items-center space-x-4 lg:space-x-6 xl:space-x-8 flex-shrink-0">
-          {navLinks.map((link) => (
+          {/* {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
@@ -69,7 +93,26 @@ const Header = () => {
             >
               {link.label}
             </a>
-          ))}
+          ))} */}
+          {navLinks.map((link) =>
+            link.section ? (
+              <button
+                key={link.label}
+                onClick={() => handleNavigation(link.section)}
+                className="text-black font-semibold text-[16px] lg:text-[18px]"
+              >
+                {link.label}
+              </button>
+            ) : (
+              <Link
+                key={link.label}
+                to={link.path}
+                className="text-black font-semibold text-[16px] lg:text-[18px]"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
 
           {/* my account login register */}
           <div className="relative" ref={dropdownRef}>
@@ -192,7 +235,7 @@ const Header = () => {
           className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg"
         >
           <nav className="flex flex-col space-y-4 px-4 py-6">
-            {navLinks.map((link) => (
+            {/* {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -201,7 +244,30 @@ const Header = () => {
               >
                 {link.label}
               </a>
-            ))}
+            ))} */}
+            {navLinks.map((link) =>
+              link.section ? (
+                <button
+                  key={link.label}
+                  onClick={() => {
+                    handleNavigation(link.section);
+                    setMenuOpen(false);
+                  }}
+                  className="text-left font-semibold"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={link.path}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-left font-semibold"
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
             {!isAuthenticated ? (
               <Link
                 to="/my-account"

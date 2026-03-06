@@ -175,7 +175,7 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
       // shadow-sm transition-all duration-300
       // hover:-translate-y-1 hover:shadow-md
       // bg-white"
-      className={`group relative rounded-2xl shadow-lg hover:shadow-xl transition duration-300
+      className={`group relative cursor-pointer rounded-2xl shadow-lg hover:shadow-xl transition duration-300
 pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4 
 
 hover:-translate-y-1 
