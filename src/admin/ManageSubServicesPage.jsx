@@ -459,7 +459,6 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                 }
                 className="w-full border rounded-lg px-3 py-2"
               />
-
               <input
                 type="string"
                 required
@@ -470,18 +469,21 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                 }
                 className="w-full border rounded-lg px-3 py-2"
               />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    setFormData({ ...formData, icon: file });
-                    setIconPreview(URL.createObjectURL(file));
-                  }
-                }}
-                className="w-full border rounded-lg px-3 py-2"
-              />
+              <div className="flex gap-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      setFormData({ ...formData, icon: file });
+                      setIconPreview(URL.createObjectURL(file));
+                    }
+                  }}
+                  className="w-full border rounded-lg px-3 py-2"
+                />{" "}
+                <label htmlFor="">icon</label>
+              </div>
               {iconPreview && (
                 <div className="relative w-20 h-20 mt-2">
                   <img
@@ -502,19 +504,22 @@ const ManageSubServicesPage = ({ mainServiceId, mainServiceTitle, onBack }) => {
                   </button>
                 </div>
               )}
-              <input
-                type="file"
-                accept="application/pdf"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
-                    setFormData({ ...formData, pdf: file });
-                    setPdfPreview(file.name);
-                    setRemovePdf(false);
-                  }
-                }}
-                className="w-full border rounded-lg px-3 py-2"
-              />
+              <div className="flex gap-2">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      setFormData({ ...formData, pdf: file });
+                      setPdfPreview(file.name);
+                      setRemovePdf(false);
+                    }
+                  }}
+                  className="w-full border rounded-lg px-3 py-2"
+                />{" "}
+                <label htmlFor="">pdf</label>
+              </div>
               {pdfPreview && (
                 <div className="flex items-center justify-between bg-gray-100 px-3 py-2 rounded-lg mt-2">
                   <span className="text-sm truncate">
