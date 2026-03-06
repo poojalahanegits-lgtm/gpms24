@@ -184,11 +184,61 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
       {/* Details */}
       <div className="flex space-x-2 mb-1 lg:mb-4 ">
         <h4
-          className=" text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1"
+          className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1"
+          title={service.title}
+        >
+          {service.title?.includes("-") ? (
+            <>
+              <span>{service.title.split("-")[0]}</span>
+              <span className="text-gray-500 italic font-normal text-[16px]">
+                {" - " + service.title.split("-").slice(1).join("-")}
+              </span>
+            </>
+          ) : (
+            service.title
+          )}
+        </h4>
+        {/* <h4
+          className="text-base lg:text-[18px] font-semibold line-clamp-1"
+          title={service.title}
+        >
+          {service.title?.includes("-") ? (
+            <>
+              <span className="text-gray-900">
+                {service.title.split("-")[0]}
+              </span>
+              <span className="text-gray-400">
+                {" - " + service.title.split("-").slice(1).join("-")}
+              </span>
+            </>
+          ) : (
+            <span className="text-gray-500">{service.title}</span>
+          )}
+        </h4> */}
+        {/* <h4
+          className=" text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 hover:bg"
           title={service.title}
         >
           {service.title}
-        </h4>
+        </h4> */}
+        {/* <div className="relative group w-fit">
+          <h4 className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 cursor-pointer">
+            {service.title}
+          </h4>
+
+          <div
+            className="absolute top-1/2 left-full ml-7 -translate-y-1/2
+               px-3 py-2 text-sm text-white bg-gray-900
+               rounded-lg shadow-xl whitespace-nowrap
+               opacity-0 translate-x-2
+               transition-all duration-300
+               group-hover:opacity-100
+               group-hover:translate-x-0
+               z-[150]"
+          >
+            {service.title}
+          </div>
+        </div> */}
         <button className="text-sm text-gray-500">
           {" "}
           <Info size={18} />
@@ -284,11 +334,11 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
                   });
                 }
               }}
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition duration-300  hover:-translate-y-1 hover:shadow-xl
     ${
       data.rate_pdf
         ? "bg-black text-white cursor-pointer hover:scale-105"
-        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        : "bg-black text-white cursor-not-allowed"
     }`}
             >
               ₹
@@ -323,7 +373,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
             </div>
             <button
               onClick={() => scrollToSection("services")}
-              className="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium  transition bg-black text-white whitespace-nowrap"
+              className="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium  transition duration-300  hover:-translate-y-1 hover:shadow-xl bg-black text-white whitespace-nowrap"
             >
               ← Back to Services
             </button>
@@ -688,7 +738,7 @@ const Services = () => {
                       sectionBg={isFirst ? "gray" : "white"}
                       onViewDetails={handleViewDetails}
                     />
-                    <p className="border-b border-gray-500"></p>
+                    {/* <p className="border-b border-gray-500"></p> */}
                   </div>
                 );
               }),
