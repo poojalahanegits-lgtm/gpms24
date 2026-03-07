@@ -11,21 +11,21 @@ import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
 import notFoundImg from "@/assetss/commanImages/not-found.jpeg";
 
 //! images
-import service1_image from "@/assetss/servicesImages/Movers&Packers.png";
-import service2_image from "@/assetss/servicesImages/DeepCleaning.png";
-import service3_image from "@/assetss/servicesImages/Electrical.png";
-import service4_image from "@/assetss/servicesImages/Plumbing.png";
-import service5_image from "@/assetss/servicesImages/WaterTank.png";
-import service6_image from "@/assetss/servicesImages/Painting.png";
-import service7_image from "@/assetss/servicesImages/Bhangarwala.png";
-import service8_image from "@/assetss/servicesImages/PropertyRenovation.png";
+import MoversNPackers_image from "@/assetss/servicesImages/Movers&Packers.png";
+import DeepCleaning_image from "@/assetss/servicesImages/DeepCleaning.png";
+import Electrical_image from "@/assetss/servicesImages/Electrical.png";
+import Plumbing_image from "@/assetss/servicesImages/Plumbing.png";
+import WaterTank_image from "@/assetss/servicesImages/WaterTank.png";
+import Painting_image from "@/assetss/servicesImages/Painting.png";
+import Bhangarwala_image from "@/assetss/servicesImages/Bhangarwala.png";
+import PropertyRenovation_image from "@/assetss/servicesImages/PropertyRenovation.png";
 // import service9_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-import service10_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-import service11_image from "@/assetss/servicesImages/CivilWork.png";
-import service12_image from "@/assetss/servicesImages/CarpentrySharp.png";
-import service13_image from "@/assetss/servicesImages/CarMaintenance.png";
-import service14_image from "@/assetss/servicesImages/BuildingMaintenance.png";
-import service15_image from "@/assetss/servicesImages/SocietyManagemen.png";
+import TileNGraniteWork_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
+import CivilWork_image from "@/assetss/servicesImages/CivilWork.png";
+import CarpentrySharp_image from "@/assetss/servicesImages/CarpentrySharp.png";
+import CarMaintenance_image from "@/assetss/servicesImages/CarMaintenance.png";
+import BuildingMaintenance_image from "@/assetss/servicesImages/BuildingMaintenance.png";
+import SocietyManagemen_image from "@/assetss/servicesImages/SocietyManagemen.png";
 
 //! icons
 
@@ -47,21 +47,21 @@ import service14_icon from "@/assetss/icons/BuildingMaintenance-Icon.png";
 import service15_icon from "@/assetss/icons/SocietyManagement-Icon.png";
 
 const fallbackImages = [
-  service1_image,
-  service2_image,
-  service3_image,
-  service4_image,
-  service5_image,
-  service6_image,
-  service7_image,
-  service8_image,
+  DeepCleaning_image,
+  Electrical_image,
+  Plumbing_image,
+  Painting_image,
+  CarpentrySharp_image,
+  WaterTank_image,
+  TileNGraniteWork_image,
+  CivilWork_image,
   // service9_image,
-  service10_image,
-  service11_image,
-  service12_image,
-  service13_image,
-  service14_image,
-  service15_image,
+  PropertyRenovation_image,
+  MoversNPackers_image,
+  CarMaintenance_image,
+  Bhangarwala_image,
+  BuildingMaintenance_image,
+  SocietyManagemen_image,
 ];
 
 const serviceIconMap = {
@@ -300,6 +300,22 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
         {/* Header */}
         <div className="flex flex-col pt-4  sm:flex-row sm:items-center justify-between">
           <h1 className="lg:text-2xl text-lg py-4 font-bold lg:text-[28px]">
+            {data.mainTitle?.replace(/\(.*?\)/g, "").split(" - ")[0]}
+
+            {data.mainTitle?.includes(" - ") && (
+              <span className="text-gray-400 lg:text-[22px] text-[16px] font-normal italic">
+                {" - "}
+                {data.mainTitle?.replace(/\(.*?\)/g, "").split(" - ")[1]}
+              </span>
+            )}
+
+            {data.mainTitle?.match(/\(([^()]*)\)[^()]*$/) && (
+              <span className="font-normal text-gray-400 text-[10px] ml-1">
+                {data.mainTitle.match(/\(([^()]*)\)[^()]*$/)[0]}
+              </span>
+            )}
+          </h1>
+          {/* <h1 className="lg:text-2xl text-lg py-4 font-bold lg:text-[28px]">
             {data.mainTitle?.split(" - ")[0]}
             {data.mainTitle?.includes(" - ") && (
               <span className="text-gray-500 lg:text-[22px] text-[16px]  font-normal italic">
@@ -307,7 +323,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
                 {data.mainTitle.split(" - ")[1]}
               </span>
             )}
-          </h1>
+          </h1> */}
 
           {/* Search */}
           <div className="flex items-center gap-2">
@@ -456,7 +472,7 @@ const Services = () => {
   const { data: services = [], isLoading: loading } = useMainServices();
   const { data: allSubServices = {} } = useAllSubServices();
   const [flipped, setFlipped] = useState(null);
-  //console.log(11111111, allSubServices);
+  console.log(11111111, allSubServices);
   return (
     <section id="services" className="  lg:scroll-mt-16 scroll-mt-20">
       {open && (
@@ -662,9 +678,25 @@ const Services = () => {
                           }
                         />
                         <div className="px-4 py-4">
-                          <h3 className="font-semibold text-[18px] text-[#111D15]">
-                            {service.title}
+                          <h3 className="text-[18px] text-[#111D15]">
+                            {service.title?.includes("(") ? (
+                              <>
+                                <span className="font-semibold">
+                                  {service.title.split("(")[0].trim()}
+                                </span>
+                                <span className="text-gray-300 italic  font-normal">
+                                  {" (" + service.title.split("(")[1]}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="font-semibold">
+                                {service.title}
+                              </span>
+                            )}
                           </h3>
+                          {/* <h3 className="font-semibold text-[18px] text-[#111D15]">
+                            {service.title}
+                          </h3> */}
                         </div>
                       </div>
 
