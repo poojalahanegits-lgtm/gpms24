@@ -3,16 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useMainServices } from "./services/index";
-const services = [
-  "Deep Cleaning",
-  "Movers & Packers",
-  "Electrical Repairs",
-  "Plumbing Services",
-  "Carpentry Services",
-  "Civil Work",
-  "Car Maintenance",
-  "Society Management",
-];
 
 const Contact = () => {
   const [selectedServices, setSelectedServices] = useState([]);
@@ -21,8 +11,7 @@ const Contact = () => {
     fullName: "",
     mobileNo: "",
     email: "",
-    services: [],
-    message: "",
+    ClientMessage: "",
   });
 
   //! validation form
@@ -78,8 +67,8 @@ const Contact = () => {
           fullName: "",
           mobileNo: "",
           email: "",
-          services: [],
-          message: "",
+
+          ClientMessage: "",
         });
 
         setSelectedServices([]);
@@ -93,22 +82,6 @@ const Contact = () => {
   };
   // const { data: services = [], isLoading } = useMainServices();
   // console.log(11111111, services);
-  const toggleService = (service) => {
-    let updatedServices;
-
-    if (selectedServices.includes(service)) {
-      updatedServices = selectedServices.filter((s) => s !== service);
-    } else {
-      updatedServices = [...selectedServices, service];
-    }
-
-    setSelectedServices(updatedServices);
-
-    setFormData({
-      ...formData,
-      services: updatedServices,
-    });
-  };
 
   return (
     <section
@@ -181,43 +154,14 @@ const Contact = () => {
                 />
               </div>
 
-              {/* Services Selection */}
-              <div>
-                <label className="mb-3 block font-medium text-gray-700">
-                  Services Interested In
-                </label>
-
-                <div className="grid grid-cols-2 gap-3">
-                  {services.map((service) => {
-                    const active = selectedServices.includes(service);
-
-                    return (
-                      <button
-                        type="button"
-                        key={service}
-                        onClick={() => toggleService(service)}
-                        className={`rounded-lg border px-4 py-3 text-sm font-medium transition
-                        ${
-                          active
-                            ? "bg-black text-white border-black shadow-md"
-                            : "bg-white text-gray-700 border-gray-300 hover:border-black hover:shadow"
-                        }`}
-                      >
-                        {service}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               {/* Message */}
               <div>
                 <label className="mb-2 block font-medium text-gray-700">
                   Message
                 </label>
                 <textarea
-                  name="message"
-                  value={formData.message}
+                  name="ClientMessage"
+                  value={formData.ClientMessage}
                   onChange={handleChange}
                   rows="4"
                   placeholder="Write your message..."

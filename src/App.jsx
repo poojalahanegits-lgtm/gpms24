@@ -11,11 +11,12 @@ import Footer from "./components/Footer.jsx";
 import Hero from "./components/Hero.jsx";
 import Login from "./components/Login.jsx"; // 👈 create this
 import ScrollToTop from "./components/ScrollToTop";
-import Dashboard from "./admin/Dashboard";
+import MainServicesPage from "./admin/ManageMainServicesPage.jsx";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { useApp } from "./context/AppProvider.jsx";
+import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
   // or check from context if you have AuthContext
@@ -33,6 +34,7 @@ const App = () => {
   const { username } = useApp();
   // console.log("Logged in user:", username);
   const isAdminPage = location.pathname.startsWith("/dashboard");
+  const isLeadsPage = location.pathname.startsWith("/gpms-leads");
 
   // useEffect(() => {
   //   const hasHash = window.location.hash;
@@ -70,17 +72,27 @@ const App = () => {
 
         {/* Login Page */}
         <Route path="/my-account" element={<Login />} />
+        {/*  services dashboard */}
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <MainServicesPage />
+            </ProtectedRoute>
+          }
+        />
+        {/* gpms leads */}
+        <Route
+          path="/gpms-leads"
+          element={
+            <ProtectedRoute>
+              <LeadsNavigation />
             </ProtectedRoute>
           }
         />
       </Routes>
 
-      {!isAdminPage && <Footer />}
+      {!isAdminPage || (!isLeadsPage && <Footer />)}
     </>
   );
 };

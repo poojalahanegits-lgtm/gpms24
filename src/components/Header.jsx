@@ -133,7 +133,7 @@ const Header = () => {
                 </button>
 
                 {accountOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg py-2 z-50">
+                  <div className="absolute right-0 mt-2 w-48 lg:w-54 bg-white shadow-lg rounded-lg py-2 z-50">
                     {/* <button
                       onClick={() => {
                         navigate("/profile");
@@ -151,7 +151,17 @@ const Header = () => {
                       }}
                       className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
-                      Dashboard
+                      Services Dashboard
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        navigate("/gpms-leads");
+                        setAccountOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    >
+                      Leads
                     </button>
 
                     <button

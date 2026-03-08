@@ -527,7 +527,7 @@ const Services = () => {
             </div>
 
             {/* Right Search */}
-            <div className="ml-auto w-full max-w-md lg:pl-8  lg:ml-0">
+            <div className="ml-auto w-full max-w-md lg:pl-16  lg:ml-0">
               {/* <div className="relative">
                 <div className=" lg:pl-12">
                   <input
@@ -540,13 +540,13 @@ const Services = () => {
                   <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
               </div> */}
-              <div className="lg:pl-12 relative">
+              <div className="lg:pl-14 relative ">
                 <input
                   type="text"
                   placeholder="Search services..."
                   value={mainSearch}
                   onChange={(e) => setMainSearch(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-6 pr-10 py-2 text-lg focus:outline-none focus:ring-1 focus:ring-black"
+                  className="w-full rounded-xl border border-gray-300 px-6 pr-10 py-2 mr-8 text-lg focus:outline-none focus:ring-1 focus:ring-black"
                 />
 
                 {/* Search icon (when empty) */}

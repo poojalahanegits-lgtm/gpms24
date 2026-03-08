@@ -277,15 +277,32 @@ export const useSubServices = (mainServiceId, categoryId) =>
     enabled: !!mainServiceId,
   });
 //! getting al subservices hook
+
 export const useAllSubServices = () =>
   useQuery({
     queryKey: ["all-sub-services"],
     queryFn: async () => {
-      const res = await apiClient.get("/sub-services");
+      const [subRes, mainRes] = await Promise.all([
+        apiClient.get("/sub-services"),
+        apiClient.get("/services-data"),
+      ]);
 
-      const data = res.data?.data || [];
+      const data = subRes.data?.data || [];
+      const mainServices = mainRes.data?.data || [];
 
-      // group by main service + category
+      // 🔹 create order map from main services
+      const serviceOrderMap = {};
+      mainServices.forEach((service, index) => {
+        serviceOrderMap[service.Id] = index;
+      });
+
+      // 🔹 sort sub services according to main service order
+      data.sort((a, b) => {
+        const orderA = serviceOrderMap[a.main_service_id] ?? 999;
+        const orderB = serviceOrderMap[b.main_service_id] ?? 999;
+        return orderA - orderB;
+      });
+
       const grouped = {};
 
       data.forEach((item) => {
@@ -293,13 +310,15 @@ export const useAllSubServices = () =>
         const categoryId = item.category_id || "no-category";
 
         if (!grouped[mainId]) grouped[mainId] = {};
-        if (!grouped[mainId][categoryId])
+
+        if (!grouped[mainId][categoryId]) {
           grouped[mainId][categoryId] = {
             mainTitle: item.main_service_title,
             categoryTitle: item.category_name,
             main_service_rate_pdf: item.main_service_rate_pdf,
             services: [],
           };
+        }
 
         grouped[mainId][categoryId].services.push({
           id: item.sub_service_id,
@@ -317,6 +336,99 @@ export const useAllSubServices = () =>
       return grouped;
     },
   });
+//! 2nd version
+// export const useAllSubServices = () =>
+//   useQuery({
+//     queryKey: ["all-sub-services"],
+//     queryFn: async () => {
+//       const res = await apiClient.get("/sub-services");
+//       const data = res.data?.data || [];
+
+//       // 🔹 your custom sequence
+//       const serviceOrder = [
+//         2, 3, 4, 6, 12, 5, 10, 11, 9, 16, 1, 13, 7, 14, 15, 2, 8,
+//       ];
+
+//       data.sort((a, b) => {
+//         const aNum = parseInt(a.main_service_id.split("-").pop());
+//         const bNum = parseInt(b.main_service_id.split("-").pop());
+
+//         return serviceOrder.indexOf(aNum) - serviceOrder.indexOf(bNum);
+//       });
+
+//       const grouped = {};
+
+//       data.forEach((item) => {
+//         const mainId = item.main_service_id;
+//         const categoryId = item.category_id || "no-category";
+
+//         if (!grouped[mainId]) grouped[mainId] = {};
+//         if (!grouped[mainId][categoryId])
+//           grouped[mainId][categoryId] = {
+//             mainTitle: item.main_service_title,
+//             categoryTitle: item.category_name,
+//             main_service_rate_pdf: item.main_service_rate_pdf,
+//             services: [],
+//           };
+
+//         grouped[mainId][categoryId].services.push({
+//           id: item.sub_service_id,
+//           title: item.title,
+//           price: item.price,
+//           pdfUrl: item.pdfUrl,
+//           page: item.pageNumber,
+//           parentId: mainId,
+//           main_service_icon: item.main_service_icon,
+//           icon: item.icon,
+//           status: item.status,
+//         });
+//       });
+
+//       return grouped;
+//     },
+//   });
+
+//! 1st version
+// export const useAllSubServices = () =>
+//   useQuery({
+//     queryKey: ["all-sub-services"],
+//     queryFn: async () => {
+//       const res = await apiClient.get("/sub-services");
+
+//       const data = res.data?.data || [];
+
+//       // group by main service + category
+//       const grouped = {};
+
+//       data.forEach((item) => {
+//         const mainId = item.main_service_id;
+//         const categoryId = item.category_id || "no-category";
+
+//         if (!grouped[mainId]) grouped[mainId] = {};
+//         if (!grouped[mainId][categoryId])
+//           grouped[mainId][categoryId] = {
+//             mainTitle: item.main_service_title,
+//             categoryTitle: item.category_name,
+//             main_service_rate_pdf: item.main_service_rate_pdf,
+//             services: [],
+//           };
+
+//         grouped[mainId][categoryId].services.push({
+//           id: item.sub_service_id,
+//           title: item.title,
+//           price: item.price,
+//           pdfUrl: item.pdfUrl,
+//           page: item.pageNumber,
+//           parentId: mainId,
+//           main_service_icon: item.main_service_icon,
+//           icon: item.icon,
+//           status: item.status,
+//         });
+//       });
+
+//       return grouped;
+//     },
+//   });
 
 //! for admin dashboard geeting all subservices hook
 export const useAdminSubServices = (mainServiceId) =>

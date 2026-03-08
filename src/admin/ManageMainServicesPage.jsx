@@ -11,8 +11,8 @@ import {
 } from "../components/services/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ManageSubServicesPage from "./ManageSubServicesPage";
-import ManageCategoriesPage from "./ManageCategoriesPage";
+import ManageSubServicesPage from "./ManageSubServicesPage.jsx";
+import ManageCategoriesPage from "./ManageCategoriesPage.jsx";
 import { useApp } from "../context/AppProvider.jsx";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -63,7 +63,7 @@ const WorkLogTooltip = ({ value }) => {
     </div>
   );
 };
-const Dashboard = () => {
+const MainServicesPage = () => {
   const { username } = useApp();
   const name = username ? username : "Unknown";
   // console.log(11111111, name);
@@ -948,7 +948,7 @@ hover:-translate-y-1 "
   );
 };
 
-export default Dashboard;
+export default MainServicesPage;
 
 // import { useState } from "react";
 // import { Plus, Pencil, Trash2 } from "lucide-react";
