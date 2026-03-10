@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LeadsNavigation from "./LeadsNavigation";
 import { useApp } from "../context/AppProvider";
 
 function LeadsTab() {
   const [activeTab, setActiveTab] = useState("Dashboard");
 
-  const [activeLead, setActiveLead] = useState("BulkUploadLeads");
+  const [activeLead, setActiveLead] = useState(null);
   const { setSelectedClient } = useApp();
 
   const tabClass = (tab) =>
-    `
-    flex items-center space-x-2 px-3 py-2 text-lg font-medium rounded-md
+    `flex items-center space-x-2 px-3 py-2 text-lg font-medium rounded-md
     sm:rounded-t-lg border-b-2 transition-colors
     text-left w-full sm:w-auto
     ${
@@ -54,11 +53,13 @@ function LeadsTab() {
           <button
             className={tabClass("CreateLead")}
             onClick={() => {
+              setActiveLead(null);
               setActiveTab("CreateLead");
             }}
           >
             <span>
-              <i className="fas fa-plus-circle"></i> Create Lead
+              <i className="fas fa-plus-circle"></i>{" "}
+              {activeLead ? "Update Lead" : "Create Lead"}
             </span>
           </button>
         </div>

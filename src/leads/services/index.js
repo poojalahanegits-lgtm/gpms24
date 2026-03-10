@@ -67,3 +67,30 @@ export const useUpdateClientDetails = () => {
     },
   });
 };
+
+// ✅ Fetch Employee Details
+const fetchEmployeeDetailsData = async (Role) => {
+  if (Role !== "client") {
+    const response = await apiClient.get("/Employees-details");
+    return response.data;
+  }
+};
+
+export const useEmployeeDetails = (Role) => {
+  return useQuery({
+    queryKey: ["EmployeeDetails"],
+    queryFn: () => fetchEmployeeDetailsData(Role),
+  });
+};
+const fetchDynamicDetails = async () => {
+  const response = await apiClient.get("/dynamic-values");
+  return response.data;
+};
+
+// React Query hook to fetch property data
+export const useDynamicDetails = () => {
+  return useQuery({
+    queryKey: ["dynamicvalues"],
+    queryFn: fetchDynamicDetails,
+  });
+};
