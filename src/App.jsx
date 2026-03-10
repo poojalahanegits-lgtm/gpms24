@@ -16,7 +16,8 @@ import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { useApp } from "./context/AppProvider.jsx";
-import LeadsNavigation from "./leads/LeadsNavigation.jsx";
+import LeadsNavigation from "./LeadsForGpgs/LeadsNavigation.jsx";
+// import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
   // or check from context if you have AuthContext
