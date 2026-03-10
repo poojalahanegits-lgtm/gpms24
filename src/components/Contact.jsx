@@ -4,9 +4,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import { useMainServices } from "./services/index";
 import { usePostClientDeatails } from "../LeadsForGpgs/services";
-
+import { useCreateLead } from "./services/index";
 const Contact = () => {
   const [selectedServices, setSelectedServices] = useState([]);
+  const { mutate: createLead, isPending } = useCreateLead();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -48,29 +49,23 @@ const Contact = () => {
     });
   };
   //! submit for contact form
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
-    try {
-      setLoading(true);
-      const payload = {
-        ClientName: formData.fullName,
-        CallingNo: formData.mobileNo,
-        WhatsAppNo: formData.mobileNo,
-        ClientMessage: formData.ClientMessage,
-        Email: formData.email,
-        LeadSource: "Website",
-        LeadStatus: "New",
-      };
+    const payload = {
+      ClientName: formData.fullName,
+      CallingNo: formData.mobileNo,
+      WhatsAppNo: formData.mobileNo,
+      ClientMessage: formData.ClientMessage,
+      Email: formData.email,
+      LeadSource: "Website",
+      LeadStatus: "New",
+    };
 
-      const res = await axios.post(
-        "http://localhost:4000/api/create-gpms-Leads",
-        payload,
-      );
-
-      if (res.status === 200) {
+    createLead(payload, {
+      onSuccess: () => {
         toast.success("Message sent successfully 🚀");
 
         setFormData({
@@ -81,14 +76,53 @@ const Contact = () => {
         });
 
         setSelectedServices([]);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+      },
+      onError: () => {
+        toast.error("Something went wrong");
+      },
+    });
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!validateForm()) return;
+
+  //   try {
+  //     setLoading(true);
+  //     const payload = {
+  //       ClientName: formData.fullName,
+  //       CallingNo: formData.mobileNo,
+  //       WhatsAppNo: formData.mobileNo,
+  //       ClientMessage: formData.ClientMessage,
+  //       Email: formData.email,
+  //       LeadSource: "Website",
+  //       LeadStatus: "New",
+  //     };
+
+  //     const res = await axios.post(
+  //       "http://localhost:4000/api/create-gpms-Leads",
+  //       payload,
+  //     );
+
+  //     if (res.status === 200) {
+  //       toast.success("Message sent successfully 🚀");
+
+  //       setFormData({
+  //         fullName: "",
+  //         mobileNo: "",
+  //         email: "",
+  //         ClientMessage: "",
+  //       });
+
+  //       setSelectedServices([]);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Something went wrong");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   // const { data: services = [], isLoading } = useMainServices();
   // console.log(11111111, services);
 
@@ -181,11 +215,18 @@ const Contact = () => {
               {/* Submit */}
               <button
                 type="submit"
+                className="w-full rounded-lg bg-black px-6 py-4 text-lg font-semibold text-white transition hover:bg-gray-800 disabled:opacity-70"
+                disabled={isPending}
+              >
+                {isPending ? "Sending..." : "Send Message"}
+              </button>
+              {/* <button
+                type="submit"
                 disabled={loading}
                 className="w-full rounded-lg bg-black px-6 py-4 text-lg font-semibold text-white transition hover:bg-gray-800 disabled:opacity-70"
               >
                 {loading ? "Sending..." : "Send Message"}
-              </button>
+              </button> */}
             </form>
           </div>
 

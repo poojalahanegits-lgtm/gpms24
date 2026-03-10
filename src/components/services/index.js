@@ -22,7 +22,25 @@ export const useLogin = () => {
     },
   });
 };
+/* =========================================================
+   CREATE LEAD (WEBSITE CONTACT FORM)
+========================================================= */
 
+const createLead = async (data) => {
+  const res = await apiClient.post("/create-gpms-Leads", data);
+  return res.data;
+};
+
+export const useCreateLead = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createLead,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["leads"]);
+    },
+  });
+};
 /* =========================================================
    MAIN SERVICES (WITH IMAGE)
 ========================================================= */
