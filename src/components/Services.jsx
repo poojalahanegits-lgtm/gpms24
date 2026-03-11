@@ -183,7 +183,7 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
     >
       {/* Details */}
       <div className="flex space-x-2 mb-1 lg:mb-4 ">
-        <h4
+        {/* <h4
           className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1"
           title={service.title}
         >
@@ -197,7 +197,7 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
           ) : (
             service.title
           )}
-        </h4>
+        </h4>  */}
         {/* <h4
           className="text-base lg:text-[18px] font-semibold line-clamp-1"
           title={service.title}
@@ -215,12 +215,12 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
             <span className="text-gray-500">{service.title}</span>
           )}
         </h4> */}
-        {/* <h4
+        <h4
           className=" text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 hover:bg"
           title={service.title}
         >
           {service.title}
-        </h4> */}
+        </h4>
         {/* <div className="relative group w-fit">
           <h4 className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 cursor-pointer">
             {service.title}
@@ -293,10 +293,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
 
   return (
     <>
-      <div
-        id={id}
-        className="space-y-6   lg:scroll-mt-24 scroll-mt-20 px-4  sm:px-6 lg:px-12"
-      >
+      <div id={id} className="space-y-6   lg:scroll-mt-24 scroll-mt-20 ">
         {/* Header */}
         <div className="flex flex-col pt-4  sm:flex-row sm:items-center justify-between">
           <h1 className="lg:text-2xl text-lg py-4 font-bold lg:text-[28px]">
@@ -434,7 +431,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
           </div>
         )}
       </div>
-      <div className="flex justify-end my-4 mx-8 lg:mx-14">
+      <div className="flex justify-end py-4 mx-8 lg:mx-14">
         <p className="flex items-center  text-[11px] text-gray-500">
           {/* <i className="fa-solid fa-star text-[8px]" /> */}* Conditions
           apply
@@ -756,7 +753,7 @@ const Services = () => {
                 return (
                   <div
                     key={`${mainId}-${categoryId}`}
-                    className={` ${isFirst ? "bg-[#fbfbfb]" : "bg-white"}`}
+                    className={` ${isFirst ? "bg-[#fbfbfb]" : "bg-white"} px-4 sm:px-6 lg:px-12`}
                   >
                     <ServiceSection
                       id={mainId}
