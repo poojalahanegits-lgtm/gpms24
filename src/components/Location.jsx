@@ -3,7 +3,8 @@ import React from "react";
 /* ===================== Locations Data ===================== */
 const locations = [
   {
-    city: "Delhi NCR",
+    city: "Nerul,",
+    maincity: "Navi Mumbai",
     iconColor: "text-purple-600",
     titleColor: "text-purple-900",
     bg: "from-purple-50 to-pink-50",
@@ -12,7 +13,8 @@ const locations = [
     areas: ["Delhi", "Noida", "Gurgaon", "Ghaziabad"],
   },
   {
-    city: "Mumbai",
+    city: "CBD Belapur,",
+    maincity: "Navi Mumbai",
     iconColor: "text-blue-600",
     titleColor: "text-blue-900",
     bg: "from-blue-50 to-purple-50",
@@ -20,7 +22,8 @@ const locations = [
     areas: ["Mumbai City", "Navi Mumbai", "Thane", "Kalyan"],
   },
   {
-    city: "Bangalore",
+    city: "Vashi,",
+    maincity: "Navi Mumbai",
     iconColor: "text-green-600",
     titleColor: "text-green-900",
     bg: "from-green-50 to-blue-50",
@@ -28,7 +31,8 @@ const locations = [
     areas: ["Central Bangalore", "Whitefield", "Electronic City", "Hebbal"],
   },
   {
-    city: "Pune",
+    city: "Sanpada,",
+    maincity: "Navi Mumbai",
     iconColor: "text-orange-600",
     titleColor: "text-orange-900",
     bg: "from-orange-50 to-red-50",
@@ -36,7 +40,8 @@ const locations = [
     areas: ["Pune City", "Hinjewadi", "Wakad", "Baner"],
   },
   {
-    city: "Hyderabad",
+    city: "Kharghar,",
+    maincity: "Navi Mumbai",
     iconColor: "text-pink-600",
     titleColor: "text-pink-900",
     bg: "from-pink-50 to-purple-50",
@@ -44,10 +49,47 @@ const locations = [
     areas: ["Hyderabad", "Secunderabad", "Gachibowli", "Madhapur"],
   },
   {
-    city: "Chennai",
+    city: "Ghansoli,",
+    maincity: "Navi Mumbai",
     iconColor: "text-yellow-600",
     titleColor: "text-yellow-900",
     bg: "from-yellow-50 to-orange-50",
+    description: "Reliable services throughout Chennai metropolitan area",
+    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+  },
+  {
+    city: "Koparkhairane,",
+    maincity: "Navi Mumbai",
+    iconColor: "text-purple-600",
+    titleColor: "text-yellow-900",
+    bg: "from-purple-50 to-pink-50",
+    description: "Reliable services throughout Chennai metropolitan area",
+    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+  },
+  {
+    city: "Kamothe,",
+    maincity: "Navi Mumbai",
+    iconColor: "text-blue-600",
+    titleColor: "text-yellow-900",
+    bg: "from-blue-50 to-purple-50",
+    description: "Reliable services throughout Chennai metropolitan area",
+    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+  },
+  {
+    city: "Panvel,",
+    maincity: "Navi Mumbai",
+    iconColor: "text-green-600",
+    titleColor: "text-yellow-900",
+    bg: "from-green-50 to-blue-50",
+    description: "Reliable services throughout Chennai metropolitan area",
+    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+  },
+  {
+    city: "Airoli,",
+    maincity: "Navi Mumbai",
+    iconColor: "text-orange-600",
+    titleColor: "text-yellow-900",
+    bg: "from-orange-50 to-red-50",
     description: "Reliable services throughout Chennai metropolitan area",
     areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
   },
@@ -58,16 +100,16 @@ const Locations = () => {
     <section id="location" className="bg-white py-20 px-4 scroll-mt-12">
       <div className="mx-auto max-w-7xl">
         {/* ================= Section Heading ================= */}
-        <h2 className="mb-4 text-center text-4xl md:text-5xl font-bold">
+        <h2 className="mb-4 lg:mb-8 text-center text-4xl md:text-5xl font-bold ">
           <span className=" text-black">Service Locations</span>
         </h2>
 
-        <p className="mb-16 text-center text-base md:text-xl text-gray-600">
+        {/* <p className="mb-16 text-center text-base md:text-xl text-gray-600">
           We operate across major cities in India
-        </p>
+        </p> */}
 
         {/* ================= Locations Grid ================= */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:pt-12">
           {locations.map((loc) => (
             <div
               key={loc.city}
@@ -77,12 +119,13 @@ const Locations = () => {
                 className={`fas fa-city mb-4 text-4xl md:text-5xl ${loc.iconColor}`}
               ></i>
 
-              <h3 className={`mb-3 text-xl md:text-2xl font-bold `}>
-                {loc.city}
-              </h3>
-
-              <p className="mb-4 text-gray-700">{loc.description}</p>
-
+              <h3 className={` text-xl md:text-2xl font-bold `}>{loc.city}</h3>
+              <h4 className={`mb-3 text-xl md:text-2xl font-bold `}>
+                {loc.maincity}
+              </h4>
+              {/* 
+              <p className="mb-4 text-gray-700">{loc.description}</p> */}
+              {/* 
               <ul className="space-y-2 text-gray-600">
                 {loc.areas.map((area) => (
                   <li key={area} className="flex items-center">
@@ -90,7 +133,7 @@ const Locations = () => {
                     {area}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           ))}
         </div>

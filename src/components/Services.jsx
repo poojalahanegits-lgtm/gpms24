@@ -26,6 +26,8 @@ import CarpentrySharp_image from "@/assetss/servicesImages/CarpentrySharp.png";
 import CarMaintenance_image from "@/assetss/servicesImages/CarMaintenance.png";
 import BuildingMaintenance_image from "@/assetss/servicesImages/BuildingMaintenance.png";
 import SocietyManagemen_image from "@/assetss/servicesImages/SocietyManagemen.png";
+import WaterProofing_image from "@/assetss/servicesImages/SocietyManagemen.png";
+import Furnishing_image from "@/assetss/servicesImages/Furnishing.png";
 
 //! icons
 
@@ -64,6 +66,24 @@ const fallbackImages = [
   SocietyManagemen_image,
 ];
 
+const fallbackImageMap = {
+  "gpms-service-1": MoversNPackers_image,
+  "gpms-service-2": DeepCleaning_image,
+  "gpms-service-3": Electrical_image,
+  "gpms-service-4": Plumbing_image,
+  "gpms-service-5": WaterTank_image,
+  "gpms-service-6": Painting_image,
+  "gpms-service-7": Bhangarwala_image,
+  "gpms-service-8": WaterProofing_image,
+  "gpms-service-9": PropertyRenovation_image,
+  "gpms-service-10": TileNGraniteWork_image,
+  "gpms-service-11": CivilWork_image,
+  "gpms-service-12": CarpentrySharp_image,
+  "gpms-service-13": CarMaintenance_image,
+  "gpms-service-14": BuildingMaintenance_image,
+  "gpms-service-15": SocietyManagemen_image,
+  "gpms-service-16": Furnishing_image,
+};
 const serviceIconMap = {
   "gpms-service-1": service1_icon,
   "gpms-service-2": service2_icon,
@@ -670,9 +690,10 @@ const Services = () => {
                         <ImageWithFallback
                           src={service.img}
                           alt={service.title}
-                          fallback={
-                            fallbackImages[index % fallbackImages.length]
-                          }
+                          fallback={fallbackImageMap[service.id] || notFoundImg}
+                          // fallback={
+                          //   fallbackImages[index % fallbackImages.length]
+                          // }
                         />
                         <div className="px-4 py-4">
                           <h3 className="text-[18px] text-[#111D15]">
