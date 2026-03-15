@@ -47,6 +47,7 @@ import service12_icon from "@/assetss/icons/Carpentry-Icon.png";
 import service13_icon from "@/assetss/icons/CarMaintenance-Icon.png";
 import service14_icon from "@/assetss/icons/BuildingMaintenance-Icon.png";
 import service15_icon from "@/assetss/icons/SocietyManagement-Icon.png";
+import service23_icon from "@/assetss/servicesImages/Furnishing.png";
 
 const fallbackImages = [
   DeepCleaning_image,
@@ -82,7 +83,7 @@ const fallbackImageMap = {
   "gpms-service-13": CarMaintenance_image,
   "gpms-service-14": BuildingMaintenance_image,
   "gpms-service-15": SocietyManagemen_image,
-  "gpms-service-16": Furnishing_image,
+  "gpms-service-23": Furnishing_image,
 };
 const serviceIconMap = {
   "gpms-service-1": service1_icon,
@@ -100,6 +101,7 @@ const serviceIconMap = {
   "gpms-service-13": service13_icon,
   "gpms-service-14": service14_icon,
   "gpms-service-15": service15_icon,
+  "gpms-service-23": service23_icon,
 };
 const IconWithFallback = ({ src, fallback }) => {
   const [iconSrc, setIconSrc] = useState(fallback);
@@ -489,7 +491,7 @@ const Services = () => {
   const { data: services = [], isLoading: loading } = useMainServices();
   const { data: allSubServices = {} } = useAllSubServices();
   const [flipped, setFlipped] = useState(null);
-  console.log(11111111, allSubServices);
+  //console.log(11111111, allSubServices);
   return (
     <section id="services" className="  lg:scroll-mt-16 scroll-mt-20">
       {open && (
