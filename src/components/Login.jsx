@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useLogin } from "./services/index";
@@ -23,29 +23,82 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  // const onSubmit = (data) => {
+  //   setIsSubmitting(true);
+
+  //   sendLoginDetails(data, {
+  //     onSuccess: (response) => {
+  //       login(response);
+  //       localStorage.setItem("loginTimestamp", Date.now());
+  //       localStorage.setItem("token", "userLoggedIn");
+
+  //       toast.success("Logged in successfully!");
+  //       reset();
+  //       setIsSubmitting(false);
+  //       navigate("/dashboard", { replace: true });
+  //     },
+  //     onError: (error) => {
+  //       toast.error(
+  //         error?.response?.data?.message || "Invalid Email or Password",
+  //       );
+  //       setIsSubmitting(false);
+  //     },
+  //   });
+  // };
+  // Handle login submit (step 1): just set data and trigger flow
   const onSubmit = (data) => {
     setIsSubmitting(true);
 
-    sendLoginDetails(data, {
-      onSuccess: (response) => {
-        login(response);
-        localStorage.setItem("loginTimestamp", Date.now());
-        localStorage.setItem("token", "userLoggedIn");
+    sendLoginDetails(
+      {
+        ...data,
+        deviceId: localStorage.getItem("deviceId"),
+      },
+      {
+        onSuccess: (response) => {
+          const { token, user } = response;
 
-        toast.success("Logged in successfully!");
-        reset();
-        setIsSubmitting(false);
-        navigate("/dashboard", { replace: true });
+          if (!token || !user) {
+            toast.error("Login failed: Invalid server response");
+            setIsSubmitting(false);
+            return;
+          }
+
+          // ✅ सही key use करें
+          // console.log("User Name:", user.Name); // "Pooja Ravindra Lahane"
+          // console.log("User Email:", user.LoginID); // "poojalahane144@gmail.com"
+          // console.log("User Role:", user.Role); // "admin"
+
+          // localStorage में save करें
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+
+          login(user); // context/state update
+          localStorage.setItem("loginTimestamp", Date.now());
+          navigate("/dashboard");
+          toast.success("Logged in successfully!");
+          reset();
+          setIsSubmitting(false);
+          // window.location.reload();
+        },
+        onError: (error) => {
+          toast.error(
+            error?.response?.data?.message || "Invalid Login ID or Password",
+          );
+          setIsSubmitting(false);
+        },
       },
-      onError: (error) => {
-        toast.error(
-          error?.response?.data?.message || "Invalid Email or Password",
-        );
-        setIsSubmitting(false);
-      },
-    });
+    );
   };
+  // 🔐 Create deviceId once
+  useEffect(() => {
+    let deviceId = localStorage.getItem("deviceId");
 
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("deviceId", deviceId);
+    }
+  }, []);
   return (
     <>
       <div className="py-12 lg:py-20 flex items-center justify-center bg-gray-100 px-4">

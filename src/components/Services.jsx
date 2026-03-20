@@ -138,6 +138,7 @@ const ImageWithFallback = ({ src, alt, fallback }) => {
     />
   );
 };
+
 // const scrollToSection = (id) => {
 //   const element = document.getElementById(id);
 //   if (element) {
@@ -189,6 +190,11 @@ const getDrivePreviewUrl = (url, pageNumber) => {
 const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
   //console.log(11111, service.main_service_icon);
   //console.log(2222, service.icon);
+  //! price validation
+  const cleanPrice = String(service.price).replace(/,/g, "");
+  const price = Number(cleanPrice);
+
+  const isValidPrice = !isNaN(price) && price > 0;
   return (
     <div
       onClick={() => service?.pdfUrl && onViewDetails(service)}
@@ -268,14 +274,29 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
       </div>
 
       <div className=" flex justify-between pb-0">
-        <div className=" mt-2">
+        <div className="mt-2">
+          {isValidPrice ? (
+            <p className="text-sm md:text-[18px] text-black">
+              ₹ {price.toLocaleString("en-IN")}
+              <span className="text-gray-500 italic text-[11px] md:text-[14px]">
+                {" "}
+                onwards <span>*</span>
+              </span>
+            </p>
+          ) : (
+            <p className="text-sm md:text-[16px] text-gray-600 font-medium">
+              Get a Quote
+            </p>
+          )}
+        </div>
+        {/* <div className=" mt-2">
           <p className="text-sm md:text-[18px]  text-black">
             ₹ {service.price}{" "}
             <span className="text-gray-500 italic text-[11px] md:text-[14px]">
               onwards <span className=" text-[11px] md:text-[14px]">*</span>
             </span>
           </p>
-        </div>
+        </div> */}
         <div className=" h-auto w-24 ">
           <IconWithFallback
             // src={service.icon}
@@ -464,6 +485,20 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
 };
 
 const Services = () => {
+  const [open, setOpen] = useState(false);
+  //! for managing scrolling
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [open]);
+
   const handleViewDetails = (service) => {
     //  console.log("Clicked service:", service);
     const previewUrl = getDrivePreviewUrl(service.pdfUrl, service.page);
@@ -487,7 +522,6 @@ const Services = () => {
   const [loaded, setLoaded] = useState(false);
   const [activePdf, setActivePdf] = useState(null);
 
-  const [open, setOpen] = useState(false);
   const { data: services = [], isLoading: loading } = useMainServices();
   const { data: allSubServices = {} } = useAllSubServices();
   const [flipped, setFlipped] = useState(null);
@@ -495,7 +529,10 @@ const Services = () => {
   return (
     <section id="services" className="  lg:scroll-mt-16 scroll-mt-20">
       {open && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
+          onWheel={(e) => e.stopPropagation()}
+        >
           <div className="relative w-[90%] max-w-4xl rounded-xl bg-white overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between border-b px-4 py-3">

@@ -1,5 +1,6 @@
 import React from "react";
-
+// import { ReactComponent as LocationIcon } from "@/assetss/commanImages/LocationIcon.svg";
+import { MapPin } from "lucide-react";
 /* ===================== Locations Data ===================== */
 const locations = [
   {
@@ -115,9 +116,17 @@ const Locations = () => {
               key={loc.city}
               className={`rounded-3xl bg-gradient-to-br ${loc.bg} p-8 transition hover:-translate-y-1 hover:shadow-2xl`}
             >
-              <i
+              {/* <i
                 className={`fas fa-city mb-4 text-4xl md:text-5xl ${loc.iconColor}`}
-              ></i>
+              ></i> */}
+              <div className="flex flex-col items-center  justify-center ">
+                <MapPin className={`h-12 w-12 ${loc.iconColor}`} />
+                {/* <img
+                  src={LocationIcon}
+                  alt="No services found"
+                  className=" object-contain opacity-90 h-12 w-12 text-red-500"
+                /> */}
+              </div>
 
               <h3 className={` text-xl md:text-2xl font-bold `}>{loc.city}</h3>
               <h4 className={`mb-3 text-xl md:text-2xl font-bold `}>
