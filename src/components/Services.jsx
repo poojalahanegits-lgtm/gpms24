@@ -1,5 +1,5 @@
 import ServiceCardSkeleton from "./skelton/ServiceCardSkeleton";
-
+import { Phone } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -191,10 +191,11 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
   //console.log(11111, service.main_service_icon);
   //console.log(2222, service.icon);
   //! price validation
-  const cleanPrice = String(service.price).replace(/,/g, "");
+  const rawPrice = service.price;
+  const cleanPrice = String(rawPrice).replace(/,/g, "");
   const price = Number(cleanPrice);
 
-  const isValidPrice = !isNaN(price) && price > 0;
+  const isValidPrice = rawPrice !== 0 && rawPrice !== "0";
   return (
     <div
       onClick={() => service?.pdfUrl && onViewDetails(service)}
@@ -273,20 +274,27 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
         </button>
       </div>
 
-      <div className=" flex justify-between pb-0">
-        <div className="mt-2">
+      <div className=" flex justify-between  pb-0">
+        <div className="mt-3">
           {isValidPrice ? (
             <p className="text-sm md:text-[18px] text-black">
-              ₹ {price.toLocaleString("en-IN")}
+              ₹ {!isNaN(price) ? price.toLocaleString("en-IN") : rawPrice}
               <span className="text-gray-500 italic text-[11px] md:text-[14px]">
                 {" "}
                 onwards <span>*</span>
               </span>
             </p>
           ) : (
-            <p className="text-sm md:text-[16px] text-gray-600 font-medium">
-              Get a Quote
+            <p className="flex  items-center gap-2 text-sm md:text-[16px] text-gray-600 font-medium">
+              <i className="fas fa-phone"></i>
+              <span className="italic underline decoration-1 underline-offset-2">
+                Get a Quote
+              </span>
             </p>
+            // <p className="flex items-center gap-2 text-sm md:text-[16px] text-gray-600 font-medium">
+            //   <span>Get a Quote</span>
+            //   <Phone size={18} />
+            // </p>
           )}
         </div>
         {/* <div className=" mt-2">
