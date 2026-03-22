@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import logo from "../assets/all_icons/GPMS-Logo.png";
+import logo from "@/assets/commanImages/GPMS-Logo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 

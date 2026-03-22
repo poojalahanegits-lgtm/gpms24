@@ -1,11 +1,11 @@
 import React from "react";
 import { MdCall } from "react-icons/md";
-import BlueLocationIcon from "@/assetss/commanImages/Blue.png";
-import PinkLocationIcon from "@/assetss/commanImages/Pink.png";
-import YellowLocationIcon from "@/assetss/commanImages/Yellow.png";
-import OrangeLocationIcon from "@/assetss/commanImages/Orange.png";
-import GreenLocationIcon from "@/assetss/commanImages/Green.png";
-import PurpleLocationIcon from "@/assetss/commanImages/Purple.png";
+import BlueLocationIcon from "@/assets/commanImages/Blue.png";
+import PinkLocationIcon from "@/assets/commanImages/Pink.png";
+import YellowLocationIcon from "@/assets/commanImages/Yellow.png";
+import OrangeLocationIcon from "@/assets/commanImages/Orange.png";
+import GreenLocationIcon from "@/assets/commanImages/Green.png";
+import PurpleLocationIcon from "@/assets/commanImages/Purple.png";
 import { MapPin } from "lucide-react";
 /* ===================== Locations Data ===================== */
 // const locations = [
@@ -107,38 +107,39 @@ const locations = [
   {
     city: "Nerul,",
     maincity: "Navi Mumbai",
-    icon: PurpleLocationIcon,
-    bg: "from-purple-50 to-pink-50",
+    icon: YellowLocationIcon,
+    bg: "from-purple-200 to-purple-50",
   },
   {
     city: "CBD Belapur,",
     maincity: "Navi Mumbai",
     icon: BlueLocationIcon,
-    bg: "from-blue-50 to-purple-50",
+    bg: "from-orange-200 to-orange-50",
   },
   {
     city: "Vashi,",
     maincity: "Navi Mumbai",
     icon: GreenLocationIcon,
-    bg: "from-green-50 to-blue-50",
+    bg: "from-green-200 to-green-50",
   },
   {
     city: "Sanpada,",
     maincity: "Navi Mumbai",
     icon: OrangeLocationIcon,
-    bg: "from-orange-50 to-red-50",
+    bg: "from-blue-200 to-blue-50",
   },
   {
     city: "Kharghar,",
     maincity: "Navi Mumbai",
-    icon: PinkLocationIcon,
-    bg: "from-pink-50 to-purple-50",
+    icon: PurpleLocationIcon,
+    bg: "from-red-200 to-red-50",
   },
   {
     city: "Ghansoli,",
     maincity: "Navi Mumbai",
-    icon: YellowLocationIcon,
-    bg: "from-yellow-50 to-orange-50",
+    icon: PinkLocationIcon,
+
+    bg: "from-yellow-200 to-yellow-50",
   },
 ];
 const Locations = () => {

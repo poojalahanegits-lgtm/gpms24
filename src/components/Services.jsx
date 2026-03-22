@@ -1,5 +1,5 @@
 import ServiceCardSkeleton from "./skelton/ServiceCardSkeleton";
-import { Phone } from "lucide-react";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -7,65 +7,47 @@ import { useState } from "react";
 import { Info } from "lucide-react";
 import { useAllSubServices, useMainServices } from "./services/index";
 
-import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
-import notFoundImg from "@/assetss/commanImages/not-found.jpeg";
+// import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
+import notFoundImg from "@/assets/commanImages/not-found.jpeg";
 
 //! images
-import MoversNPackers_image from "@/assetss/servicesImages/Movers&Packers.png";
-import DeepCleaning_image from "@/assetss/servicesImages/DeepCleaning.png";
-import Electrical_image from "@/assetss/servicesImages/Electrical.png";
-import Plumbing_image from "@/assetss/servicesImages/Plumbing.png";
-import WaterTank_image from "@/assetss/servicesImages/WaterTank.png";
-import Painting_image from "@/assetss/servicesImages/Painting.png";
-import Bhangarwala_image from "@/assetss/servicesImages/Bhangarwala.png";
-import PropertyRenovation_image from "@/assetss/servicesImages/PropertyRenovation.png";
-// import service9_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-import TileNGraniteWork_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-import CivilWork_image from "@/assetss/servicesImages/CivilWork.png";
-import CarpentrySharp_image from "@/assetss/servicesImages/CarpentrySharp.png";
-import CarMaintenance_image from "@/assetss/servicesImages/CarMaintenance.png";
-import BuildingMaintenance_image from "@/assetss/servicesImages/BuildingMaintenance.png";
-import SocietyManagemen_image from "@/assetss/servicesImages/SocietyManagemen.png";
-import WaterProofing_image from "@/assetss/servicesImages/SocietyManagemen.png";
-import Furnishing_image from "@/assetss/servicesImages/Furnishing.png";
+import MoversNPackers_image from "@/assets/servicesImages/Movers&Packers.png";
+import DeepCleaning_image from "@/assets/servicesImages/DeepCleaning.png";
+import Electrical_image from "@/assets/servicesImages/Electrical.png";
+import Plumbing_image from "@/assets/servicesImages/Plumbing.png";
+import WaterTank_image from "@/assets/servicesImages/WaterTank.png";
+import Painting_image from "@/assets/servicesImages/Painting.png";
+import Bhangarwala_image from "@/assets/servicesImages/Bhangarwala.png";
+import PropertyRenovation_image from "@/assets/servicesImages/PropertyRenovation.png";
+// import service9_image from "@/assets/servicesImages/Tile&GraniteWork.png";
+import TileNGraniteWork_image from "@/assets/servicesImages/Tile&GraniteWork.png";
+import CivilWork_image from "@/assets/servicesImages/CivilWork.png";
+import CarpentrySharp_image from "@/assets/servicesImages/CarpentrySharp.png";
+import CarMaintenance_image from "@/assets/servicesImages/CarMaintenance.png";
+import BuildingMaintenance_image from "@/assets/servicesImages/BuildingMaintenance.png";
+import SocietyManagemen_image from "@/assets/servicesImages/SocietyManagemen.png";
+import WaterProofing_image from "@/assets/servicesImages/SocietyManagemen.png";
+import Furnishing_image from "@/assets/servicesImages/Furnishing.png";
 
 //! icons
 
-import service1_icon from "@/assetss/icons/Movers&Packers.png";
+import service1_icon from "@/assets/icons/Movers&Packers.png";
 
-import service2_icon from "@/assetss/icons/DeepCleaning-Icon.png";
-import service3_icon from "@/assetss/icons/Electrical-Icon.png";
-import service4_icon from "@/assetss/icons/Plumbing-Icon.png";
-import service5_icon from "@/assetss/icons/WaterTank-Icon.png";
-import service6_icon from "@/assetss/icons/Painting-Icon.png";
-import service7_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-import service8_icon from "@/assetss/icons/PropertyRenovation-Icon.png";
-import service9_icon from "@/assetss/icons/PropertyRenovation-Icon.png";
-import service10_icon from "@/assetss/icons/Tile&GraniteWork-Icon.png";
-import service11_icon from "@/assetss/icons/CivilWork-Icon.png";
-import service12_icon from "@/assetss/icons/Carpentry-Icon.png";
-import service13_icon from "@/assetss/icons/CarMaintenance-Icon.png";
-import service14_icon from "@/assetss/icons/BuildingMaintenance-Icon.png";
-import service15_icon from "@/assetss/icons/SocietyManagement-Icon.png";
-import service23_icon from "@/assetss/servicesImages/Furnishing.png";
-
-const fallbackImages = [
-  DeepCleaning_image,
-  Electrical_image,
-  Plumbing_image,
-  Painting_image,
-  CarpentrySharp_image,
-  WaterTank_image,
-  TileNGraniteWork_image,
-  CivilWork_image,
-  // service9_image,
-  PropertyRenovation_image,
-  MoversNPackers_image,
-  CarMaintenance_image,
-  Bhangarwala_image,
-  BuildingMaintenance_image,
-  SocietyManagemen_image,
-];
+import service2_icon from "@/assets/icons/DeepCleaning-Icon.png";
+import service3_icon from "@/assets/icons/Electrical-Icon.png";
+import service4_icon from "@/assets/icons/Plumbing-Icon.png";
+import service5_icon from "@/assets/icons/WaterTank-Icon.png";
+import service6_icon from "@/assets/icons/Painting-Icon.png";
+import service7_icon from "@/assets/icons/Bhangarwala-Icon.png";
+import service8_icon from "@/assets/icons/PropertyRenovation-Icon.png";
+import service9_icon from "@/assets/icons/PropertyRenovation-Icon.png";
+import service10_icon from "@/assets/icons/Tile&GraniteWork-Icon.png";
+import service11_icon from "@/assets/icons/CivilWork-Icon.png";
+import service12_icon from "@/assets/icons/Carpentry-Icon.png";
+import service13_icon from "@/assets/icons/CarMaintenance-Icon.png";
+import service14_icon from "@/assets/icons/BuildingMaintenance-Icon.png";
+import service15_icon from "@/assets/icons/SocietyManagement-Icon.png";
+import service23_icon from "@/assets/servicesImages/Furnishing.png";
 
 const fallbackImageMap = {
   "gpms-service-1": MoversNPackers_image,
@@ -139,16 +121,6 @@ const ImageWithFallback = ({ src, alt, fallback }) => {
   );
 };
 
-// const scrollToSection = (id) => {
-//   const element = document.getElementById(id);
-//   if (element) {
-//     element.scrollIntoView({
-//       behavior: "smooth",
-//       block: "start",
-//     });
-//   }
-// };
-
 const scrollToSection = (id, resetSearch) => {
   if (resetSearch) {
     resetSearch("");
@@ -188,8 +160,6 @@ const getDrivePreviewUrl = (url, pageNumber) => {
 };
 
 const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
-  //console.log(11111, service.main_service_icon);
-  //console.log(2222, service.icon);
   //! price validation
   const rawPrice = service.price;
   const cleanPrice = String(rawPrice).replace(/,/g, "");
@@ -198,7 +168,6 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
   const isValidPrice = rawPrice !== 0 && rawPrice !== "0";
   return (
     <div
-      // onClick={() => service?.pdfUrl && onViewDetails(service)}
       onClick={() => {
         if (service?.infoPdf) {
           onViewDetails({
@@ -214,7 +183,7 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
 pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4 
 
 hover:-translate-y-1 
-${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
+${sectionBg === "gray" ? "bg-white" : "bg-white"}`}
     >
       {/* Details */}
       <div className="flex space-x-2 mb-1 lg:mb-4 ">
@@ -309,31 +278,9 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
               </span>
             )}
           </h1>
-          {/* <h1 className="lg:text-2xl text-lg py-4 font-bold lg:text-[28px]">
-            {data.mainTitle?.split(" - ")[0]}
-            {data.mainTitle?.includes(" - ") && (
-              <span className="text-gray-500 lg:text-[22px] text-[16px]  font-normal italic">
-                {" - "}
-                {data.mainTitle.split(" - ")[1]}
-              </span>
-            )}
-          </h1> */}
 
           {/* Search */}
           <div className="flex items-center gap-2">
-            {/* <div className="relative w-full sm:w-[280px]">
-              <input
-                type="text"
-                placeholder="Search services..."
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setShowAll(false); 
-                }}
-                className="w-full rounded-xl border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-              />
-              <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
-            </div> */}
             <div
               onClick={() => {
                 if (data.rate_pdf) {
@@ -395,7 +342,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
             <div className="grid gap-6 grid-cols-2 lg:grid-cols-5 overflow-visible">
               {visibleServices.map((service, index) => (
                 <ServiceCard
-                  key={service.title + index}
+                  key={service.id}
                   service={service}
                   sectionBg={sectionBg}
                   onViewDetails={onViewDetails}
@@ -538,18 +485,7 @@ const Services = () => {
 
             {/* Right Search */}
             <div className="ml-auto w-full max-w-md lg:pl-16  lg:ml-0">
-              {/* <div className="relative">
-                <div className=" lg:pl-12">
-                  <input
-                    type="text"
-                    placeholder="Search services..."
-                    value={mainSearch}
-                    onChange={(e) => setMainSearch(e.target.value)}
-                    className="w-full rounded-xl border border-gray-300 px-6 py-2 text-lg focus:outline-none focus:ring-1 focus:ring-black"
-                  />
-                  <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
-                </div>
-              </div> */}
+              \
               <div className="lg:pl-14 relative ">
                 <input
                   type="text"
@@ -579,41 +515,6 @@ const Services = () => {
 
           {/* Main Services Cards */}
           <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:px-2">
-            {/* {loading
-              ? Array.from({ length: 8 }).map((_, i) => (
-                  <ServiceCardSkeleton key={i} />
-                ))
-              : services
-                  .filter(
-                    (service) =>
-                      (service.status === "active" ||
-                        service.Status === "active") &&
-                      service.title
-                        .toLowerCase()
-                        .includes(mainSearch.trim().toLowerCase()),
-                  )
-                  .map((service, index) => (
-                    <div
-                      id={`#${service.id}`}
-                      key={service.title}
-                      onClick={() => scrollToSection(service.id)}
-                      className="cursor-pointer rounded-md flex flex-col gap-4 scroll-mt-40 lg:scroll-mt-0 transition hover:-translate-y-1 group max-w-[400px] shadow-lg"
-                    >
-            
-                      <ImageWithFallback
-                        src={service.img}
-                        alt={service.title}
-                        fallback={fallbackImages[index % fallbackImages.length]}
-                      />
-
-                      <div className="px-4 pb-4 ">
-                        <h3 className="font-semibold text-[18px] text-[#111D15]">
-                          {service.title}
-                        </h3>
-                     
-                      </div>
-                    </div>
-                  ))} */}
             {loading ? (
               Array.from({ length: 8 }).map((_, i) => (
                 <ServiceCardSkeleton key={i} />
@@ -705,9 +606,6 @@ const Services = () => {
                               </span>
                             )}
                           </h3>
-                          {/* <h3 className="font-semibold text-[18px] text-[#111D15]">
-                            {service.title}
-                          </h3> */}
                         </div>
                       </div>
 
@@ -735,15 +633,10 @@ const Services = () => {
 
                           {/* Subtitle */}
                           <p className="text-sm text-gray-300 mt-2">
-                            This service will be available shortly
+                            This service will be available soon
                           </p>
                         </div>
                       </div>
-                      {/* <div className="absolute inset-0 rotate-y-180 backface-hidden bg-black text-white rounded-md flex items-center justify-center">
-                        <p className="text-lg font-semibold tracking-wide">
-                          🚀 Coming Soon
-                        </p>
-                      </div> */}
                     </div>
                   </div>
                 ))
@@ -751,7 +644,7 @@ const Services = () => {
           </div>
         </div>
       </div>
-      <p className="border-b border-gray-300"></p>
+      {/* <p className="border-b border-gray-300"></p> */}
       {/* all  servics */}
 
       <div>
@@ -767,7 +660,8 @@ const Services = () => {
                 return (
                   <div
                     key={`${mainId}-${categoryId}`}
-                    className={` ${isFirst ? "bg-[#fbfbfb]" : "bg-white"} px-4 sm:px-6 lg:px-12`}
+                    // className={` ${isFirst ? "bg-[#fbfbfb]" : "bg-white"} px-4 sm:px-6 lg:px-12`}
+                    className={` ${isFirst ? "" : ""} px-4 sm:px-6 lg:px-12`}
                   >
                     <ServiceSection
                       id={mainId}
@@ -828,46 +722,46 @@ export default Services;
 // import { useAllSubServices, useMainServices } from "./services/index";
 
 // import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
-// import notFoundImg from "@/assetss/commanImages/not-found.jpeg";
+// import notFoundImg from "@/assets/commanImages/not-found.jpeg";
 
 // //! images
-// import MoversNPackers_image from "@/assetss/servicesImages/Movers&Packers.png";
-// import DeepCleaning_image from "@/assetss/servicesImages/DeepCleaning.png";
-// import Electrical_image from "@/assetss/servicesImages/Electrical.png";
-// import Plumbing_image from "@/assetss/servicesImages/Plumbing.png";
-// import WaterTank_image from "@/assetss/servicesImages/WaterTank.png";
-// import Painting_image from "@/assetss/servicesImages/Painting.png";
-// import Bhangarwala_image from "@/assetss/servicesImages/Bhangarwala.png";
-// import PropertyRenovation_image from "@/assetss/servicesImages/PropertyRenovation.png";
-// // import service9_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-// import TileNGraniteWork_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-// import CivilWork_image from "@/assetss/servicesImages/CivilWork.png";
-// import CarpentrySharp_image from "@/assetss/servicesImages/CarpentrySharp.png";
-// import CarMaintenance_image from "@/assetss/servicesImages/CarMaintenance.png";
-// import BuildingMaintenance_image from "@/assetss/servicesImages/BuildingMaintenance.png";
-// import SocietyManagemen_image from "@/assetss/servicesImages/SocietyManagemen.png";
-// import WaterProofing_image from "@/assetss/servicesImages/SocietyManagemen.png";
-// import Furnishing_image from "@/assetss/servicesImages/Furnishing.png";
+// import MoversNPackers_image from "@/assets/servicesImages/Movers&Packers.png";
+// import DeepCleaning_image from "@/assets/servicesImages/DeepCleaning.png";
+// import Electrical_image from "@/assets/servicesImages/Electrical.png";
+// import Plumbing_image from "@/assets/servicesImages/Plumbing.png";
+// import WaterTank_image from "@/assets/servicesImages/WaterTank.png";
+// import Painting_image from "@/assets/servicesImages/Painting.png";
+// import Bhangarwala_image from "@/assets/servicesImages/Bhangarwala.png";
+// import PropertyRenovation_image from "@/assets/servicesImages/PropertyRenovation.png";
+// // import service9_image from "@/assets/servicesImages/Tile&GraniteWork.png";
+// import TileNGraniteWork_image from "@/assets/servicesImages/Tile&GraniteWork.png";
+// import CivilWork_image from "@/assets/servicesImages/CivilWork.png";
+// import CarpentrySharp_image from "@/assets/servicesImages/CarpentrySharp.png";
+// import CarMaintenance_image from "@/assets/servicesImages/CarMaintenance.png";
+// import BuildingMaintenance_image from "@/assets/servicesImages/BuildingMaintenance.png";
+// import SocietyManagemen_image from "@/assets/servicesImages/SocietyManagemen.png";
+// import WaterProofing_image from "@/assets/servicesImages/SocietyManagemen.png";
+// import Furnishing_image from "@/assets/servicesImages/Furnishing.png";
 
 // //! icons
 
-// import service1_icon from "@/assetss/icons/Movers&Packers.png";
+// import service1_icon from "@/assets/icons/Movers&Packers.png";
 
-// import service2_icon from "@/assetss/icons/DeepCleaning-Icon.png";
-// import service3_icon from "@/assetss/icons/Electrical-Icon.png";
-// import service4_icon from "@/assetss/icons/Plumbing-Icon.png";
-// import service5_icon from "@/assetss/icons/WaterTank-Icon.png";
-// import service6_icon from "@/assetss/icons/Painting-Icon.png";
-// import service7_icon from "@/assetss/icons/Bhangarwala-Icon.png";
-// import service8_icon from "@/assetss/icons/PropertyRenovation-Icon.png";
-// import service9_icon from "@/assetss/icons/PropertyRenovation-Icon.png";
-// import service10_icon from "@/assetss/icons/Tile&GraniteWork-Icon.png";
-// import service11_icon from "@/assetss/icons/CivilWork-Icon.png";
-// import service12_icon from "@/assetss/icons/Carpentry-Icon.png";
-// import service13_icon from "@/assetss/icons/CarMaintenance-Icon.png";
-// import service14_icon from "@/assetss/icons/BuildingMaintenance-Icon.png";
-// import service15_icon from "@/assetss/icons/SocietyManagement-Icon.png";
-// import service23_icon from "@/assetss/servicesImages/Furnishing.png";
+// import service2_icon from "@/assets/icons/DeepCleaning-Icon.png";
+// import service3_icon from "@/assets/icons/Electrical-Icon.png";
+// import service4_icon from "@/assets/icons/Plumbing-Icon.png";
+// import service5_icon from "@/assets/icons/WaterTank-Icon.png";
+// import service6_icon from "@/assets/icons/Painting-Icon.png";
+// import service7_icon from "@/assets/icons/Bhangarwala-Icon.png";
+// import service8_icon from "@/assets/icons/PropertyRenovation-Icon.png";
+// import service9_icon from "@/assets/icons/PropertyRenovation-Icon.png";
+// import service10_icon from "@/assets/icons/Tile&GraniteWork-Icon.png";
+// import service11_icon from "@/assets/icons/CivilWork-Icon.png";
+// import service12_icon from "@/assets/icons/Carpentry-Icon.png";
+// import service13_icon from "@/assets/icons/CarMaintenance-Icon.png";
+// import service14_icon from "@/assets/icons/BuildingMaintenance-Icon.png";
+// import service15_icon from "@/assets/icons/SocietyManagement-Icon.png";
+// import service23_icon from "@/assets/servicesImages/Furnishing.png";
 
 // const fallbackImages = [
 //   DeepCleaning_image,

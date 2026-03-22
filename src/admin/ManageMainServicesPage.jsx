@@ -803,16 +803,114 @@ hover:-translate-y-1 "
                         setRemoveInfoPdf(false);
                       }
                     }}
+                    className="w-full border rounded-lg px-3 py-2"
                   />
                 </div>
               </div>
-
               {(previewIcon ||
                 previewImage ||
                 previewPdf ||
                 previewInfoPdf) && (
                 <div className="mt-4 grid grid-cols-4 gap-6 mx-4 items-start">
-                  {/* IMAGE PREVIEW */}
+                  {/* IMAGE SLOT */}
+                  <div className="relative h-20 w-20">
+                    {previewImage && (
+                      <>
+                        <img
+                          src={previewImage}
+                          alt="Preview"
+                          className="h-20 w-20 object-cover border"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPreviewImage(null);
+                            setSelectedFile(null);
+                            setRemoveImage(true);
+                          }}
+                          className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* ICON SLOT */}
+                  <div className="relative h-20 w-20">
+                    {previewIcon && (
+                      <>
+                        <img
+                          src={previewIcon}
+                          alt="Icon Preview"
+                          className="h-20 w-20 object-contain border"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPreviewIcon(null);
+                            setSelectedIconFile(null);
+                            setRemoveIcon(true);
+                          }}
+                          className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* PDF SLOT */}
+                  <div className="relative h-20 w-20">
+                    {(previewPdf || selectedPdfFile) && (
+                      <>
+                        <div className="h-20 w-20 border flex items-center justify-center bg-white">
+                          <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPreviewPdf(null);
+                            setSelectedPdfFile(null);
+                            setRemovePdf(true);
+                          }}
+                          className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* INFO PDF SLOT */}
+                  <div className="relative h-20 w-20">
+                    {(previewInfoPdf || selectedInfoPdfFile) && (
+                      <>
+                        <div className="h-20 w-20 border flex items-center justify-center bg-white">
+                          <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPreviewInfoPdf(null);
+                            setSelectedInfoPdfFile(null);
+                            setRemoveInfoPdf(true);
+                          }}
+                          className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+                        >
+                          ✕
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+              {/* {(previewIcon ||
+                previewImage ||
+                previewPdf ||
+                previewInfoPdf) && (
+                <div className="mt-4 grid grid-cols-4 gap-6 mx-4 items-start">
+               
                   {previewImage && (
                     <div className="relative h-20 w-20">
                       <img
@@ -835,7 +933,7 @@ hover:-translate-y-1 "
                     </div>
                   )}
 
-                  {/* ICON PREVIEW */}
+                 
                   {previewIcon && (
                     <div className="relative h-20 w-20">
                       <img
@@ -858,7 +956,7 @@ hover:-translate-y-1 "
                     </div>
                   )}
 
-                  {/* PDF PREVIEW */}
+               
                   {(previewPdf || selectedPdfFile) && (
                     <div className="relative h-20 w-20">
                       <div className="h-20 w-20 border flex items-center justify-center bg-white">
@@ -878,8 +976,8 @@ hover:-translate-y-1 "
                       </button>
                     </div>
                   )}
-                  {/* INFO PDF PREVIEW */}
-                  {previewInfoPdf && (
+                 
+                  {(previewInfoPdf || selectedInfoPdfFile) && (
                     <div className="relative h-20 w-20">
                       <div className="h-20 w-20 border flex items-center justify-center bg-white">
                         <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
@@ -898,8 +996,9 @@ hover:-translate-y-1 "
                       </button>
                     </div>
                   )}
+              
                 </div>
-              )}
+              )} */}
 
               <div className="flex justify-end gap-3">
                 <button

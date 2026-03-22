@@ -7,7 +7,7 @@ const features = [
 ];
 const Home = () => {
   return (
-    <div className="bg-[#fbfbfb]">
+    <div className="">
       {/* Feature Cards */}
       <div
         className="pt-12 pb-8 sm:pt-16  lg:pb-16 grid grid-cols-1 
