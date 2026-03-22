@@ -198,12 +198,18 @@ const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
   const isValidPrice = rawPrice !== 0 && rawPrice !== "0";
   return (
     <div
-      onClick={() => service?.pdfUrl && onViewDetails(service)}
-      //     className="group relative rounded-2xl border border-gray-300
-      // pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4
-      // shadow-sm transition-all duration-300
-      // hover:-translate-y-1 hover:shadow-md
-      // bg-white"
+      // onClick={() => service?.pdfUrl && onViewDetails(service)}
+      onClick={() => {
+        if (service?.infoPdf) {
+          onViewDetails({
+            ...service,
+            pdfUrl: service.infoPdf,
+            title: service.title + " - Info",
+          });
+        } else if (service?.pdfUrl) {
+          onViewDetails(service);
+        }
+      }}
       className={`group relative cursor-pointer rounded-2xl shadow-lg hover:shadow-xl transition duration-300
 pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4 
 
@@ -212,62 +218,13 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
     >
       {/* Details */}
       <div className="flex space-x-2 mb-1 lg:mb-4 ">
-        {/* <h4
-          className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1"
-          title={service.title}
-        >
-          {service.title?.includes("-") ? (
-            <>
-              <span>{service.title.split("-")[0]}</span>
-              <span className="text-gray-500 italic font-normal text-[16px]">
-                {" - " + service.title.split("-").slice(1).join("-")}
-              </span>
-            </>
-          ) : (
-            service.title
-          )}
-        </h4>  */}
-        {/* <h4
-          className="text-base lg:text-[18px] font-semibold line-clamp-1"
-          title={service.title}
-        >
-          {service.title?.includes("-") ? (
-            <>
-              <span className="text-gray-900">
-                {service.title.split("-")[0]}
-              </span>
-              <span className="text-gray-400">
-                {" - " + service.title.split("-").slice(1).join("-")}
-              </span>
-            </>
-          ) : (
-            <span className="text-gray-500">{service.title}</span>
-          )}
-        </h4> */}
         <h4
           className=" text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 hover:bg"
           title={service.title}
         >
           {service.title}
         </h4>
-        {/* <div className="relative group w-fit">
-          <h4 className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 cursor-pointer">
-            {service.title}
-          </h4>
 
-          <div
-            className="absolute top-1/2 left-full ml-7 -translate-y-1/2
-               px-3 py-2 text-sm text-white bg-gray-900
-               rounded-lg shadow-xl whitespace-nowrap
-               opacity-0 translate-x-2
-               transition-all duration-300
-               group-hover:opacity-100
-               group-hover:translate-x-0
-               z-[150]"
-          >
-            {service.title}
-          </div>
-        </div> */}
         <button className="text-sm text-gray-500">
           {" "}
           <Info size={18} />
@@ -291,20 +248,9 @@ ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
                 Get a Quote
               </span>
             </p>
-            // <p className="flex items-center gap-2 text-sm md:text-[16px] text-gray-600 font-medium">
-            //   <span>Get a Quote</span>
-            //   <Phone size={18} />
-            // </p>
           )}
         </div>
-        {/* <div className=" mt-2">
-          <p className="text-sm md:text-[18px]  text-black">
-            ₹ {service.price}{" "}
-            <span className="text-gray-500 italic text-[11px] md:text-[14px]">
-              onwards <span className=" text-[11px] md:text-[14px]">*</span>
-            </span>
-          </p>
-        </div> */}
+
         <div className=" h-auto w-24 ">
           <IconWithFallback
             // src={service.icon}
@@ -873,7 +819,7 @@ const Services = () => {
 export default Services;
 
 // import ServiceCardSkeleton from "./skelton/ServiceCardSkeleton";
-
+// import { Phone } from "lucide-react";
 // import AOS from "aos";
 // import "aos/dist/aos.css";
 // import { useEffect } from "react";
@@ -885,21 +831,23 @@ export default Services;
 // import notFoundImg from "@/assetss/commanImages/not-found.jpeg";
 
 // //! images
-// import service1_image from "@/assetss/servicesImages/Movers&Packers.png";
-// import service2_image from "@/assetss/servicesImages/DeepCleaning.png";
-// import service3_image from "@/assetss/servicesImages/Electrical.png";
-// import service4_image from "@/assetss/servicesImages/Plumbing.png";
-// import service5_image from "@/assetss/servicesImages/WaterTank.png";
-// import service6_image from "@/assetss/servicesImages/Painting.png";
-// import service7_image from "@/assetss/servicesImages/Bhangarwala.png";
-// import service8_image from "@/assetss/servicesImages/PropertyRenovation.png";
+// import MoversNPackers_image from "@/assetss/servicesImages/Movers&Packers.png";
+// import DeepCleaning_image from "@/assetss/servicesImages/DeepCleaning.png";
+// import Electrical_image from "@/assetss/servicesImages/Electrical.png";
+// import Plumbing_image from "@/assetss/servicesImages/Plumbing.png";
+// import WaterTank_image from "@/assetss/servicesImages/WaterTank.png";
+// import Painting_image from "@/assetss/servicesImages/Painting.png";
+// import Bhangarwala_image from "@/assetss/servicesImages/Bhangarwala.png";
+// import PropertyRenovation_image from "@/assetss/servicesImages/PropertyRenovation.png";
 // // import service9_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-// import service10_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
-// import service11_image from "@/assetss/servicesImages/CivilWork.png";
-// import service12_image from "@/assetss/servicesImages/CarpentrySharp.png";
-// import service13_image from "@/assetss/servicesImages/CarMaintenance.png";
-// import service14_image from "@/assetss/servicesImages/BuildingMaintenance.png";
-// import service15_image from "@/assetss/servicesImages/SocietyManagemen.png";
+// import TileNGraniteWork_image from "@/assetss/servicesImages/Tile&GraniteWork.png";
+// import CivilWork_image from "@/assetss/servicesImages/CivilWork.png";
+// import CarpentrySharp_image from "@/assetss/servicesImages/CarpentrySharp.png";
+// import CarMaintenance_image from "@/assetss/servicesImages/CarMaintenance.png";
+// import BuildingMaintenance_image from "@/assetss/servicesImages/BuildingMaintenance.png";
+// import SocietyManagemen_image from "@/assetss/servicesImages/SocietyManagemen.png";
+// import WaterProofing_image from "@/assetss/servicesImages/SocietyManagemen.png";
+// import Furnishing_image from "@/assetss/servicesImages/Furnishing.png";
 
 // //! icons
 
@@ -919,25 +867,44 @@ export default Services;
 // import service13_icon from "@/assetss/icons/CarMaintenance-Icon.png";
 // import service14_icon from "@/assetss/icons/BuildingMaintenance-Icon.png";
 // import service15_icon from "@/assetss/icons/SocietyManagement-Icon.png";
+// import service23_icon from "@/assetss/servicesImages/Furnishing.png";
 
 // const fallbackImages = [
-//   service1_image,
-//   service2_image,
-//   service3_image,
-//   service4_image,
-//   service5_image,
-//   service6_image,
-//   service7_image,
-//   service8_image,
+//   DeepCleaning_image,
+//   Electrical_image,
+//   Plumbing_image,
+//   Painting_image,
+//   CarpentrySharp_image,
+//   WaterTank_image,
+//   TileNGraniteWork_image,
+//   CivilWork_image,
 //   // service9_image,
-//   service10_image,
-//   service11_image,
-//   service12_image,
-//   service13_image,
-//   service14_image,
-//   service15_image,
+//   PropertyRenovation_image,
+//   MoversNPackers_image,
+//   CarMaintenance_image,
+//   Bhangarwala_image,
+//   BuildingMaintenance_image,
+//   SocietyManagemen_image,
 // ];
 
+// const fallbackImageMap = {
+//   "gpms-service-1": MoversNPackers_image,
+//   "gpms-service-2": DeepCleaning_image,
+//   "gpms-service-3": Electrical_image,
+//   "gpms-service-4": Plumbing_image,
+//   "gpms-service-5": WaterTank_image,
+//   "gpms-service-6": Painting_image,
+//   "gpms-service-7": Bhangarwala_image,
+//   "gpms-service-8": WaterProofing_image,
+//   "gpms-service-9": PropertyRenovation_image,
+//   "gpms-service-10": TileNGraniteWork_image,
+//   "gpms-service-11": CivilWork_image,
+//   "gpms-service-12": CarpentrySharp_image,
+//   "gpms-service-13": CarMaintenance_image,
+//   "gpms-service-14": BuildingMaintenance_image,
+//   "gpms-service-15": SocietyManagemen_image,
+//   "gpms-service-23": Furnishing_image,
+// };
 // const serviceIconMap = {
 //   "gpms-service-1": service1_icon,
 //   "gpms-service-2": service2_icon,
@@ -954,6 +921,7 @@ export default Services;
 //   "gpms-service-13": service13_icon,
 //   "gpms-service-14": service14_icon,
 //   "gpms-service-15": service15_icon,
+//   "gpms-service-23": service23_icon,
 // };
 // const IconWithFallback = ({ src, fallback }) => {
 //   const [iconSrc, setIconSrc] = useState(fallback);
@@ -990,6 +958,7 @@ export default Services;
 //     />
 //   );
 // };
+
 // // const scrollToSection = (id) => {
 // //   const element = document.getElementById(id);
 // //   if (element) {
@@ -1041,38 +1010,121 @@ export default Services;
 // const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
 //   //console.log(11111, service.main_service_icon);
 //   //console.log(2222, service.icon);
+//   //! price validation
+//   const rawPrice = service.price;
+//   const cleanPrice = String(rawPrice).replace(/,/g, "");
+//   const price = Number(cleanPrice);
+
+//   const isValidPrice = rawPrice !== 0 && rawPrice !== "0";
 //   return (
 //     <div
 //       onClick={() => service?.pdfUrl && onViewDetails(service)}
-//       className="group relative rounded-2xl border border-gray-300
-//   pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4
-//   shadow-sm transition-all duration-300
-//   hover:-translate-y-1 hover:shadow-md
-//   bg-white"
+//       //     className="group relative rounded-2xl border border-gray-300
+//       // pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4
+//       // shadow-sm transition-all duration-300
+//       // hover:-translate-y-1 hover:shadow-md
+//       // bg-white"
+//       className={`group relative cursor-pointer rounded-2xl shadow-lg hover:shadow-xl transition duration-300
+// pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4
+
+// hover:-translate-y-1
+// ${sectionBg === "gray" ? "bg-white" : "bg-[#fbfbfb]"}`}
 //     >
 //       {/* Details */}
 //       <div className="flex space-x-2 mb-1 lg:mb-4 ">
+//         {/* <h4
+//           className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1"
+//           title={service.title}
+//         >
+//           {service.title?.includes("-") ? (
+//             <>
+//               <span>{service.title.split("-")[0]}</span>
+//               <span className="text-gray-500 italic font-normal text-[16px]">
+//                 {" - " + service.title.split("-").slice(1).join("-")}
+//               </span>
+//             </>
+//           ) : (
+//             service.title
+//           )}
+//         </h4>  */}
+//         {/* <h4
+//           className="text-base lg:text-[18px] font-semibold line-clamp-1"
+//           title={service.title}
+//         >
+//           {service.title?.includes("-") ? (
+//             <>
+//               <span className="text-gray-900">
+//                 {service.title.split("-")[0]}
+//               </span>
+//               <span className="text-gray-400">
+//                 {" - " + service.title.split("-").slice(1).join("-")}
+//               </span>
+//             </>
+//           ) : (
+//             <span className="text-gray-500">{service.title}</span>
+//           )}
+//         </h4> */}
 //         <h4
-//           className=" text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1"
+//           className=" text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 hover:bg"
 //           title={service.title}
 //         >
 //           {service.title}
 //         </h4>
+//         {/* <div className="relative group w-fit">
+//           <h4 className="text-base lg:text-[18px] font-semibold text-gray-900 line-clamp-1 cursor-pointer">
+//             {service.title}
+//           </h4>
+
+//           <div
+//             className="absolute top-1/2 left-full ml-7 -translate-y-1/2
+//                px-3 py-2 text-sm text-white bg-gray-900
+//                rounded-lg shadow-xl whitespace-nowrap
+//                opacity-0 translate-x-2
+//                transition-all duration-300
+//                group-hover:opacity-100
+//                group-hover:translate-x-0
+//                z-[150]"
+//           >
+//             {service.title}
+//           </div>
+//         </div> */}
 //         <button className="text-sm text-gray-500">
 //           {" "}
 //           <Info size={18} />
 //         </button>
 //       </div>
 
-//       <div className=" flex justify-between pb-0">
-//         <div className=" mt-2">
+//       <div className=" flex justify-between  pb-0">
+//         <div className="mt-3">
+//           {isValidPrice ? (
+//             <p className="text-sm md:text-[18px] text-black">
+//               ₹ {!isNaN(price) ? price.toLocaleString("en-IN") : rawPrice}
+//               <span className="text-gray-500 italic text-[11px] md:text-[14px]">
+//                 {" "}
+//                 onwards <span>*</span>
+//               </span>
+//             </p>
+//           ) : (
+//             <p className="flex  items-center gap-2 text-sm md:text-[16px] text-gray-600 font-medium">
+//               <i className="fas fa-phone"></i>
+//               <span className="italic underline decoration-1 underline-offset-2">
+//                 Get a Quote
+//               </span>
+//             </p>
+//             // <p className="flex items-center gap-2 text-sm md:text-[16px] text-gray-600 font-medium">
+//             //   <span>Get a Quote</span>
+//             //   <Phone size={18} />
+//             // </p>
+//           )}
+//         </div>
+//         {/* <div className=" mt-2">
 //           <p className="text-sm md:text-[18px]  text-black">
 //             ₹ {service.price}{" "}
 //             <span className="text-gray-500 italic text-[11px] md:text-[14px]">
 //               onwards <span className=" text-[11px] md:text-[14px]">*</span>
 //             </span>
 //           </p>
-//         </div>
+//         </div> */}
 //         <div className=" h-auto w-24 ">
 //           <IconWithFallback
 //             // src={service.icon}
@@ -1112,13 +1164,26 @@ export default Services;
 
 //   return (
 //     <>
-//       <div
-//         id={id}
-//         className="space-y-6   lg:scroll-mt-28 scroll-mt-24 px-4  sm:px-6 lg:px-12"
-//       >
+//       <div id={id} className="space-y-6   lg:scroll-mt-24 scroll-mt-20 ">
 //         {/* Header */}
-//         <div className="flex flex-col  sm:flex-row sm:items-center justify-between">
+//         <div className="flex flex-col pt-4  sm:flex-row sm:items-center justify-between">
 //           <h1 className="lg:text-2xl text-lg py-4 font-bold lg:text-[28px]">
+//             {data.mainTitle?.replace(/\(.*?\)/g, "").split(" - ")[0]}
+
+//             {data.mainTitle?.includes(" - ") && (
+//               <span className="text-gray-400 lg:text-[22px] text-[16px] font-normal italic">
+//                 {" - "}
+//                 {data.mainTitle?.replace(/\(.*?\)/g, "").split(" - ")[1]}
+//               </span>
+//             )}
+
+//             {data.mainTitle?.match(/\(([^()]*)\)[^()]*$/) && (
+//               <span className="font-normal text-gray-400 text-[10px] ml-1">
+//                 {data.mainTitle.match(/\(([^()]*)\)[^()]*$/)[0]}
+//               </span>
+//             )}
+//           </h1>
+//           {/* <h1 className="lg:text-2xl text-lg py-4 font-bold lg:text-[28px]">
 //             {data.mainTitle?.split(" - ")[0]}
 //             {data.mainTitle?.includes(" - ") && (
 //               <span className="text-gray-500 lg:text-[22px] text-[16px]  font-normal italic">
@@ -1126,7 +1191,7 @@ export default Services;
 //                 {data.mainTitle.split(" - ")[1]}
 //               </span>
 //             )}
-//           </h1>
+//           </h1> */}
 
 //           {/* Search */}
 //           <div className="flex items-center gap-2">
@@ -1143,7 +1208,26 @@ export default Services;
 //               />
 //               <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
 //             </div> */}
-//             <div className="relative w-full sm:w-[280px]">
+//             <div
+//               onClick={() => {
+//                 if (data.rate_pdf) {
+//                   onViewDetails({
+//                     title: data.mainTitle + " - Rate Card",
+//                     pdfUrl: data.rate_pdf,
+//                     page: 1,
+//                   });
+//                 }
+//               }}
+//               className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition duration-300  hover:-translate-y-1 hover:shadow-xl
+//     ${
+//       data.rate_pdf
+//         ? "bg-black text-white cursor-pointer hover:scale-105"
+//         : "bg-black text-white cursor-not-allowed"
+//     }`}
+//             >
+//               ₹
+//             </div>
+//             <div className="relative w-full sm:w-[200px]">
 //               <input
 //                 type="text"
 //                 placeholder="Search services..."
@@ -1173,7 +1257,7 @@ export default Services;
 //             </div>
 //             <button
 //               onClick={() => scrollToSection("services")}
-//               className="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium  transition bg-black text-white whitespace-nowrap"
+//               className="flex items-center gap-2 rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium  transition duration-300  hover:-translate-y-1 hover:shadow-xl bg-black text-white whitespace-nowrap"
 //             >
 //               ← Back to Services
 //             </button>
@@ -1218,18 +1302,31 @@ export default Services;
 //           </div>
 //         )}
 //       </div>
-//       <div className="flex justify-end my-4 mx-8 lg:mx-14">
+//       <div className="flex justify-end py-4 mx-8 lg:mx-14">
 //         <p className="flex items-center  text-[11px] text-gray-500">
 //           {/* <i className="fa-solid fa-star text-[8px]" /> */}* Conditions
 //           apply
 //         </p>
 //       </div>
-//       <p className="border-b"></p>
 //     </>
 //   );
 // };
 
 // const Services = () => {
+//   const [open, setOpen] = useState(false);
+//   //! for managing scrolling
+//   useEffect(() => {
+//     if (open) {
+//       document.body.style.overflow = "hidden";
+//     } else {
+//       document.body.style.overflow = "auto";
+//     }
+
+//     return () => {
+//       document.body.style.overflow = "auto";
+//     };
+//   }, [open]);
+
 //   const handleViewDetails = (service) => {
 //     //  console.log("Clicked service:", service);
 //     const previewUrl = getDrivePreviewUrl(service.pdfUrl, service.page);
@@ -1253,14 +1350,17 @@ export default Services;
 //   const [loaded, setLoaded] = useState(false);
 //   const [activePdf, setActivePdf] = useState(null);
 
-//   const [open, setOpen] = useState(false);
 //   const { data: services = [], isLoading: loading } = useMainServices();
 //   const { data: allSubServices = {} } = useAllSubServices();
-
+//   const [flipped, setFlipped] = useState(null);
+//   //console.log(11111111, allSubServices);
 //   return (
 //     <section id="services" className="  lg:scroll-mt-16 scroll-mt-20">
 //       {open && (
-//         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+//         <div
+//           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
+//           onWheel={(e) => e.stopPropagation()}
+//         >
 //           <div className="relative w-[90%] max-w-4xl rounded-xl bg-white overflow-hidden">
 //             {/* Header */}
 //             <div className="flex items-center justify-between border-b px-4 py-3">
@@ -1311,7 +1411,7 @@ export default Services;
 //             </div>
 
 //             {/* Right Search */}
-//             <div className="ml-auto w-full max-w-md lg:pl-8  lg:ml-0">
+//             <div className="ml-auto w-full max-w-md lg:pl-16  lg:ml-0">
 //               {/* <div className="relative">
 //                 <div className=" lg:pl-12">
 //                   <input
@@ -1324,13 +1424,13 @@ export default Services;
 //                   <i className="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
 //                 </div>
 //               </div> */}
-//               <div className="lg:pl-12 relative">
+//               <div className="lg:pl-14 relative ">
 //                 <input
 //                   type="text"
 //                   placeholder="Search services..."
 //                   value={mainSearch}
 //                   onChange={(e) => setMainSearch(e.target.value)}
-//                   className="w-full rounded-xl border border-gray-300 px-6 pr-10 py-2 text-lg focus:outline-none focus:ring-1 focus:ring-black"
+//                   className="w-full rounded-xl border border-gray-300 px-6 pr-10 py-2 mr-8 text-lg focus:outline-none focus:ring-1 focus:ring-black"
 //                 />
 
 //                 {/* Search icon (when empty) */}
@@ -1421,19 +1521,103 @@ export default Services;
 //                 .map((service, index) => (
 //                   <div
 //                     key={service.title}
-//                     onClick={() => scrollToSection(service.id, setMainSearch)}
-//                     className="cursor-pointer rounded-md flex flex-col gap-4 transition hover:-translate-y-1 group max-w-[400px] shadow-lg"
+//                     className="cursor-pointer perspective max-w-[400px]"
 //                   >
-//                     <ImageWithFallback
-//                       src={service.img}
-//                       alt={service.title}
-//                       fallback={fallbackImages[index % fallbackImages.length]}
-//                     />
+//                     <div
+//                       className={`relative flip-card-inner transition-transform duration-700 ease-[cubic-bezier(0.4,0.2,0.2,1)] ${
+//                         flipped === service.id ? "rotate-y-180" : ""
+//                       }`}
+//                     >
+//                       {/* FRONT */}
+//                       <div
+//                         onClick={() => {
+//                           const hasSubServices =
+//                             allSubServices[service.id] &&
+//                             Object.values(allSubServices[service.id]).some(
+//                               (section) =>
+//                                 section.services &&
+//                                 section.services.some(
+//                                   (s) => s.status === "active",
+//                                 ),
+//                             );
 
-//                     <div className="px-4 pb-4 ">
-//                       <h3 className="font-semibold text-[18px] text-[#111D15]">
-//                         {service.title}
-//                       </h3>
+//                           if (hasSubServices) {
+//                             scrollToSection(service.id, setMainSearch);
+//                           } else {
+//                             setFlipped(service.id);
+
+//                             // Auto flip back after 2 seconds
+//                             setTimeout(() => {
+//                               setFlipped(null);
+//                             }, 2000);
+//                           }
+//                         }}
+//                         className="backface-hidden bg-white rounded-md shadow-lg"
+//                       >
+//                         <ImageWithFallback
+//                           src={service.img}
+//                           alt={service.title}
+//                           fallback={fallbackImageMap[service.id] || notFoundImg}
+//                           // fallback={
+//                           //   fallbackImages[index % fallbackImages.length]
+//                           // }
+//                         />
+//                         <div className="px-4 py-4">
+//                           <h3 className="text-[18px] text-[#111D15]">
+//                             {service.title?.includes("(") ? (
+//                               <>
+//                                 <span className="font-semibold">
+//                                   {service.title.split("(")[0].trim()}
+//                                 </span>
+//                                 <span className="text-gray-300 italic  font-normal">
+//                                   {" (" + service.title.split("(")[1]}
+//                                 </span>
+//                               </>
+//                             ) : (
+//                               <span className="font-semibold">
+//                                 {service.title}
+//                               </span>
+//                             )}
+//                           </h3>
+//                           {/* <h3 className="font-semibold text-[18px] text-[#111D15]">
+//                             {service.title}
+//                           </h3> */}
+//                         </div>
+//                       </div>
+
+//                       {/* BACK */}
+//                       <div className="absolute inset-0 rotate-y-180 backface-hidden rounded-xl overflow-hidden">
+//                         {/* Gradient Background */}
+//                         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
+
+//                         {/* Glow Overlay */}
+//                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.15),transparent_60%)]"></div>
+
+//                         {/* Content */}
+//                         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
+//                           {/* Animated Icon */}
+//                           <div className="mb-4 animate-pulse">
+//                             <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+//                               🚀
+//                             </div>
+//                           </div>
+
+//                           {/* Title */}
+//                           <h3 className="text-xl font-bold tracking-wide">
+//                             Coming Soon
+//                           </h3>
+
+//                           {/* Subtitle */}
+//                           <p className="text-sm text-gray-300 mt-2">
+//                             This service will be available shortly
+//                           </p>
+//                         </div>
+//                       </div>
+//                       {/* <div className="absolute inset-0 rotate-y-180 backface-hidden bg-black text-white rounded-md flex items-center justify-center">
+//                         <p className="text-lg font-semibold tracking-wide">
+//                           🚀 Coming Soon
+//                         </p>
+//                       </div> */}
 //                     </div>
 //                   </div>
 //                 ))
@@ -1441,11 +1625,43 @@ export default Services;
 //           </div>
 //         </div>
 //       </div>
-
+//       <p className="border-b border-gray-300"></p>
 //       {/* all  servics */}
 
 //       <div>
-//         {Object.entries(allSubServices).map(([mainId, categories], index) =>
+//         {(() => {
+//           let sectionIndex = 0;
+
+//           return Object.entries(allSubServices).flatMap(
+//             ([mainId, categories]) =>
+//               Object.entries(categories).map(([categoryId, section]) => {
+//                 const isFirst = sectionIndex % 2 === 0; // first = true
+//                 sectionIndex++;
+
+//                 return (
+//                   <div
+//                     key={`${mainId}-${categoryId}`}
+//                     className={` ${isFirst ? "bg-[#fbfbfb]" : "bg-white"} px-4 sm:px-6 lg:px-12`}
+//                   >
+//                     <ServiceSection
+//                       id={mainId}
+//                       data={{
+//                         mainTitle: section.categoryTitle
+//                           ? `${section.mainTitle} - ${section.categoryTitle}`
+//                           : section.mainTitle,
+//                         services: section.services,
+//                         rate_pdf: section.main_service_rate_pdf,
+//                       }}
+//                       sectionBg={isFirst ? "gray" : "white"}
+//                       onViewDetails={handleViewDetails}
+//                     />
+//                     {/* <p className="border-b border-gray-500"></p> */}
+//                   </div>
+//                 );
+//               }),
+//           );
+//         })()}
+//         {/* {Object.entries(allSubServices).map(([mainId, categories], index) =>
 //           Object.entries(categories).map(([categoryId, section], idx) => {
 //             const isGray = (index + idx) % 2 === 0;
 
@@ -1468,7 +1684,7 @@ export default Services;
 //               </div>
 //             );
 //           }),
-//         )}
+//         )} */}
 //       </div>
 //     </section>
 //   );

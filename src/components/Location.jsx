@@ -1,102 +1,146 @@
 import React from "react";
 import { MdCall } from "react-icons/md";
-// import { ReactComponent as LocationIcon } from "@/assetss/commanImages/LocationIcon.svg";
+import BlueLocationIcon from "@/assetss/commanImages/Blue.png";
+import PinkLocationIcon from "@/assetss/commanImages/Pink.png";
+import YellowLocationIcon from "@/assetss/commanImages/Yellow.png";
+import OrangeLocationIcon from "@/assetss/commanImages/Orange.png";
+import GreenLocationIcon from "@/assetss/commanImages/Green.png";
+import PurpleLocationIcon from "@/assetss/commanImages/Purple.png";
 import { MapPin } from "lucide-react";
 /* ===================== Locations Data ===================== */
+// const locations = [
+//   {
+//     city: "Nerul,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-purple-600",
+//     titleColor: "text-purple-900",
+//     icon: PurpleLocationIcon,
+//     bg: "from-purple-50 to-pink-50",
+//     description:
+//       "Complete coverage across Delhi, Noida, Gurgaon, Ghaziabad, and Faridabad",
+//     areas: ["Delhi", "Noida", "Gurgaon", "Ghaziabad"],
+//   },
+//   {
+//     city: "CBD Belapur,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-blue-600",
+//     titleColor: "text-blue-900",
+//     bg: "from-blue-50 to-purple-50",
+//     description: "Serving Mumbai, Navi Mumbai, and Thane regions",
+//     areas: ["Mumbai City", "Navi Mumbai", "Thane", "Kalyan"],
+//   },
+//   {
+//     city: "Vashi,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-green-600",
+//     titleColor: "text-green-900",
+//     bg: "from-green-50 to-blue-50",
+//     description: "Full service availability across Bangalore city",
+//     areas: ["Central Bangalore", "Whitefield", "Electronic City", "Hebbal"],
+//   },
+//   {
+//     city: "Sanpada,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-orange-600",
+//     titleColor: "text-orange-900",
+//     bg: "from-orange-50 to-red-50",
+//     description: "Comprehensive services in Pune and Pimpri-Chinchwad",
+//     areas: ["Pune City", "Hinjewadi", "Wakad", "Baner"],
+//   },
+//   {
+//     city: "Kharghar,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-pink-600",
+//     titleColor: "text-pink-900",
+//     bg: "from-pink-50 to-purple-50",
+//     description: "Quality services across Hyderabad and Secunderabad",
+//     areas: ["Hyderabad", "Secunderabad", "Gachibowli", "Madhapur"],
+//   },
+//   {
+//     city: "Ghansoli,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-yellow-600",
+//     titleColor: "text-yellow-900",
+//     bg: "from-yellow-50 to-orange-50",
+//     description: "Reliable services throughout Chennai metropolitan area",
+//     areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+//   },
+//   {
+//     city: "Koparkhairane,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-purple-600",
+//     titleColor: "text-yellow-900",
+//     bg: "from-purple-50 to-pink-50",
+//     description: "Reliable services throughout Chennai metropolitan area",
+//     areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+//   },
+//   {
+//     city: "Kamothe,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-blue-600",
+//     titleColor: "text-yellow-900",
+//     bg: "from-blue-50 to-purple-50",
+//     description: "Reliable services throughout Chennai metropolitan area",
+//     areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+//   },
+//   {
+//     city: "Panvel,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-green-600",
+//     titleColor: "text-yellow-900",
+//     bg: "from-green-50 to-blue-50",
+//     description: "Reliable services throughout Chennai metropolitan area",
+//     areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+//   },
+//   {
+//     city: "Airoli,",
+//     maincity: "Navi Mumbai",
+//     iconColor: "text-orange-600",
+//     titleColor: "text-yellow-900",
+//     bg: "from-orange-50 to-red-50",
+//     description: "Reliable services throughout Chennai metropolitan area",
+//     areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
+//   },
+// ];
+
 const locations = [
   {
     city: "Nerul,",
     maincity: "Navi Mumbai",
-    iconColor: "text-purple-600",
-    titleColor: "text-purple-900",
+    icon: PurpleLocationIcon,
     bg: "from-purple-50 to-pink-50",
-    description:
-      "Complete coverage across Delhi, Noida, Gurgaon, Ghaziabad, and Faridabad",
-    areas: ["Delhi", "Noida", "Gurgaon", "Ghaziabad"],
   },
   {
     city: "CBD Belapur,",
     maincity: "Navi Mumbai",
-    iconColor: "text-blue-600",
-    titleColor: "text-blue-900",
+    icon: BlueLocationIcon,
     bg: "from-blue-50 to-purple-50",
-    description: "Serving Mumbai, Navi Mumbai, and Thane regions",
-    areas: ["Mumbai City", "Navi Mumbai", "Thane", "Kalyan"],
   },
   {
     city: "Vashi,",
     maincity: "Navi Mumbai",
-    iconColor: "text-green-600",
-    titleColor: "text-green-900",
+    icon: GreenLocationIcon,
     bg: "from-green-50 to-blue-50",
-    description: "Full service availability across Bangalore city",
-    areas: ["Central Bangalore", "Whitefield", "Electronic City", "Hebbal"],
   },
   {
     city: "Sanpada,",
     maincity: "Navi Mumbai",
-    iconColor: "text-orange-600",
-    titleColor: "text-orange-900",
+    icon: OrangeLocationIcon,
     bg: "from-orange-50 to-red-50",
-    description: "Comprehensive services in Pune and Pimpri-Chinchwad",
-    areas: ["Pune City", "Hinjewadi", "Wakad", "Baner"],
   },
   {
     city: "Kharghar,",
     maincity: "Navi Mumbai",
-    iconColor: "text-pink-600",
-    titleColor: "text-pink-900",
+    icon: PinkLocationIcon,
     bg: "from-pink-50 to-purple-50",
-    description: "Quality services across Hyderabad and Secunderabad",
-    areas: ["Hyderabad", "Secunderabad", "Gachibowli", "Madhapur"],
   },
   {
     city: "Ghansoli,",
     maincity: "Navi Mumbai",
-    iconColor: "text-yellow-600",
-    titleColor: "text-yellow-900",
+    icon: YellowLocationIcon,
     bg: "from-yellow-50 to-orange-50",
-    description: "Reliable services throughout Chennai metropolitan area",
-    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
-  },
-  {
-    city: "Koparkhairane,",
-    maincity: "Navi Mumbai",
-    iconColor: "text-purple-600",
-    titleColor: "text-yellow-900",
-    bg: "from-purple-50 to-pink-50",
-    description: "Reliable services throughout Chennai metropolitan area",
-    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
-  },
-  {
-    city: "Kamothe,",
-    maincity: "Navi Mumbai",
-    iconColor: "text-blue-600",
-    titleColor: "text-yellow-900",
-    bg: "from-blue-50 to-purple-50",
-    description: "Reliable services throughout Chennai metropolitan area",
-    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
-  },
-  {
-    city: "Panvel,",
-    maincity: "Navi Mumbai",
-    iconColor: "text-green-600",
-    titleColor: "text-yellow-900",
-    bg: "from-green-50 to-blue-50",
-    description: "Reliable services throughout Chennai metropolitan area",
-    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
-  },
-  {
-    city: "Airoli,",
-    maincity: "Navi Mumbai",
-    iconColor: "text-orange-600",
-    titleColor: "text-yellow-900",
-    bg: "from-orange-50 to-red-50",
-    description: "Reliable services throughout Chennai metropolitan area",
-    areas: ["Chennai City", "OMR", "Anna Nagar", "Velachery"],
   },
 ];
-
 const Locations = () => {
   return (
     <section id="location" className="bg-white py-20 px-4 scroll-mt-12">
@@ -111,7 +155,7 @@ const Locations = () => {
         </p> */}
 
         {/* ================= Locations Grid ================= */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:pt-12">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:pt-12">
           {locations.map((loc) => (
             <div
               key={loc.city}
@@ -121,18 +165,19 @@ const Locations = () => {
                 className={`fas fa-city mb-4 text-4xl md:text-5xl ${loc.iconColor}`}
               ></i> */}
               <div className="flex flex-col items-center  justify-center ">
-                <MapPin className={`h-12 w-12 ${loc.iconColor}`} />
-                {/* <img
-                  src={LocationIcon}
-                  alt="No services found"
-                  className=" object-contain opacity-90 h-12 w-12 text-red-500"
-                /> */}
+                <img
+                  src={loc.icon}
+                  alt={loc.city}
+                  className="h-12 w-12 object-contain"
+                />
               </div>
 
-              <h3 className={` text-xl md:text-2xl font-bold `}>{loc.city}</h3>
-              <h4 className={`mb-3 text-xl md:text-2xl font-bold `}>
+              <h3 className={` text-xl mt-2 md:text-2xl font-bold `}>
+                {loc.city}
+              </h3>
+              <p className={`mb-3 text-xl md:text-xl  font-semibold`}>
                 {loc.maincity}
-              </h4>
+              </p>
               {/* 
               <p className="mb-4 text-gray-700">{loc.description}</p> */}
               {/* 

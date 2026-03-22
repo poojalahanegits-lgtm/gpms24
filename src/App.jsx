@@ -13,10 +13,11 @@ import Login from "./components/Login.jsx"; // 👈 create this
 import ScrollToTop from "./components/ScrollToTop";
 import MainServicesPage from "./admin/ManageMainServicesPage.jsx";
 import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "./context/AuthContext";
 import { useApp } from "./context/AppProvider.jsx";
 import LeadsNavigation from "./LeadsForGpgs/LeadsNavigation.jsx";
+import EditServicePage from "./admin/EditServicePage.jsx";
 // import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -29,7 +30,6 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuth();
   const { username } = useApp();
@@ -88,6 +88,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <LeadsNavigation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-service/:id"
+          element={
+            <ProtectedRoute>
+              <EditServicePage />
             </ProtectedRoute>
           }
         />

@@ -112,3 +112,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.editor-container .ql-container {
+  min-height: 400px; /* 🔥 Increase editor typing area */
+  border-radius: 0 0 10px 10px;
+}
+
+.editor-container .ql-toolbar {
+  border-radius: 10px 10px 0 0;
+  background: #f9fafb;
+}
+
+.editor-container .ql-editor {
+  min-height: 350px;
+  font-size: 14px;
+  line-height: 1.6;
+}
