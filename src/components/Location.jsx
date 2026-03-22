@@ -111,6 +111,12 @@ const locations = [
     bg: "from-purple-200 to-purple-50",
   },
   {
+    city: "Seawoods,",
+    maincity: "Navi Mumbai",
+    icon: YellowLocationIcon,
+    bg: "from-yellow-200 to-yellow-50",
+  },
+  {
     city: "CBD Belapur,",
     maincity: "Navi Mumbai",
     icon: BlueLocationIcon,
@@ -120,7 +126,7 @@ const locations = [
     city: "Vashi,",
     maincity: "Navi Mumbai",
     icon: GreenLocationIcon,
-    bg: "from-green-200 to-green-50",
+    bg: "from-purple-200 to-purple-50",
   },
   {
     city: "Sanpada,",
@@ -133,6 +139,13 @@ const locations = [
     maincity: "Navi Mumbai",
     icon: PurpleLocationIcon,
     bg: "from-red-200 to-red-50",
+  },
+  {
+    city: "Kopar Khairne",
+    maincity: "Navi Mumbai",
+    icon: PinkLocationIcon,
+
+    bg: "from-purple-200 to-purple-50",
   },
   {
     city: "Ghansoli,",

@@ -205,9 +205,8 @@ ${sectionBg === "gray" ? "bg-white" : "bg-white"}`}
           {isValidPrice ? (
             <p className="text-sm md:text-[18px] text-black">
               ₹ {!isNaN(price) ? price.toLocaleString("en-IN") : rawPrice}
-              <span className="text-gray-500 italic text-[11px] md:text-[14px]">
-                {" "}
-                onwards <span>*</span>
+              <span className="text-gray-500 font-normal text-[11px] md:text-[18px]">
+                +<span></span>
               </span>
             </p>
           ) : (
@@ -485,7 +484,6 @@ const Services = () => {
 
             {/* Right Search */}
             <div className="ml-auto w-full max-w-md lg:pl-16  lg:ml-0">
-              \
               <div className="lg:pl-14 relative ">
                 <input
                   type="text"
