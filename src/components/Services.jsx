@@ -28,26 +28,28 @@ import BuildingMaintenance_image from "@/assets/servicesImages/BuildingMaintenan
 import SocietyManagemen_image from "@/assets/servicesImages/SocietyManagemen.png";
 import WaterProofing_image from "@/assets/servicesImages/SocietyManagemen.png";
 import Furnishing_image from "@/assets/servicesImages/Furnishing.png";
+import GrillAndSlidingWork_image from "@/assets/servicesImages/Grill&SlidingWork.png";
 
 //! icons
 
-import service1_icon from "@/assets/icons/Movers&Packers.png";
+import MoversNPackers_icon from "@/assets/icons/Movers&Packers.png";
 
-import service2_icon from "@/assets/icons/DeepCleaning-Icon.png";
-import service3_icon from "@/assets/icons/Electrical-Icon.png";
-import service4_icon from "@/assets/icons/Plumbing-Icon.png";
-import service5_icon from "@/assets/icons/WaterTank-Icon.png";
-import service6_icon from "@/assets/icons/Painting-Icon.png";
-import service7_icon from "@/assets/icons/Bhangarwala-Icon.png";
-import service8_icon from "@/assets/icons/PropertyRenovation-Icon.png";
-import service9_icon from "@/assets/icons/PropertyRenovation-Icon.png";
-import service10_icon from "@/assets/icons/Tile&GraniteWork-Icon.png";
-import service11_icon from "@/assets/icons/CivilWork-Icon.png";
-import service12_icon from "@/assets/icons/Carpentry-Icon.png";
-import service13_icon from "@/assets/icons/CarMaintenance-Icon.png";
-import service14_icon from "@/assets/icons/BuildingMaintenance-Icon.png";
-import service15_icon from "@/assets/icons/SocietyManagement-Icon.png";
-import service23_icon from "@/assets/servicesImages/Furnishing.png";
+import DeepCleaning_icon from "@/assets/icons/DeepCleaning-Icon.png";
+import Electrical_icon from "@/assets/icons/Electrical-Icon.png";
+import Plumbing_icon from "@/assets/icons/Plumbing-Icon.png";
+import WaterTank_icon from "@/assets/icons/WaterTank-Icon.png";
+import Painting_icon from "@/assets/icons/Painting-Icon.png";
+import Bhangarwala_icon from "@/assets/icons/Bhangarwala-Icon.png";
+import WaterProofing_icon from "@/assets/icons/PropertyRenovation-Icon.png";
+import PropertyRenovation_icon from "@/assets/icons/PropertyRenovation-Icon.png";
+import TileNGraniteWork_icon from "@/assets/icons/Tile&GraniteWork-Icon.png";
+import CivilWork_icon from "@/assets/icons/CivilWork-Icon.png";
+import CarpentrySharp_icon from "@/assets/icons/Carpentry-Icon.png";
+import CarMaintenance_icon from "@/assets/icons/CarMaintenance-Icon.png";
+import BuildingMaintenance_icon from "@/assets/icons/BuildingMaintenance-Icon.png";
+import SocietyManagemen_icon from "@/assets/icons/SocietyManagement-Icon.png";
+import Furnishing_icon from "@/assets/icons/Furnishing-Icon.png";
+import GrillAndSlidingWork_icon from "@/assets/icons/Grill&SlidingWork.png";
 
 const fallbackImageMap = {
   "gpms-service-1": MoversNPackers_image,
@@ -66,24 +68,26 @@ const fallbackImageMap = {
   "gpms-service-14": BuildingMaintenance_image,
   "gpms-service-15": SocietyManagemen_image,
   "gpms-service-23": Furnishing_image,
+  "gpms-service-24": GrillAndSlidingWork_image,
 };
 const serviceIconMap = {
-  "gpms-service-1": service1_icon,
-  "gpms-service-2": service2_icon,
-  "gpms-service-3": service3_icon,
-  "gpms-service-4": service4_icon,
-  "gpms-service-5": service5_icon,
-  "gpms-service-6": service6_icon,
-  "gpms-service-7": service7_icon,
-  "gpms-service-8": service8_icon,
-  "gpms-service-9": service9_icon,
-  "gpms-service-10": service10_icon,
-  "gpms-service-11": service11_icon,
-  "gpms-service-12": service12_icon,
-  "gpms-service-13": service13_icon,
-  "gpms-service-14": service14_icon,
-  "gpms-service-15": service15_icon,
-  "gpms-service-23": service23_icon,
+  "gpms-service-1": MoversNPackers_icon,
+  "gpms-service-2": DeepCleaning_icon,
+  "gpms-service-3": Electrical_icon,
+  "gpms-service-4": Plumbing_icon,
+  "gpms-service-5": WaterTank_icon,
+  "gpms-service-6": Painting_icon,
+  "gpms-service-7": Bhangarwala_icon,
+  "gpms-service-8": WaterProofing_icon,
+  "gpms-service-9": PropertyRenovation_icon,
+  "gpms-service-10": TileNGraniteWork_icon,
+  "gpms-service-11": CivilWork_icon,
+  "gpms-service-12": CarpentrySharp_icon,
+  "gpms-service-13": CarMaintenance_icon,
+  "gpms-service-14": BuildingMaintenance_icon,
+  "gpms-service-15": SocietyManagemen_icon,
+  "gpms-service-23": Furnishing_icon,
+  "gpms-service-24": GrillAndSlidingWork_icon,
 };
 const IconWithFallback = ({ src, fallback }) => {
   const [iconSrc, setIconSrc] = useState(fallback);
@@ -158,7 +162,7 @@ const getDrivePreviewUrl = (url, pageNumber) => {
 
   return page > 0 ? `${baseUrl}#page=${page}` : baseUrl;
 };
-
+// ! Service Card
 const ServiceCard = ({ service, sectionBg, onViewDetails, mainId }) => {
   //! price validation
   const rawPrice = service.price;
@@ -236,6 +240,7 @@ ${sectionBg === "gray" ? "bg-white" : "bg-white"}`}
     </div>
   );
 };
+//! Service Section main service
 const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -384,6 +389,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
   );
 };
 
+//! Main Service Component
 const Services = () => {
   const [open, setOpen] = useState(false);
   //! for managing scrolling
@@ -399,6 +405,7 @@ const Services = () => {
     };
   }, [open]);
 
+  //! pdf view
   const handleViewDetails = (service) => {
     //  console.log("Clicked service:", service);
     const previewUrl = getDrivePreviewUrl(service.pdfUrl, service.page);
@@ -679,30 +686,6 @@ const Services = () => {
               }),
           );
         })()}
-        {/* {Object.entries(allSubServices).map(([mainId, categories], index) =>
-          Object.entries(categories).map(([categoryId, section], idx) => {
-            const isGray = (index + idx) % 2 === 0;
-
-            return (
-              <div
-                key={`${mainId}-${categoryId}`}
-                className="lg:py-6 py-4 md:py-6 "
-              >
-                <ServiceSection
-                  id={mainId}
-                  data={{
-                    mainTitle: section.categoryTitle
-                      ? `${section.mainTitle} - ${section.categoryTitle}`
-                      : section.mainTitle,
-                    services: section.services,
-                  }}
-                  sectionBg={isGray ? "white" : "gray"}
-                  onViewDetails={handleViewDetails}
-                />
-              </div>
-            );
-          }),
-        )} */}
       </div>
     </section>
   );

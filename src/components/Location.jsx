@@ -107,8 +107,9 @@ const locations = [
   {
     city: "Nerul,",
     maincity: "Navi Mumbai",
-    icon: YellowLocationIcon,
-    bg: "from-purple-200 to-purple-50",
+    icon: PinkLocationIcon,
+
+    bg: "from-pink-200 to-pink-50",
   },
   {
     city: "Seawoods,",
@@ -120,38 +121,37 @@ const locations = [
     city: "CBD Belapur,",
     maincity: "Navi Mumbai",
     icon: BlueLocationIcon,
-    bg: "from-orange-200 to-orange-50",
+    bg: "from-blue-200 to-blue-50",
   },
   {
     city: "Vashi,",
     maincity: "Navi Mumbai",
     icon: GreenLocationIcon,
-    bg: "from-purple-200 to-purple-50",
+    bg: "from-green-200 to-green-50",
   },
   {
     city: "Sanpada,",
     maincity: "Navi Mumbai",
     icon: OrangeLocationIcon,
-    bg: "from-blue-200 to-blue-50",
+    bg: "from-orange-200 to-orange-50",
   },
   {
     city: "Kharghar,",
     maincity: "Navi Mumbai",
     icon: PurpleLocationIcon,
-    bg: "from-red-200 to-red-50",
+    bg: "from-purple-200 to-purple-50",
   },
   {
     city: "Kopar Khairne",
     maincity: "Navi Mumbai",
     icon: PinkLocationIcon,
 
-    bg: "from-purple-200 to-purple-50",
+    bg: "from-pink-200 to-pink-50",
   },
   {
     city: "Ghansoli,",
     maincity: "Navi Mumbai",
-    icon: PinkLocationIcon,
-
+    icon: YellowLocationIcon,
     bg: "from-yellow-200 to-yellow-50",
   },
 ];
