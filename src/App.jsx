@@ -56,14 +56,13 @@ const App = () => {
       style={{ backgroundImage: `url(${background9})` }}
     >
       <Header />
-
+      <ScrollToTop />
       <Routes>
         {/* Home Page */}
         <Route
           path="/"
           element={
             <>
-              <ScrollToTop />
               <Hero />
               <Home />
               <Services />
