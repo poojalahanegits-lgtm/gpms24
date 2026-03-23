@@ -208,13 +208,21 @@ ${sectionBg === "gray" ? "bg-white" : "bg-white"}`}
         <div className="mt-3">
           {isValidPrice ? (
             <p className="text-sm md:text-[18px] text-black">
-              ₹ {!isNaN(price) ? price.toLocaleString("en-IN") : rawPrice}
+              ₹{!isNaN(price) ? price.toLocaleString("en-IN") : rawPrice}
               <span className="text-gray-500 font-normal text-[11px] md:text-[18px]">
                 +<span></span>
               </span>
             </p>
           ) : (
-            <p className="flex  items-center gap-2 text-sm md:text-[16px] text-gray-600 font-medium">
+            <p
+              onClick={(e) => {
+                e.stopPropagation(); // 🚀 रोकता है parent click (PDF open)
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="flex items-center gap-1 text-sm md:text-[16px] text-gray-600 font-medium cursor-pointer"
+            >
               <i className="fas fa-phone"></i>
               <span className="italic underline decoration-1 underline-offset-2">
                 Get a Quote
@@ -302,7 +310,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
         : "bg-black text-white cursor-not-allowed"
     }`}
             >
-              ₹
+              <span className="text-[18px]"> ₹</span>
             </div>
             <div className="relative w-full sm:w-[200px]">
               <input

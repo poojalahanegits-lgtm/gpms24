@@ -158,7 +158,7 @@ const Contact = () => {
                   value={formData.fullName}
                   onChange={handleChange}
                   required
-                  placeholder="Enter your full name"
+                  placeholder="Enter full name"
                   className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
                 />
               </div>
@@ -239,35 +239,29 @@ const Contact = () => {
                 <InfoItem
                   icon="fa-phone"
                   title="Phone"
-                  lines={["+91 98765 43210", "+91 98765 43211"]}
+                  info="(Please Note: Whatsapp message is most preffered)"
+                  lines={["9819636341", "7977438563"]}
                 />
 
                 <InfoItem
                   icon="fa-envelope"
                   title="Email"
-                  lines={[
-                    "info@eliteproperty.care",
-                    "support@eliteproperty.care",
-                  ]}
+                  lines={["gopalspms@gmail.com", "kamleshwarkodag@gmail.com"]}
                 />
 
                 <InfoItem
                   icon="fa-map-marker-alt"
                   title="Head Office"
                   lines={[
-                    "123 Business Park, Sector 15",
-                    "Delhi NCR, India - 110001",
+                    "Plot No 132B, Nandanvan CHS, Lane Number 7, ",
+                    "Sector 17, Nerul (E), Navi Mumbai, Maharashtra 400706",
                   ]}
                 />
 
                 <InfoItem
                   icon="fa-clock"
                   title="Working Hours"
-                  lines={[
-                    "Mon - Sat: 8:00 AM - 8:00 PM",
-                    "Sun: 9:00 AM - 6:00 PM",
-                    "24/7 Emergency Service",
-                  ]}
+                  lines={[" 9:00 AM - 9:00 PM", "24/7 Emergency Service"]}
                   highlightLast
                 />
               </div>
@@ -304,11 +298,15 @@ const Contact = () => {
 };
 
 /* ================= Reusable Info Item ================= */
-const InfoItem = ({ icon, title, lines, highlightLast }) => (
+const InfoItem = ({ icon, info, title, lines, highlightLast }) => (
   <div className="flex items-start">
     <i className={`fas ${icon} mr-4 mt-1 text-2xl`}></i>
     <div>
-      <h4 className="text-lg font-bold">{title}</h4>
+      <div className="flex gap-2">
+        <h4 className="text-lg font-bold">{title}</h4>
+        <h4 className="text-gray-500 italic text-[15px] pt-1">{info}</h4>
+      </div>
+
       {lines.map((line, i) => (
         <p
           key={i}
