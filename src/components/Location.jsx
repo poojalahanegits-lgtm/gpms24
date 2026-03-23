@@ -157,7 +157,7 @@ const locations = [
 ];
 const Locations = () => {
   return (
-    <section id="location" className="bg-white py-20 px-4 scroll-mt-12">
+    <section id="location" className=" py-20 px-4 scroll-mt-12">
       <div className="mx-auto max-w-7xl">
         {/* ================= Section Heading ================= */}
         <h2 className="mb-4 lg:mb-8 text-center text-4xl md:text-5xl font-bold ">

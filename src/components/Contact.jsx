@@ -127,10 +127,7 @@ const Contact = () => {
   // console.log(11111111, services);
 
   return (
-    <section
-      id="contact"
-      className="bg-gradient-to-br from-gray-50 to-purple-50 py-20 px-4 scroll-mt-12"
-    >
+    <section id="contact" className=" py-20 px-4 scroll-mt-12">
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}
         <h2 className="mb-4 text-center text-4xl md:text-5xl font-bold">
