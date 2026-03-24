@@ -496,8 +496,10 @@ const Services = () => {
       )}
       {/* main services */}
       <div className=" lg:pb-18 pt-4 md:pt-6 pb-4 md:pb-6 lg:pt-12 px-2">
-        <div className=" sm:px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-5  mb-8">
+        {/* for larg devices  */}
+        <div className="  sm:px-6 lg:px-12">
+          {/* title and serach  for larg devices */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-5  mb-8">
             {/* Center Heading */}
             <div className="lg:flex flex-col hidden  justify-center "></div>
             <div className="flex flex-col  justify-center items-center">
@@ -527,6 +529,44 @@ const Services = () => {
                   <button
                     onClick={() => setMainSearch("")}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Title and Search for Mobile & Up */}
+          <div className="grid md:hidden grid-cols-2 px-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-8">
+            {/* Heading */}
+            <div className="flex justify-between sm:justify-start items-center">
+              <h2 className="text-black text-[22px] sm:text-[26px] lg:text-[38px] font-bold">
+                Our Services
+              </h2>
+            </div>
+
+            {/* Search */}
+            <div className="w-full sm:col-span-1 lg:col-span-2">
+              <div className="relative w-full max-w-md sm:max-w-full">
+                <input
+                  type="text"
+                  placeholder="Search services"
+                  value={mainSearch}
+                  onChange={(e) => setMainSearch(e.target.value)}
+                  className="w-full rounded-xl border border-gray-300 px-5 pr-2 py-2 text-base sm:text-lg focus:outline-none focus:ring-1 focus:ring-black"
+                />
+
+                {/* Search icon (when empty) */}
+                {!mainSearch && (
+                  <i className="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm sm:text-base" />
+                )}
+
+                {/* Clear icon (when typing) */}
+                {mainSearch && (
+                  <button
+                    onClick={() => setMainSearch("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black text-sm sm:text-base"
                   >
                     ✕
                   </button>

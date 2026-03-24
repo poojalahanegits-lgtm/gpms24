@@ -10,8 +10,8 @@ const Home = () => {
     <div className="">
       {/* Feature Cards */}
       <div
-        className="pt-12 pb-8 sm:pt-16  lg:pb-16 grid grid-cols-1 
-        sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl lg:mx-auto mx-4"
+        className="pt-12 pb-8 sm:pt-16  lg:pb-16 grid 
+        grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl lg:mx-auto mx-4"
       >
         {features.map((feature) => (
           <div

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import logo from "@/assets/commanImages/GPMS-Logo.png";
+import logo from "@/assets/commanImages/GPMS-Logo.jpeg";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -22,6 +22,15 @@ const navLinks = [
 ];
 
 const Header = () => {
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const handleNavigation = (section) => {
     if (location.pathname !== "/") {
       navigate("/");
@@ -67,22 +76,31 @@ const Header = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [accountOpen, setAccountOpen] = useState(false);
-
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   return (
-    <header className="w-full font-nunito bg-white shadow-lg sticky top-0 z-[100]">
-      <div className="flex items-center justify-between px-4 sm:px-6 lg:px-10 py-1">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img
-            src={logo}
-            alt="Company Logo"
-            className="h-20 lg:h-24 w-auto object-contain"
-          />
-        </Link>
-
+    <header
+      className={`w-full  sticky top-0 z-[100] transition-all duration-300 ${
+        scrolled ? "bg-white shadow-lg" : "bg-white shadow-lg"
+      }`}
+    >
+      <div className="flex items-center justify-between px-4 sm:px-6 lg:px-10 ">
+        {/* TEXT */}
+        <div className="flex gap-2 lg:gap-4 items-center justify-center py-2">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <img
+              src={logo}
+              alt="Company Logo"
+              className="h-20 lg:h-20 w-auto object-contain"
+            />
+          </Link>
+          <h1 className="text-black text-[20px] uppercase md:text-[28px]  lg:text-[30px] md:leading-[1.3]  lg:leading-[1.2] font-bold">
+            Property <span className="">Maintenance</span> Services
+          </h1>
+        </div>
         {/* ================= Desktop Navigation (md and up) ================= */}
         <nav className="hidden lg:flex items-center space-x-4 lg:space-x-6 xl:space-x-8 flex-shrink-0">
           {/* {navLinks.map((link) => (

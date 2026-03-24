@@ -73,7 +73,7 @@ export default function Hero() {
             className="  mx-auto max-w-7xl px-4 
         grid grid-cols-1 md:grid-cols-2 
          gap-8 lg:gap-12    
-        py-2   h-full"
+        pt-2 lg:pb-2   h-full"
           >
             {/* Left Content */}
 
@@ -129,8 +129,8 @@ export default function Hero() {
         <div className="flex gap-3">
           {/* Call Button */}
           <a
-            href="tel:+919999999999"
-            className="flex-1 flex items-center justify-center gap-2 bg-blue-900 text-white py-3 rounded-xl font-semibold text-[16px]"
+            href="tel:+919819636341"
+            className="flex-1 flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-xl font-semibold text-[16px]"
           >
             <FaPhoneAlt />
             Call Now
@@ -138,7 +138,7 @@ export default function Hero() {
 
           {/* WhatsApp Button */}
           <a
-            href="https://wa.me/919999999999"
+            href="https://wa.me/919819636341"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl font-semibold text-[16px]"
@@ -148,36 +148,14 @@ export default function Hero() {
           </a>
         </div>
       </div>
-      {/* <div className="fixed bottom-6 w-full  z-50 flex flex-row gap-8  items-center justify-around md:hidden">
-      
-        <div>
-          <a
-            href="https://wa.me/919999999999"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 p-3 rounded-full shadow-lg text-white text-xl flex items-center justify-center"
-          >
-            <FaWhatsapp />
-          </a>
-        </div>
 
-        
-        <div>
-          <a
-            href="tel:+919999999999"
-            className="bg-blue-500 p-3 rounded-full shadow-lg text-white text-xl flex items-center justify-center"
-          >
-            <FaPhoneAlt />
-          </a>
-        </div>
-      </div> */}
       {/* desktop Sticky 3D WhatsApp & Call icons */}
       <div
         className=" hidden md:flex fixed bottom-6 right-4 z-50  flex-col space-y-3 md:space-y-4"
         data-aos="fade-left"
       >
         <a
-          href="https://wa.me/9326262292"
+          href="https://wa.me/919819636341"
           target="_blank"
           rel="noopener noreferrer"
           className="
@@ -194,7 +172,7 @@ export default function Hero() {
           <FaWhatsapp className="text-2xl md:text-3xl" />
         </a>
         <a
-          href="tel:9326262292"
+          href="tel:919819636341"
           className="
     flex items-center justify-center
     w-12 h-12            /* Mobile */
@@ -209,36 +187,6 @@ export default function Hero() {
           <FaPhoneAlt className="text-xl md:text-2xl" />
         </a>
       </div>
-      {/* <div
-        className="fixed bottom-8 right-4 z-50 flex flex-col space-y-4"
-        data-aos="fade-left"
-      >
-  
-        <a
-          href="https://wa.me/9326262292"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-auto min-w-[20px] h-8 lg:h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg text-white text-2xl
-     hover:scale-110 hover:-translate-y-1 hover:shadow-2xl
-     active:shadow-md animate-zoom"
-          title="Chat with us on WhatsApp"
-          aria-label="WhatsApp Chat"
-        >
-          <FaWhatsapp className="text-xl lg:text-4xl" />
-        </a>
-
-       
-        <a
-          href="tel:9326262292"
-          className="w-auto min-w-[20px] px-3 h-8 lg:h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg text-white text-2xl
-     hover:scale-110 hover:-translate-y-1 hover:shadow-2xl
-    active:scale-95 active:shadow-md animate-zoom"
-          title="Call us"
-          aria-label="Call Us"
-        >
-          <FaPhoneAlt className="text-xl lg:text-2xl" />
-        </a>
-      </div> */}
     </>
   );
 }
