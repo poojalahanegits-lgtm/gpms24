@@ -1,10 +1,11 @@
 import ServiceCardSkeleton from "./skelton/ServiceCardSkeleton";
-
+import { useAuth } from "../context/AuthContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Info } from "lucide-react";
+
 import { useAllSubServices, useMainServices } from "./services/index";
 
 // import plumbingImg from "@/assets/mainservicesimages/Plumbing.png";
@@ -250,6 +251,8 @@ ${sectionBg === "gray" ? "bg-white" : "bg-white"}`}
 };
 //! Service Section main service
 const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
+  const { user } = useAuth();
+
   const [search, setSearch] = useState("");
   const [showAll, setShowAll] = useState(false);
 
@@ -291,27 +294,32 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
             )}
           </h1>
 
-          {/* Search */}
+          {/* Search  & rate card pdf */}
           <div className="flex items-center gap-2">
-            <div
-              onClick={() => {
-                if (data.rate_pdf) {
-                  onViewDetails({
-                    title: data.mainTitle + " - Rate Card",
-                    pdfUrl: data.rate_pdf,
-                    page: 1,
-                  });
-                }
-              }}
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition duration-300  hover:-translate-y-1 hover:shadow-xl
+            {/* rate card pdf */}
+            {user?.Role === "admin" && (
+              <div
+                onClick={() => {
+                  if (data.rate_pdf) {
+                    onViewDetails({
+                      title: data.mainTitle + " - Rate Card",
+                      pdfUrl: data.rate_pdf,
+                      page: 1,
+                    });
+                  }
+                }}
+                className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition duration-300  hover:-translate-y-1 hover:shadow-xl
     ${
       data.rate_pdf
         ? "bg-black text-white cursor-pointer hover:scale-105"
         : "bg-black text-white cursor-not-allowed"
     }`}
-            >
-              <span className="text-[18px]"> ₹</span>
-            </div>
+              >
+                <span className="text-[18px]"> ₹</span>
+              </div>
+            )}
+
+            {/*  search */}
             <div className="relative w-full sm:w-[200px]">
               <input
                 type="text"
@@ -399,6 +407,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
 
 //! Main Service Component
 const Services = () => {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   //! for managing scrolling
   useEffect(() => {

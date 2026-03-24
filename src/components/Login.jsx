@@ -5,8 +5,31 @@ import { useLogin } from "./services/index";
 import SignupPage from "./SignupPage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+// import CryptoJS from "crypto-js";
+
+// const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+
+// const encryptedUser = localStorage.getItem("user");
+
+// if (encryptedUser) {
+//   const bytes = CryptoJS.AES.decrypt(encryptedUser, SECRET_KEY);
+//   const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+//   const parsedUser = JSON.parse(decrypted);
+
+//   console.log("Manually Decrypted User:", parsedUser);
+// }
 
 const Login = () => {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      console.log("Decrypted User:", user);
+      console.log("User Role:", user.Role);
+    }
+  }, [user]);
+
+  console.log("User Role:", user?.Role);
   const { login } = useAuth();
   const { mutate: sendLoginDetails } = useLogin();
 
@@ -75,7 +98,12 @@ const Login = () => {
 
           login(user); // context/state update
           localStorage.setItem("loginTimestamp", Date.now());
-          navigate("/dashboard");
+          if (user.Role === "admin") {
+            navigate("/dashboard");
+          } else {
+            navigate("/user-dashboard");
+          }
+
           toast.success("Logged in successfully!");
           reset();
           setIsSubmitting(false);

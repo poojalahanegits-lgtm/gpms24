@@ -18,7 +18,8 @@ import { useAuth } from "./context/AuthContext";
 import { useApp } from "./context/AppProvider.jsx";
 import LeadsNavigation from "./LeadsForGpgs/LeadsNavigation.jsx";
 import EditServicePage from "./admin/EditServicePage.jsx";
-import background9 from "@/assets/commanImages/9.png";
+// import background9 from "@/assets/commanImages/9.png";
+import background9 from "@/assets/commanImages/Background1.png";
 // import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("token");
