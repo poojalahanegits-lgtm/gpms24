@@ -122,9 +122,58 @@ export default function Hero() {
           </div>
         </div>
       </section>
-      {/* Sticky 3D WhatsApp & Call icons */}
+
+      {/* mobile whastpp and call icon */}
+      {/* Floating Buttons (Mobile Sticky) */}
+      <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg z-50 py-3 px-8 md:hidden">
+        <div className="flex gap-3">
+          {/* Call Button */}
+          <a
+            href="tel:+919999999999"
+            className="flex-1 flex items-center justify-center gap-2 bg-blue-900 text-white py-3 rounded-xl font-semibold text-[16px]"
+          >
+            <FaPhoneAlt />
+            Call Now
+          </a>
+
+          {/* WhatsApp Button */}
+          <a
+            href="https://wa.me/919999999999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl font-semibold text-[16px]"
+          >
+            <FaWhatsapp />
+            WhatsApp
+          </a>
+        </div>
+      </div>
+      {/* <div className="fixed bottom-6 w-full  z-50 flex flex-row gap-8  items-center justify-around md:hidden">
+      
+        <div>
+          <a
+            href="https://wa.me/919999999999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 p-3 rounded-full shadow-lg text-white text-xl flex items-center justify-center"
+          >
+            <FaWhatsapp />
+          </a>
+        </div>
+
+        
+        <div>
+          <a
+            href="tel:+919999999999"
+            className="bg-blue-500 p-3 rounded-full shadow-lg text-white text-xl flex items-center justify-center"
+          >
+            <FaPhoneAlt />
+          </a>
+        </div>
+      </div> */}
+      {/* desktop Sticky 3D WhatsApp & Call icons */}
       <div
-        className="fixed bottom-6 right-4 z-50 flex flex-col space-y-3 md:space-y-4"
+        className=" hidden md:flex fixed bottom-6 right-4 z-50  flex-col space-y-3 md:space-y-4"
         data-aos="fade-left"
       >
         <a
