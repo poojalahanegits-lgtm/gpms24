@@ -96,13 +96,13 @@ const Login = () => {
           login(user);
 
           localStorage.setItem("loginTimestamp", Date.now());
-
+          navigate("/dashboard");
           // ✅ Role-based navigation
-          if (user.Role === "admin") {
-            navigate("/dashboard");
-          } else {
-            navigate("/user-dashboard");
-          }
+          // if (user.Role === "admin") {
+          //   navigate("/dashboard");
+          // } else {
+          //   navigate("/user-dashboard");
+          // }
 
           toast.success("Logged in successfully!");
           reset();
