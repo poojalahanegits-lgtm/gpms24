@@ -9,14 +9,14 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      console.log("Decrypted User:", user);
-      console.log("User Role:", user.Role);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log("Decrypted User:", user);
+  //     console.log("User Role:", user.Role);
+  //   }
+  // }, [user]);
 
-  console.log("User Role:", user?.Role);
+  // console.log("User Role:", user?.Role);
   const { login } = useAuth();
   const { mutate: sendLoginDetails } = useLogin();
 
@@ -62,35 +62,26 @@ const Login = () => {
     sendLoginDetails(
       {
         ...data,
-        deviceId: localStorage.getItem("deviceId"),
+        // deviceId: localStorage.getItem("deviceId"),
       },
       {
         onSuccess: (response) => {
-          const user = response?.employee; // ✅ backend sends employee
+          const user = response?.employee;
 
           if (!user) {
-            toast.error("Login failed: Invalid server response");
+            toast.error("Login failed");
             setIsSubmitting(false);
             return;
           }
 
-          // ✅ store user
-          //  localStorage.setItem("user", JSON.stringify(user));
+          login(user); // sets state + localStorage
 
-          // optional fake token (since backend not sending)
-          //  localStorage.setItem("token", "loggedIn");
-
-          login(user);
-
-          localStorage.setItem("loginTimestamp", Date.now());
-          navigate("/dashboard", { replace: true });
-          // ✅ Role-based navigation
-          // if (user.Role === "admin") {
-          //   navigate("/dashboard");
-          // } else {
-          //   navigate("/user-dashboard");
-          // }
-
+          //    console.log("User after login:", user);
+          if (user.Role == "admin") {
+            navigate("/dashboard");
+          } else {
+            navigate("/");
+          }
           toast.success("Logged in successfully!");
           reset();
           setIsSubmitting(false);
@@ -136,14 +127,14 @@ const Login = () => {
     );
   };
   // 🔐 Create deviceId once
-  useEffect(() => {
-    let deviceId = localStorage.getItem("deviceId");
+  // useEffect(() => {
+  //   let deviceId = localStorage.getItem("deviceId");
 
-    if (!deviceId) {
-      deviceId = crypto.randomUUID();
-      localStorage.setItem("deviceId", deviceId);
-    }
-  }, []);
+  //   if (!deviceId) {
+  //     deviceId = crypto.randomUUID();
+  //     localStorage.setItem("deviceId", deviceId);
+  //   }
+  // }, []);
   return (
     <>
       <div className="py-12 lg:py-20 flex items-center justify-center bg-gray-100 px-4">
@@ -223,20 +214,19 @@ const Login = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            // className={`w-full flex items-center justify-center gap-2 mt-6 px-4 py-2 rounded-lg text-lg font-medium transition ${
-            //   isSubmitting
-            //     ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-            //     : "bg-black text-white hover:bg-gray-800"
-            // }`}
+            className={`w-full flex items-center justify-center gap-2 mt-6 px-4 py-2 rounded-lg text-lg font-medium transition ${
+              isSubmitting
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-black text-white hover:bg-gray-800"
+            }`}
           >
-            {/* {isSubmitting ? (
+            {isSubmitting ? (
               <>
-                <span className="loader"></span> Logging in..
+                <span className="loader"></span> Logging in...
               </>
             ) : (
               "Login"
-            )} */}
-            login
+            )}
           </button>
         </form>
       </div>
