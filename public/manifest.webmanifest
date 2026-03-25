@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "My App",
-  "short_name": "App",
+  "name": "GPMS",
+  "short_name": "GPMS",
   "description": "My Vite PWA App",
   "start_url": "/",
   "display": "standalone",

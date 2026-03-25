@@ -14,9 +14,9 @@ export default defineConfig({
       },
       manifest: {
         id: "/",
-        name: "My App",
-        short_name: "App",
-        description: "My Vite PWA App",
+        name: "GPMS",
+        short_name: "GPMS",
+        description: "GPMS My Vite PWA App",
         theme_color: "#0f172a",
         background_color: "#ffffff",
         display: "standalone",
