@@ -77,7 +77,7 @@ const Login = () => {
           login(user); // sets state + localStorage
 
           //    console.log("User after login:", user);
-          if (user.Role == "admin") {
+          if (user?.Role == "admin") {
             navigate("/dashboard");
           } else {
             navigate("/");
