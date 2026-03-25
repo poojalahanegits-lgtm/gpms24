@@ -132,7 +132,7 @@ export default function Hero() {
             href="tel:+919819636341"
             className="flex-1 flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-xl font-semibold text-[16px]"
           >
-            <FaPhoneAlt />
+            <FaPhoneAlt className="animate-ring" />
             Call Now
           </a>
 
@@ -143,11 +143,34 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl font-semibold text-[16px]"
           >
-            <FaWhatsapp />
+            <FaWhatsapp className="animate-pulseZoom" />
             WhatsApp
           </a>
         </div>
       </div>
+      {/* <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg z-50 py-3 px-8 md:hidden">
+        <div className="flex gap-3">
+
+          <a
+            href="tel:+919819636341"
+            className="flex-1 flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-xl font-semibold text-[16px]"
+          >
+            <FaPhoneAlt />
+            Call Now
+          </a>
+
+   
+          <a
+            href="https://wa.me/919819636341"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl font-semibold text-[16px]"
+          >
+            <FaWhatsapp />
+            WhatsApp
+          </a>
+        </div>
+      </div> */}
 
       {/* desktop Sticky 3D WhatsApp & Call icons */}
       <div

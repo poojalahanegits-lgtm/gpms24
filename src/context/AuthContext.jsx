@@ -14,20 +14,41 @@ export const AuthProvider = ({ children }) => {
 
   // 🔐 Decrypt stored user data from localStorage
   const decryptUser = (encryptedData) => {
+    if (!encryptedData || !SECRET_KEY) return null;
+
     try {
       const bytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
       const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-      return JSON.parse(decrypted);
+
+      return decrypted ? JSON.parse(decrypted) : null;
     } catch (error) {
       console.error("Failed to decrypt user:", error);
       return null;
     }
   };
+  // const decryptUser = (encryptedData) => {
+  //   try {
+  //     const bytes = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
+  //     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+  //     return JSON.parse(decrypted);
+  //   } catch (error) {
+  //     console.error("Failed to decrypt user:", error);
+  //     return null;
+  //   }
+  // };
 
   // Encrypt user object before storing
   const encryptUser = (user) => {
+    if (!user || !SECRET_KEY) {
+      console.error("Encryption failed: Missing data or secret key");
+      return null;
+    }
+
     return CryptoJS.AES.encrypt(JSON.stringify(user), SECRET_KEY).toString();
   };
+  // const encryptUser = (user) => {
+  //   return CryptoJS.AES.encrypt(JSON.stringify(user), SECRET_KEY).toString();
+  // };
 
   useEffect(() => {
     const encryptedUser = localStorage.getItem("user");
@@ -47,12 +68,22 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // login
   const login = (user) => {
     const encryptedUser = encryptUser(user);
+
+    if (!encryptedUser) return;
+
     setAuth({ isAuthenticated: true, user });
     localStorage.setItem("user", encryptedUser);
     localStorage.setItem("auth", "true");
   };
+  // const login = (user) => {
+  //   const encryptedUser = encryptUser(user);
+  //   setAuth({ isAuthenticated: true, user });
+  //   localStorage.setItem("user", encryptedUser);
+  //   localStorage.setItem("auth", "true");
+  // };
 
   const logout = () => {
     setAuth({ isAuthenticated: false, user: null });

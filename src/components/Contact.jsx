@@ -127,21 +127,88 @@ const Contact = () => {
   // console.log(11111111, services);
 
   return (
-    <section id="contact" className=" py-20 px-4 scroll-mt-12">
+    <section
+      id="contact"
+      className=" md:py-20 py-4 px-4 md:scroll-mt-12 scroll-mt-20"
+    >
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}
         <h2 className="mb-4 text-center text-4xl md:text-5xl font-bold">
           <span className="text-black">Get In Touch</span>
         </h2>
 
-        <p className="mb-16 text-center text-base md:text-xl text-gray-600">
+        <p className="md:mb-16 mb-2 text-center text-base md:text-xl text-gray-600">
           We're here to help with all your property maintenance needs
         </p>
 
         {/* Grid Layout */}
         <div className="grid gap-12 md:grid-cols-2">
+          {/* ================= Contact Info ================= */}
+          <div className="space-y-6">
+            {/* Info Card */}
+            <div className="rounded-3xl bg-white p-8 shadow-xl">
+              <h3 className="mb-6 text-2xl font-bold text-black">
+                Contact Information
+              </h3>
+
+              <div className="space-y-6">
+                <InfoItem
+                  icon="fa-phone"
+                  title="Phone"
+                  info="(Please Note: Whatsapp message is most preffered)"
+                  lines={["9819636341", "7977438563"]}
+                />
+
+                <InfoItem
+                  icon="fa-envelope"
+                  title="Email"
+                  lines={["gopalspms@gmail.com", "kamleshwarkodag@gmail.com"]}
+                />
+
+                <InfoItem
+                  icon="fa-map-marker-alt"
+                  title="Head Office"
+                  lines={[
+                    "Plot No 132B, Nandanvan CHS, Lane Number 7, ",
+                    "Sector 17, Nerul (E), Navi Mumbai, Maharashtra 400706",
+                  ]}
+                />
+
+                <InfoItem
+                  icon="fa-clock"
+                  title="Working Hours"
+                  lines={[" 9:00 AM - 9:00 PM", "24/7 Emergency Service"]}
+                  highlightLast
+                />
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="rounded-3xl bg-black p-8 text-white shadow-xl">
+              <h3 className="mb-4 text-2xl font-bold">Follow Us</h3>
+              <p className="mb-6">Stay connected for updates and offers</p>
+
+              <div className="flex flex-wrap gap-4">
+                {[
+                  "facebook-f",
+                  "instagram",
+                  "twitter",
+                  "linkedin-in",
+                  "whatsapp",
+                ].map((icon) => (
+                  <a
+                    key={icon}
+                    href="#"
+                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black transition hover:bg-gray-200"
+                  >
+                    <i className={`fab fa-${icon} text-xl`}></i>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
           {/* ================= Contact Form ================= */}
-          <div className="rounded-3xl bg-white p-8 shadow-xl">
+          <div className="rounded-3xl bg-white md:p-8 p-4 shadow-xl">
             <h3 className="mb-6 text-2xl font-bold text-black">
               Send Us a Message
             </h3>
@@ -225,71 +292,6 @@ const Contact = () => {
                 {loading ? "Sending..." : "Send Message"}
               </button> */}
             </form>
-          </div>
-
-          {/* ================= Contact Info ================= */}
-          <div className="space-y-6">
-            {/* Info Card */}
-            <div className="rounded-3xl bg-white p-8 shadow-xl">
-              <h3 className="mb-6 text-2xl font-bold text-black">
-                Contact Information
-              </h3>
-
-              <div className="space-y-6">
-                <InfoItem
-                  icon="fa-phone"
-                  title="Phone"
-                  info="(Please Note: Whatsapp message is most preffered)"
-                  lines={["9819636341", "7977438563"]}
-                />
-
-                <InfoItem
-                  icon="fa-envelope"
-                  title="Email"
-                  lines={["gopalspms@gmail.com", "kamleshwarkodag@gmail.com"]}
-                />
-
-                <InfoItem
-                  icon="fa-map-marker-alt"
-                  title="Head Office"
-                  lines={[
-                    "Plot No 132B, Nandanvan CHS, Lane Number 7, ",
-                    "Sector 17, Nerul (E), Navi Mumbai, Maharashtra 400706",
-                  ]}
-                />
-
-                <InfoItem
-                  icon="fa-clock"
-                  title="Working Hours"
-                  lines={[" 9:00 AM - 9:00 PM", "24/7 Emergency Service"]}
-                  highlightLast
-                />
-              </div>
-            </div>
-
-            {/* Social Media */}
-            <div className="rounded-3xl bg-black p-8 text-white shadow-xl">
-              <h3 className="mb-4 text-2xl font-bold">Follow Us</h3>
-              <p className="mb-6">Stay connected for updates and offers</p>
-
-              <div className="flex flex-wrap gap-4">
-                {[
-                  "facebook-f",
-                  "instagram",
-                  "twitter",
-                  "linkedin-in",
-                  "whatsapp",
-                ].map((icon) => (
-                  <a
-                    key={icon}
-                    href="#"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black transition hover:bg-gray-200"
-                  >
-                    <i className={`fab fa-${icon} text-xl`}></i>
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
