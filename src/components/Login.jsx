@@ -223,11 +223,11 @@ const Login = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full flex items-center justify-center gap-2 mt-6 px-4 py-2 rounded-lg text-lg font-medium transition ${
-              isSubmitting
-                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                : "bg-black text-white hover:bg-gray-800"
-            }`}
+            // className={`w-full flex items-center justify-center gap-2 mt-6 px-4 py-2 rounded-lg text-lg font-medium transition ${
+            //   isSubmitting
+            //     ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+            //     : "bg-black text-white hover:bg-gray-800"
+            // }`}
           >
             {isSubmitting ? (
               <>
