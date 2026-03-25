@@ -5,19 +5,6 @@ import { useLogin } from "./services/index";
 import SignupPage from "./SignupPage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import CryptoJS from "crypto-js";
-
-// const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
-
-// const encryptedUser = localStorage.getItem("user");
-
-// if (encryptedUser) {
-//   const bytes = CryptoJS.AES.decrypt(encryptedUser, SECRET_KEY);
-//   const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-//   const parsedUser = JSON.parse(decrypted);
-
-//   console.log("Manually Decrypted User:", parsedUser);
-// }
 
 const Login = () => {
   const { user } = useAuth();
@@ -88,15 +75,15 @@ const Login = () => {
           }
 
           // ✅ store user
-          localStorage.setItem("user", JSON.stringify(user));
+          //  localStorage.setItem("user", JSON.stringify(user));
 
           // optional fake token (since backend not sending)
-          localStorage.setItem("token", "loggedIn");
+          //  localStorage.setItem("token", "loggedIn");
 
           login(user);
 
           localStorage.setItem("loginTimestamp", Date.now());
-          navigate("/dashboard");
+          navigate("/dashboard", { replace: true });
           // ✅ Role-based navigation
           // if (user.Role === "admin") {
           //   navigate("/dashboard");
