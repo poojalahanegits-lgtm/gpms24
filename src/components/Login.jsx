@@ -229,13 +229,14 @@ const Login = () => {
             //     : "bg-black text-white hover:bg-gray-800"
             // }`}
           >
-            {isSubmitting ? (
+            {/* {isSubmitting ? (
               <>
-                <span className="loader"></span> Logging in...
+                <span className="loader"></span> Logging in..
               </>
             ) : (
               "Login"
-            )}
+            )} */}
+            login
           </button>
         </form>
       </div>
