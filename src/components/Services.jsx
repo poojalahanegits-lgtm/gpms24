@@ -104,28 +104,51 @@ const IconWithFallback = ({ src, fallback }) => {
 
   return <img src={iconSrc || fallback} alt="icon" className=" object-cover" />;
 };
+// const ImageWithFallback = ({ src, alt, fallback }) => {
+//   const [imgSrc, setImgSrc] = useState(fallback);
+
+//   useEffect(() => {
+//     if (!src) return;
+
+//     const img = new Image();
+//     img.src = src;
+
+//     img.onload = () => setImgSrc(src);
+//   }, [src]);
+
+//   return (
+//     <img
+//       src={imgSrc || fallback}
+//       alt={alt}
+//       loading="lazy"
+//       className="w-full h-[340px] object-cover rounded-t-xl"
+//     />
+//   );
+// };
+
 const ImageWithFallback = ({ src, alt, fallback }) => {
-  const [imgSrc, setImgSrc] = useState(fallback);
-
+  const [imgSrc, setImgSrc] = useState(src || fallback);
+  // ⏱️ Timeout fallback
   useEffect(() => {
-    if (!src) return;
+    const timer = setTimeout(() => {
+      setImgSrc(fallback);
+    }, 1000);
 
-    const img = new Image();
-    img.src = src;
-
-    img.onload = () => setImgSrc(src);
+    return () => clearTimeout(timer);
   }, [src]);
 
   return (
     <img
-      src={imgSrc || fallback}
+      src={imgSrc}
       alt={alt}
       loading="lazy"
       className="w-full h-[340px] object-cover rounded-t-xl"
+      onError={() => {
+        setImgSrc(fallback);
+      }}
     />
   );
 };
-
 const scrollToSection = (id, resetSearch) => {
   if (resetSearch) {
     resetSearch("");
@@ -297,7 +320,26 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
           {/* Search  & rate card pdf */}
           <div className="flex items-center gap-2">
             {/* rate card pdf */}
-            {user?.Role === "admin" && (
+            <div
+              onClick={() => {
+                if (data.rate_pdf) {
+                  onViewDetails({
+                    title: data.mainTitle + " - Rate Card",
+                    pdfUrl: data.rate_pdf,
+                    page: 1,
+                  });
+                }
+              }}
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-[16px] transition duration-300  hover:-translate-y-1 hover:shadow-xl
+    ${
+      data.rate_pdf
+        ? "bg-black text-white cursor-pointer hover:scale-105"
+        : "bg-black text-white cursor-not-allowed"
+    }`}
+            >
+              <span className="text-[18px]"> ₹</span>
+            </div>
+            {/* {user?.Role === "admin" && (
               <div
                 onClick={() => {
                   if (data.rate_pdf) {
@@ -317,7 +359,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
               >
                 <span className="text-[18px]"> ₹</span>
               </div>
-            )}
+            )} */}
 
             {/*  search */}
             <div className="relative w-full sm:w-[200px]">

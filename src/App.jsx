@@ -19,7 +19,7 @@ import { useApp } from "./context/AppProvider.jsx";
 import LeadsNavigation from "./LeadsForGpgs/LeadsNavigation.jsx";
 import EditServicePage from "./admin/EditServicePage.jsx";
 // import background9 from "@/assets/commanImages/9.png";
-import background9 from "@/assets/commanImages/Background2.png";
+//import background9 from "./public/images/Background1.png";
 // import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 
 const ProtectedRoute = ({ children }) => {
@@ -54,8 +54,12 @@ const App = () => {
   // }, []);
   return (
     <div
-      className="min-h-screen w-full bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: `url(${background9})` }}
+      // className="bg-red-600"
+      // className="min-h-screen w-full bg-cover bg-center bg-fixed"
+      // className="min-h-screen w-full bg-cover bg-center bg-scroll"
+      // style={{ backgroundImage: `url(${background9})` }}
+      // className="min-h-screen w-full bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: "url('/images/aa.png')" }}
     >
       <Header />
       <ScrollToTop />
