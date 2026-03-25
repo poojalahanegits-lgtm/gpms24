@@ -19,7 +19,6 @@ const Login = () => {
   // console.log("User Role:", user?.Role);
   const { login } = useAuth();
   const { mutate: sendLoginDetails } = useLogin();
-
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

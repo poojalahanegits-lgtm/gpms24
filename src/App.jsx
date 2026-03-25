@@ -18,9 +18,6 @@ import { useAuth } from "./context/AuthContext";
 import { useApp } from "./context/AppProvider.jsx";
 import LeadsNavigation from "./LeadsForGpgs/LeadsNavigation.jsx";
 import EditServicePage from "./admin/EditServicePage.jsx";
-// import background9 from "@/assets/commanImages/9.png";
-//import background9 from "./public/images/Background1.png";
-// import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 
 // const ProtectedRoute = ({ children }) => {
 //   const isAuthenticated = localStorage.getItem("user");
@@ -56,11 +53,10 @@ const App = () => {
     }
   }, [user]);
 
-  // console.log("User Role 11111111==:", user?.Role);
   const location = useLocation();
   const { logout } = useAuth();
   const { username } = useApp();
-  // console.log("Logged in user:", username);
+
   const isAdminPage = location.pathname.startsWith("/dashboard");
   const isLeadsPage = location.pathname.startsWith("/gpms-leads");
   // console.log(11111111, isAdminPage, isLeadsPage);
