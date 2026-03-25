@@ -14,7 +14,6 @@ import { useAuth } from "../context/AuthContext";
 //   { label: "Contact Us", href: "#contact" },
 // ];
 const navLinks = [
-  { label: "Home", path: "/" },
   { label: "Services", section: "services" },
   { label: "About Us", section: "about" },
   { label: "Location", section: "location" },
@@ -90,13 +89,13 @@ const Header = () => {
         {/* TEXT */}
         <div className="flex gap-2 lg:gap-4 items-center justify-center py-2">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <a href="/" className="flex items-center">
             <img
               src={logo}
               alt="Company Logo"
               className="h-20 lg:h-20 w-auto object-contain"
             />
-          </Link>
+          </a>
           <h1 className="text-black text-[20px] uppercase md:text-[28px]  lg:text-[30px] md:leading-[1.3]  lg:leading-[1.2] font-bold">
             Property <span className="">Maintenance</span> Services
           </h1>
@@ -112,6 +111,9 @@ const Header = () => {
               {link.label}
             </a>
           ))} */}
+          <button className="text-black font-semibold text-[16px] lg:text-[18px]">
+            <a href="/">Home</a>
+          </button>
           {navLinks.map((link) =>
             link.section ? (
               <button
@@ -273,6 +275,9 @@ const Header = () => {
                 {link.label}
               </a>
             ))} */}
+            <button className="text-left font-semibold">
+              <a href="/">Home</a>
+            </button>
             {navLinks.map((link) =>
               link.section ? (
                 <button
@@ -306,18 +311,27 @@ const Header = () => {
               </Link>
             ) : (
               <>
-                <button
+                {/* <button
                   onClick={() => navigate("/profile")}
                   className="text-left font-semibold"
                 >
                   Profile
-                </button>
+                </button> */}
 
                 <button
                   onClick={() => navigate("/dashboard")}
                   className="text-left font-semibold"
                 >
                   Dashboard
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/gpms-leads");
+                    setAccountOpen(false);
+                  }}
+                  className="text-left font-semibold"
+                >
+                  Leads
                 </button>
 
                 <button

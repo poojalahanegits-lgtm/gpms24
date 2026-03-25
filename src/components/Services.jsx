@@ -240,7 +240,7 @@ ${sectionBg === "gray" ? "bg-white" : "bg-white"}`}
           ) : (
             <p
               onClick={(e) => {
-                e.stopPropagation(); // 🚀 रोकता है parent click (PDF open)
+                e.stopPropagation();
                 document
                   .getElementById("contact")
                   ?.scrollIntoView({ behavior: "smooth" });

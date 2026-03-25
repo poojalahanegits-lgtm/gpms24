@@ -101,7 +101,14 @@ export default function Hero() {
                   <a href="#services">Explore Services</a>
                 </button>
 
-                <button className="w-full sm:w-auto px-6 lg:px-10 py-3  text-black border-2 border-black  font-bold rounded-[68px] shadow-lg hover:bg-black-500 lg:text-[18px] transition">
+                <button
+                  onClick={(e) => {
+                    document
+                      .getElementById("contact")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="w-full sm:w-auto px-6 lg:px-10 py-3  text-black border-2 border-black  font-bold rounded-[68px] shadow-lg hover:bg-black-500 lg:text-[18px] transition"
+                >
                   Get in Touch
                 </button>
               </div>

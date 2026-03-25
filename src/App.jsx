@@ -22,23 +22,48 @@ import EditServicePage from "./admin/EditServicePage.jsx";
 //import background9 from "./public/images/Background1.png";
 // import LeadsNavigation from "./leads/LeadsNavigation.jsx";
 
-const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem("user");
-  // or check from context if you have AuthContext
+// const ProtectedRoute = ({ children }) => {
+//   const isAuthenticated = localStorage.getItem("user");
 
-  if (!isAuthenticated) {
+//   // or check from context if you have AuthContext
+
+//   if (!isAuthenticated) {
+//     return <Navigate to="/my-account" replace />;
+//   }
+//   return children;
+// };
+const ProtectedRoute = ({ children }) => {
+  const { user } = useAuth();
+
+  // check login
+  if (!user) {
     return <Navigate to="/my-account" replace />;
   }
+
+  // check admin role
+  if (user.Role !== "admin") {
+    return <Navigate to="/" replace />; // or show "Unauthorized"
+  }
+
   return children;
 };
-
 const App = () => {
+  const { user } = useAuth();
+  useEffect(() => {
+    if (user) {
+      //console.log("Decrypted User:", user);
+      //   console.log("User Role:", user.Role);
+    }
+  }, [user]);
+
+  // console.log("User Role 11111111==:", user?.Role);
   const location = useLocation();
   const { logout } = useAuth();
   const { username } = useApp();
   // console.log("Logged in user:", username);
   const isAdminPage = location.pathname.startsWith("/dashboard");
   const isLeadsPage = location.pathname.startsWith("/gpms-leads");
+  // console.log(11111111, isAdminPage, isLeadsPage);
 
   // useEffect(() => {
   //   const hasHash = window.location.hash;
@@ -109,8 +134,7 @@ const App = () => {
           }
         />
       </Routes>
-
-      {!isAdminPage || (!isLeadsPage && <Footer />)}
+      {!isLeadsPage && !isAdminPage && <Footer />}
     </div>
   );
 };
