@@ -80,7 +80,13 @@ const App = () => {
       // className="min-h-screen w-full bg-cover bg-center bg-scroll"
       // style={{ backgroundImage: `url(${background9})` }}
       // className="min-h-screen w-full bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: "url('/images/aa.png')" }}
+      style={{
+        backgroundImage: "url('/images/aa.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
+      }}
     >
       <Header />
       <ScrollToTop />
@@ -93,7 +99,7 @@ const App = () => {
               <Hero />
               <Home />
               <Services />
-              {/* <About /> */}
+              <About />
               <Contact />
               <Locations />
               {/* <ReadyToGetStarted /> */}

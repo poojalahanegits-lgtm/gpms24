@@ -66,7 +66,7 @@ const rightImages = [h1, h2, h3, h4, h5, h6, h7];
 export default function Hero() {
   return (
     <>
-      <section className="relative lg:h-screen md:h-[380px] w-full overflow-hidden ">
+      <section className="relative  md:h-[500px] lg:h-[650px] w-full overflow-hidden ">
         {" "}
         <div className="relative z-10">
           <div

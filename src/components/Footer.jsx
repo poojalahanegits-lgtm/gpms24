@@ -1,7 +1,7 @@
 import React from "react";
-
+// href = "/";
 const quickLinks = [
-  { label: "Home", href: "#home" },
+  { label: "Home", href: "/" },
   { label: "Services", href: "#services" },
   { label: "About Us", href: "#about" },
   { label: "Contact", href: "#contact" },
@@ -66,7 +66,7 @@ const Footer = () => {
         </div>
 
         {/* ================= Bottom Bar ================= */}
-        <div className="border-t border-purple-400 pt-8 text-center text-sm md:text-base text-purple-100">
+        <div className="border-t border-orange-300 pt-8 text-center text-sm md:text-base text-purple-100">
           <p>
             &copy; 2026 Elite Property Care. All rights reserved. | Designed for
             Excellence
