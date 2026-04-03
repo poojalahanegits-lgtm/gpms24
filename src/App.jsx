@@ -29,6 +29,17 @@ import EditServicePage from "./admin/EditServicePage.jsx";
 //   }
 //   return children;
 // };
+
+const PublicRoute = ({ children }) => {
+  const { user } = useAuth();
+
+  // if already logged in → block login page
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+};
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
@@ -108,7 +119,14 @@ const App = () => {
         />
 
         {/* Login Page */}
-        <Route path="/my-account" element={<Login />} />
+        <Route
+          path="/my-account"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
         {/*  services dashboard */}
         <Route
           path="/dashboard"
