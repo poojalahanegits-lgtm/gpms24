@@ -155,7 +155,7 @@ const Contact = () => {
                 <InfoItem
                   icon="fa-phone"
                   title="Phone"
-                  info="(Please Note: Whatsapp message is most preffered)"
+                  info="(Please Note: WhatsApp message is most preferred)"
                   lines={["9819636341", "7977438563"]}
                 />
 
@@ -169,8 +169,8 @@ const Contact = () => {
                   icon="fa-map-marker-alt"
                   title="Head Office"
                   lines={[
-                    "Plot No 132B, Nandanvan CHS, Lane Number 7, ",
-                    "Sector 17, Nerul (E), Navi Mumbai, Maharashtra 400706",
+                    "Plot No. 132B, Lane No. 7, Nandanvan CHS, ",
+                    "Sector-17, Nerul (E), Navi Mumbai - 400706, Maharashtra",
                   ]}
                 />
 
