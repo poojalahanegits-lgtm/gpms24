@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Plus } from "lucide-react";
 import { pdfjs } from "react-pdf";
 
 import {
@@ -9,6 +7,8 @@ import {
   useDeleteMainService,
   useUpdateMainServiceStatus,
 } from "../components/services/index";
+import { MoreVertical, Pencil, Tags, Plus, LayoutGrid } from "lucide-react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ManageSubServicesPage from "./ManageSubServicesPage.jsx";
@@ -100,6 +100,7 @@ const MainServicesPage = () => {
   const [selectedInfoPdfFile, setSelectedInfoPdfFile] = useState(null);
   const [previewInfoPdf, setPreviewInfoPdf] = useState(null);
   const [removeInfoPdf, setRemoveInfoPdf] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
   // const { decryptedUser } = useApp();
   // const LOGGED_IN_USER = `${decryptedUser?.employee?.Name}` || "Unknow User";
   const [formData, setFormData] = useState({
@@ -370,7 +371,6 @@ const MainServicesPage = () => {
                   <th className="p-4 bg-black sticky top-0 z-30">Image</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Icon</th>
 
-                  <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
                   <th className="p-4 bg-black sticky top-0 z-30">Status</th>
                   <th className="p-4 bg-black sticky top-0 z-30">
                     {" "}
@@ -380,10 +380,8 @@ const MainServicesPage = () => {
                     {" "}
                     Information PDF
                   </th>
-                  <th className="p-4 bg-black sticky top-0 z-30">Categories</th>
-                  <th className="p-4 bg-black sticky top-0 z-30">
-                    Sub Services
-                  </th>
+                  <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
+
                   <th className="p-4 bg-black sticky top-0 z-30">Worklogs</th>
                 </tr>
               </thead>
@@ -421,30 +419,6 @@ const MainServicesPage = () => {
                       />
                     </td>
 
-                    <td className="p-4">
-                      <button
-                        onClick={() => handleEdit(service)}
-                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
-                      >
-                        <i className="fas fa-edit"></i>
-                      </button>
-
-                      {/* <button
-                        onClick={() => handleDelete(service)}
-                        disabled={deleteMutation.isPending}
-                        className={`text-red-500 hover:text-red-700 ${
-                          deleteMutation.isPending
-                            ? "opacity-50 cursor-not-allowed"
-                            : ""
-                        }`}
-                      >
-                        {deleteMutation.isPending ? (
-                          <span className="bw-loader"></span>
-                        ) : (
-                          <Trash2 size={18} />
-                        )}
-                      </button> */}
-                    </td>
                     {/* toggle button for the status */}
 
                     <td className="p-4">
@@ -539,27 +513,57 @@ hover:-translate-y-1 "
                         </div>
                       )}
                     </td>
-                    <td className="p-4 ">
+                    <td className="p-4 relative">
                       <button
-                        onClick={() => {
-                          setSelectedParent(service);
-                          setViewMode("categories");
-                        }}
-                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
+                        onClick={() =>
+                          setOpenMenu(
+                            openMenu === service.id ? null : service.id,
+                          )
+                        }
+                        className="p-2 font-bold  rounded hover:bg-gray-100"
                       >
-                        <i className="fas fa-edit"></i>
+                        <MoreVertical size={22} />
                       </button>
-                    </td>
-                    <td className="p-4">
-                      <button
-                        onClick={() => {
-                          setSelectedParent(service);
-                          setViewMode("sub");
-                        }}
-                        className="text-orange-500 hover:orange-blue-700 px-3 py-1"
-                      >
-                        <i className="fas fa-edit"></i>
-                      </button>
+
+                      {/* Dropdown */}
+                      {openMenu === service.id && (
+                        <div className="absolute right-6 mt-2 w-44 bg-white border rounded-lg shadow-lg z-50">
+                          {/* Edit */}
+                          <button
+                            onClick={() => {
+                              handleEdit(service);
+                              setOpenMenu(null);
+                            }}
+                            className="flex items-center text-orange-500 gap-2 w-full px-4 py-2 hover:bg-gray-100 text-sm"
+                          >
+                            <Pencil size={16} /> Edit
+                          </button>
+
+                          {/* Categories */}
+                          <button
+                            onClick={() => {
+                              setSelectedParent(service);
+                              setViewMode("categories");
+                              setOpenMenu(null);
+                            }}
+                            className="flex items-center gap-2 w-full px-4 py-2 hover:bg-gray-100 text-sm"
+                          >
+                            <Tags size={16} /> Categories
+                          </button>
+
+                          {/* Sub Services */}
+                          <button
+                            onClick={() => {
+                              setSelectedParent(service);
+                              setViewMode("sub");
+                              setOpenMenu(null);
+                            }}
+                            className="flex items-center gap-2 w-full px-4 py-2 hover:bg-gray-100 text-sm"
+                          >
+                            <LayoutGrid size={16} /> Sub Services
+                          </button>
+                        </div>
+                      )}
                     </td>
                     {/* worklob */}
                     <td className="p-4">
@@ -1138,8 +1142,7 @@ export default MainServicesPage;
 // import { useState } from "react";
 // import { Plus } from "lucide-react";
 // import { pdfjs } from "react-pdf";
-// import { useNavigate } from "react-router-dom";
-// import DocumentEditor from "./DocumentEditor.jsx";
+
 // import {
 //   useMainServices,
 //   useCreateMainService,
@@ -1204,7 +1207,6 @@ export default MainServicesPage;
 // const MainServicesPage = () => {
 //   const { username } = useApp();
 //   const name = username ? username : "Unknown";
-//   const navigate = useNavigate();
 //   // console.log(11111111, name);
 //   const { data: services = [], isLoading } = useMainServices();
 //   const statusMutation = useUpdateMainServiceStatus();
@@ -1235,6 +1237,10 @@ export default MainServicesPage;
 //   const [removeImage, setRemoveImage] = useState(false);
 //   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 //   const [serviceToToggle, setServiceToToggle] = useState(null);
+
+//   const [selectedInfoPdfFile, setSelectedInfoPdfFile] = useState(null);
+//   const [previewInfoPdf, setPreviewInfoPdf] = useState(null);
+//   const [removeInfoPdf, setRemoveInfoPdf] = useState(false);
 //   // const { decryptedUser } = useApp();
 //   // const LOGGED_IN_USER = `${decryptedUser?.employee?.Name}` || "Unknow User";
 //   const [formData, setFormData] = useState({
@@ -1242,9 +1248,28 @@ export default MainServicesPage;
 //     desc: "",
 //     img: "",
 //     sectionId: "",
-//     document: "",
 //   });
 //   //! confirmation box for upating status
+//   // const confirmStatusToggle = () => {
+//   //   if (!serviceToToggle) return;
+//   //   setUpdatingId(id);
+//   //   statusMutation.mutate(
+//   //     {
+//   //       Id: serviceToToggle.id,
+//   //       Status: serviceToToggle.status === "active" ? "inactive" : "active",
+//   //     },
+//   //     {
+//   //       onSuccess: () => {
+//   //         toast.success("Status updated successfully");
+//   //         setIsStatusModalOpen(false);
+//   //         setServiceToToggle(null);
+//   //       },
+//   //       onError: () => {
+//   //         toast.error("Failed to update status");
+//   //       },
+//   //     },
+//   //   );
+//   // };
 
 //   const confirmStatusToggle = () => {
 //     if (!serviceToToggle) return;
@@ -1286,6 +1311,7 @@ export default MainServicesPage;
 //     setSelectedPdfFile(null);
 //     setPreviewPdf(null);
 //     setRemovePdf(false);
+//     setRemoveInfoPdf(false);
 //     setFormData({
 //       title: "",
 //       desc: "",
@@ -1313,7 +1339,6 @@ export default MainServicesPage;
 //     formDataToSend.append("Title", formData.title);
 //     formDataToSend.append("Description", formData.desc);
 //     formDataToSend.append("updatedBy", name);
-//     formDataToSend.append("Document", formData.document);
 
 //     if (selectedFile) {
 //       formDataToSend.append("image", selectedFile);
@@ -1323,6 +1348,13 @@ export default MainServicesPage;
 //     }
 //     if (selectedPdfFile) {
 //       formDataToSend.append("pdf", selectedPdfFile);
+//     }
+//     if (selectedInfoPdfFile) {
+//       formDataToSend.append("informationPdf", selectedInfoPdfFile);
+//     }
+
+//     if (removeInfoPdf) {
+//       formDataToSend.append("removeInformationPdf", "true");
 //     }
 //     if (removePdf) {
 //       formDataToSend.append("removePdf", "true");
@@ -1365,17 +1397,17 @@ export default MainServicesPage;
 
 //   const handleEdit = (service) => {
 //     setEditingService(service);
-
+//     setRemoveInfoPdf(false); // ✅ ADD THIS
 //     setFormData({
 //       title: service.Title || service.title,
 //       desc: service.Description || service.desc,
 //       img: service.Image || service.img,
 //       sectionId: service["Section ID"] || service.sectionId,
-//       document: service.Document || service.document || "",
 //     });
 //     setPreviewIcon(service.Icon || service.icon);
 //     setPreviewImage(service.Image || service.img);
 //     setPreviewPdf(service.Pdf || service.pdf);
+//     setPreviewInfoPdf(service.InformationPdf);
 //     setIsModalOpen(true);
 //   };
 //   const handleDelete = (service) => {
@@ -1481,7 +1513,14 @@ export default MainServicesPage;
 
 //                   <th className="p-4 bg-black sticky top-0 z-30">Actions</th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">Status</th>
-//                   <th className="p-4 bg-black sticky top-0 z-30">PDF</th>
+//                   <th className="p-4 bg-black sticky top-0 z-30">
+//                     {" "}
+//                     Rate Card PDF
+//                   </th>
+//                   <th className="p-4 bg-black sticky top-0 z-30">
+//                     {" "}
+//                     Information PDF
+//                   </th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">Categories</th>
 //                   <th className="p-4 bg-black sticky top-0 z-30">
 //                     Sub Services
@@ -1525,10 +1564,7 @@ export default MainServicesPage;
 
 //                     <td className="p-4">
 //                       <button
-//                         onClick={() =>
-//                           navigate(`/edit-service/${service.id || service.Id}`)
-//                         }
-//                         // onClick={() => handleEdit(service)}
+//                         onClick={() => handleEdit(service)}
 //                         className="text-orange-500 hover:orange-blue-700 px-3 py-1"
 //                       >
 //                         <i className="fas fa-edit"></i>
@@ -1603,6 +1639,30 @@ export default MainServicesPage;
 //                           onClick={() => {
 //                             const previewUrl = getDrivePreviewUrl(
 //                               service.Pdf,
+//                               service.page,
+//                             );
+
+//                             setSelectedService(service);
+//                             setActivePdf(previewUrl);
+//                             setOpen(true);
+//                           }}
+//                           className="group relative rounded-2xl  hover:shadow-xl transition duration-300
+// pl-4 pr-1 lg:pl-5 pt-4 lg:pt-4
+
+// hover:-translate-y-1 "
+//                           title="Open PDF"
+//                         >
+//                           <i className="fa-solid fa-file-pdf text-red-600 text-3xl"></i>
+//                         </div>
+//                       )}
+//                     </td>
+//                     {/* information pdf */}
+//                     <td className="p-1">
+//                       {service?.InformationPdf && (
+//                         <div
+//                           onClick={() => {
+//                             const previewUrl = getDrivePreviewUrl(
+//                               service.InformationPdf,
 //                               service.page,
 //                             );
 
@@ -1776,49 +1836,41 @@ export default MainServicesPage;
 //       {/* ================= Modal ================= */}
 //       {isModalOpen && (
 //         <div className="fixed inset-0 bg-black/40 z-[500] flex justify-center items-center">
-//           <div className="bg-white p-6 rounded-xl w-[95%] max-w-4xl shadow-lg">
+//           <div className="bg-white p-6  rounded-xl w-[400px] lg:w-[700px] shadow-lg">
 //             <h2 className="text-lg font-semibold mb-4">
 //               {editingService ? "Edit Service" : "Add Service"}
 //             </h2>
 
 //             <form className="space-y-4">
-//               <div className="flex gap-4">
-//                 {/* title */}
-//                 <div>
-//                   <label className="block text-sm font-medium text-gray-600 mb-1">
-//                     Service Title
-//                   </label>
-//                   <input
-//                     type="text"
-//                     placeholder="Service Title"
-//                     value={formData.title}
-//                     onChange={(e) =>
-//                       setFormData({ ...formData, title: e.target.value })
-//                     }
-//                     className="w-full border rounded-lg px-3 py-2"
-//                     required
-//                   />
-//                 </div>
+//               <label className="block text-sm font-medium text-gray-600 mb-1">
+//                 Service Title
+//               </label>
+//               <input
+//                 type="text"
+//                 placeholder="Service Title"
+//                 value={formData.title}
+//                 onChange={(e) =>
+//                   setFormData({ ...formData, title: e.target.value })
+//                 }
+//                 className="w-full border rounded-lg px-3 py-2"
+//                 required
+//               />
 
-//                 {/* description */}
-//                 <div>
-//                   <label className="block text-sm font-medium text-gray-600 mb-1">
-//                     Description
-//                   </label>
-//                   <input
-//                     type="text"
-//                     placeholder="Description"
-//                     value={formData.desc}
-//                     onChange={(e) =>
-//                       setFormData({ ...formData, desc: e.target.value })
-//                     }
-//                     className="w-full border rounded-lg px-3 py-2"
-//                     required
-//                   />
-//                 </div>
-//               </div>
+//               <label className="block text-sm font-medium text-gray-600 mb-1">
+//                 Description
+//               </label>
+//               <input
+//                 type="text"
+//                 placeholder="Description"
+//                 value={formData.desc}
+//                 onChange={(e) =>
+//                   setFormData({ ...formData, desc: e.target.value })
+//                 }
+//                 className="w-full border rounded-lg px-3 py-2"
+//                 required
+//               />
 
-//               <div className="flex gap-4 justify-between">
+//               <div className=" grid grid-cols-4 gap-6 mx-4 items-start">
 //                 {/* img */}
 //                 <div className="">
 //                   <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -1856,10 +1908,10 @@ export default MainServicesPage;
 //                     className="w-full border rounded-lg px-3 py-2"
 //                   />
 //                 </div>
-//                 {/* pdf */}
+//                 {/* rate card pdf */}
 //                 <div>
 //                   <label className="block text-sm font-medium text-gray-600 mb-1">
-//                     Upload PDF
+//                     Rate Card PDF
 //                   </label>
 
 //                   <input
@@ -1875,11 +1927,131 @@ export default MainServicesPage;
 //                     className="w-full border rounded-lg px-3 py-2"
 //                   />
 //                 </div>
-//               </div>
+//                 {/* information pdf */}
+//                 <div>
+//                   <label className="block text-sm font-medium text-gray-600 mb-1">
+//                     Information PDF
+//                   </label>
 
-//               {(previewIcon || previewImage || previewPdf) && (
-//                 <div className="mt-4 grid grid-cols-3 gap-6 mx-4 items-start">
-//                   {/* IMAGE PREVIEW */}
+//                   <input
+//                     type="file"
+//                     accept="application/pdf"
+//                     onChange={(e) => {
+//                       const file = e.target.files[0];
+//                       if (file) {
+//                         setSelectedInfoPdfFile(file);
+//                         setPreviewInfoPdf(URL.createObjectURL(file));
+//                         setRemoveInfoPdf(false);
+//                       }
+//                     }}
+//                     className="w-full border rounded-lg px-3 py-2"
+//                   />
+//                 </div>
+//               </div>
+//               {(previewIcon ||
+//                 previewImage ||
+//                 previewPdf ||
+//                 previewInfoPdf) && (
+//                 <div className="mt-4 grid grid-cols-4 gap-6 mx-4 items-start">
+//                   {/* IMAGE SLOT */}
+//                   <div className="relative h-20 w-20">
+//                     {previewImage && (
+//                       <>
+//                         <img
+//                           src={previewImage}
+//                           alt="Preview"
+//                           className="h-20 w-20 object-cover border"
+//                         />
+//                         <button
+//                           type="button"
+//                           onClick={() => {
+//                             setPreviewImage(null);
+//                             setSelectedFile(null);
+//                             setRemoveImage(true);
+//                           }}
+//                           className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+//                         >
+//                           ✕
+//                         </button>
+//                       </>
+//                     )}
+//                   </div>
+
+//                   {/* ICON SLOT */}
+//                   <div className="relative h-20 w-20">
+//                     {previewIcon && (
+//                       <>
+//                         <img
+//                           src={previewIcon}
+//                           alt="Icon Preview"
+//                           className="h-20 w-20 object-contain border"
+//                         />
+//                         <button
+//                           type="button"
+//                           onClick={() => {
+//                             setPreviewIcon(null);
+//                             setSelectedIconFile(null);
+//                             setRemoveIcon(true);
+//                           }}
+//                           className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+//                         >
+//                           ✕
+//                         </button>
+//                       </>
+//                     )}
+//                   </div>
+
+//                   {/* PDF SLOT */}
+//                   <div className="relative h-20 w-20">
+//                     {(previewPdf || selectedPdfFile) && (
+//                       <>
+//                         <div className="h-20 w-20 border flex items-center justify-center bg-white">
+//                           <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+//                         </div>
+//                         <button
+//                           type="button"
+//                           onClick={() => {
+//                             setPreviewPdf(null);
+//                             setSelectedPdfFile(null);
+//                             setRemovePdf(true);
+//                           }}
+//                           className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+//                         >
+//                           ✕
+//                         </button>
+//                       </>
+//                     )}
+//                   </div>
+
+//                   {/* INFO PDF SLOT */}
+//                   <div className="relative h-20 w-20">
+//                     {(previewInfoPdf || selectedInfoPdfFile) && (
+//                       <>
+//                         <div className="h-20 w-20 border flex items-center justify-center bg-white">
+//                           <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+//                         </div>
+//                         <button
+//                           type="button"
+//                           onClick={() => {
+//                             setPreviewInfoPdf(null);
+//                             setSelectedInfoPdfFile(null);
+//                             setRemoveInfoPdf(true);
+//                           }}
+//                           className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6 text-xs"
+//                         >
+//                           ✕
+//                         </button>
+//                       </>
+//                     )}
+//                   </div>
+//                 </div>
+//               )}
+//               {/* {(previewIcon ||
+//                 previewImage ||
+//                 previewPdf ||
+//                 previewInfoPdf) && (
+//                 <div className="mt-4 grid grid-cols-4 gap-6 mx-4 items-start">
+
 //                   {previewImage && (
 //                     <div className="relative h-20 w-20">
 //                       <img
@@ -1902,7 +2074,6 @@ export default MainServicesPage;
 //                     </div>
 //                   )}
 
-//                   {/* ICON PREVIEW */}
 //                   {previewIcon && (
 //                     <div className="relative h-20 w-20">
 //                       <img
@@ -1925,7 +2096,6 @@ export default MainServicesPage;
 //                     </div>
 //                   )}
 
-//                   {/* PDF PREVIEW */}
 //                   {(previewPdf || selectedPdfFile) && (
 //                     <div className="relative h-20 w-20">
 //                       <div className="h-20 w-20 border flex items-center justify-center bg-white">
@@ -1945,8 +2115,29 @@ export default MainServicesPage;
 //                       </button>
 //                     </div>
 //                   )}
+
+//                   {(previewInfoPdf || selectedInfoPdfFile) && (
+//                     <div className="relative h-20 w-20">
+//                       <div className="h-20 w-20 border flex items-center justify-center bg-white">
+//                         <i className="fa-solid fa-file-pdf text-red-600 text-4xl"></i>
+//                       </div>
+
+//                       <button
+//                         type="button"
+//                         onClick={() => {
+//                           setPreviewInfoPdf(null);
+//                           setSelectedInfoPdfFile(null);
+//                           setRemoveInfoPdf(true);
+//                         }}
+//                         className="absolute -top-2 -right-2 bg-black text-white rounded-full w-6 h-6"
+//                       >
+//                         ✕
+//                       </button>
+//                     </div>
+//                   )}
+
 //                 </div>
-//               )}
+//               )} */}
 
 //               <div className="flex justify-end gap-3">
 //                 <button
@@ -1977,21 +2168,7 @@ export default MainServicesPage;
 //                 </button>
 //               </div>
 //             </form>
-
-//             {/*  */}
-//             {/* document */}
-//             <label className="block text-sm font-medium text-gray-600 mb-1">
-//               Document (Rich Text)
-//             </label>
-
-//             <DocumentEditor
-//               value={formData.document}
-//               onChange={(value) =>
-//                 setFormData({ ...formData, document: value })
-//               }
-//             />
 //           </div>
-
 //           <style>{`
 //   .bw-loader {
 //     border: 3px solid #e5e5e5;

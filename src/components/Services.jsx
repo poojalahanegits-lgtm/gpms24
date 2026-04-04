@@ -320,7 +320,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
           {/* Search  & rate card pdf */}
           <div className="flex items-center gap-2">
             {/* rate card pdf */}
-            <div
+            {/* <div
               onClick={() => {
                 if (data.rate_pdf) {
                   onViewDetails({
@@ -338,8 +338,8 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
     }`}
             >
               <span className="text-[18px]"> ₹</span>
-            </div>
-            {/* {user?.Role === "admin" && (
+            </div> */}
+            {user?.Role === "admin" && (
               <div
                 onClick={() => {
                   if (data.rate_pdf) {
@@ -359,7 +359,7 @@ const ServiceSection = ({ id, data, sectionBg, onViewDetails }) => {
               >
                 <span className="text-[18px]"> ₹</span>
               </div>
-            )} */}
+            )}
 
             {/*  search */}
             <div className="relative w-full sm:w-[200px]">
